@@ -19,7 +19,7 @@ function wincmd()
 
 function memow()
 {
-	NDIR="${HOME}/Memo/$1"
+	NDIR="${HOME}/GitHub/Config/md/$1"
 	EXT=$(basename $NDIR)
 	EXT=${EXT##*.}
 
@@ -55,6 +55,14 @@ function baktar()
 # alias
 alias la='ls -a'
 alias lla='ls -al'
+alias grep='grep --color=auto'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias bashrc='source ~/.bashrc'
+alias bash_profile='source ~/.bash_profile'
+
 alias proj='. proj.sh'
 alias nip="memow $(date +"%Y%m")"
 
