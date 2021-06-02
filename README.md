@@ -14,8 +14,10 @@ VSCode(Windows/Linux) + Git Bash(Windows)環境の設定ファイルが中心。
   - 一部の関数はWindows依存のため、7(Core)で使う場合は修正が必要。
 - xyzzy
   - VSCodeが1.5になるまで20年近く愛用したエディターの設定ファイル。 
+- Office
+  - Excel/Word/Outlook/VisioのカスタムUIのエクスポートファイル。
 - md
   - Markdown形式で書かれたメモファイル置き場。
 
 ## ライセンス
-ノーリスクノーリターン、自己責任でご自由にお使いください。(古)
+自己責任でご自由にお使いください。
