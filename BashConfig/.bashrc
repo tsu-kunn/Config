@@ -1,0 +1,70 @@
+#!/etc/bash
+
+# PATH
+export LANG='ja_JP.UTF-8'
+export PATH=$PATH:"${HOME}/bin":
+
+# history
+export HISTSIZE=1000
+export HISTCONTROL=ignoredups
+
+# function
+# cmd output SJIS->UTF-8
+function wincmd()
+{
+	CMD=$1
+	shift
+	$CMD $* 2>&1 | iconv -f cp932 -t utf-8
+}
+
+function memow()
+{
+	NDIR="${HOME}/Memo/$1"
+	EXT=$(basename $NDIR)
+	EXT=${EXT##*.}
+
+	if [ "$1" = "$EXT" ]; then
+		NDIR="${NDIR}.txt"
+	fi
+
+	vim $NDIR
+}
+
+function baktar()
+{
+	# ファイル名設定
+	DATA=`date '+%Y%m%d_%k%M'`
+
+	# 引数のチェック
+	if [ $# -eq 0 -o "$1" = "-h" ]; then
+		printf "baktar [option] [dirname]\n"
+		printf "\n"
+		printf "[option]\n"
+		printf "  -h      : Help\n"
+		printf "\n"
+		printf "[dirname]\n"
+		printf "  directory name\n"
+		printf "\n"
+	else
+		FNAME=$(basename $1)"_${DATA}.tar.gz"
+		tar cvzf $FNAME $1
+	fi
+}
+
+
+# alias
+alias la='ls -a'
+alias lla='ls -al'
+alias proj='. proj.sh'
+alias nip="memow $(date +"%Y%m")"
+
+# prompt
+# \w full path \W current path
+export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\]:\w \$\[\e[00m\] '
+
+# Git Bash only
+alias python='winpty python'
+alias docker='winpty docker'
+alias npm='winpty npm'
+
+NODIST_BIN_DIR__=$(echo "$NODIST_PREFIX" | sed -e 's,\\,/,g')/bin; if [ -f "$NODIST_BIN_DIR__/nodist.sh" ]; then . "$NODIST_BIN_DIR__/nodist.sh"; fi; unset NODIST_BIN_DIR__;

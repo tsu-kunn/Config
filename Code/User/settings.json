@@ -1,0 +1,161 @@
+// Place your settings in this file to overwrite the default settings
+{
+    // Controls the font family.MS Gothic
+//    "editor.fontFamily": "Consolas, MeiryoKe_Gothic",
+    "editor.fontFamily": "Myrica M,Consolas,MeiryoKe_Gothic",
+//    "editor.fontFamily": "Consolas, MeiryoKe_Gothic, 'Courier New', monospace"
+
+    // Controls the font size.(default:0)
+    "editor.fontSize": 15,
+
+    // インデントの設定(true: スペース, false: タブ)
+    "editor.insertSpaces": true,
+
+    // スペースの表示とカーソル行のハイライト設定
+    "editor.renderWhitespace": "all",
+    "editor.renderControlCharacters": true,
+    "editor.renderLineHighlight": "all",
+    "editor.renderIndentGuides": true,
+
+    // Controls visibility of the glyph margin
+    "editor.glyphMargin": true,
+
+    // Control the cursor animation style
+    "editor.cursorStyle": "line",
+    "editor.cursorSmoothCaretAnimation": true,
+    
+    // ミニマップの表示設定
+    "editor.minimap.enabled": false,
+
+    // 文字コード自動判別
+    "files.autoGuessEncoding": true,
+
+    // ファイルの最終行を空行
+    "files.insertFinalNewline": true,
+
+    // カラーテーマの設定
+    "workbench.colorTheme": "Tomorrow Night Blue",
+    "workbench.colorCustomizations": {
+        "[Tomorrow Night Blue]": {
+            // 背景色を変更
+            "editor.background": "#2e3440"
+//            "editor.background": "#2e2030" // ノートPC用
+        },
+
+        // カーソル行のハイライト
+        "editor.lineHighlightBackground": "#404040",
+
+        // オプションの文字を見やすくする
+        "terminal.ansiBrightBlack": "#808080"
+    },
+
+    // vscode-icon拡張を有効にする
+    "workbench.iconTheme": "vscode-icons",
+
+    // エディタレイアウトの保持
+    "workbench.editor.closeEmptyGroups": false,
+
+    // エクスプローラーから除外するファイルとフォルダ
+    "files.exclude": {
+        "**.vs": true,
+        "**.Thumbs.db": true,
+        "**/node_modules": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/*.dll": true,
+        "**/*.exe": true,
+        "**/*.idb": true,
+        "**/*.ilk": true,
+        "**/*.lst": true,
+        "**/*.o": true,
+        "**/*.obj": true,
+        "**/*.pdb": true,
+        "**/*.tlog": true
+    },
+
+    // 自動整形を有効にする
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+
+    // Ctrl + マウスホイールでフォントのズームを有効にする
+    "editor.mouseWheelZoom": true,
+
+    // 未保存のタブを分かりやすくする
+    "workbench.editor.highlightModifiedTabs": true,
+
+    // ターミナルのプロファイルを設定
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash",
+            "icon": "c:/Program Files/Git/mingw64/share/git/git-for-windows.ico"
+        }
+    },
+
+    // ターミナルを Git Bash に変更
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+
+    // ターミナルのフォントサイズ
+    "terminal.integrated.fontSize": 14,
+
+    // ターミナルのカーソルを縦線にして点滅
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorStyle": "line",
+
+    // ターミナルの強調表示を normal に設定
+    // "terminal.integrated.fontWeight": "normal",
+    // "terminal.integrated.fontWeightBold": "normal",
+
+    // テレメトリーを無効にする（MSに送らない）
+    "telemetry.enableTelemetry": false,
+
+    // Pythonのスタートページを表示しない
+    "python.showStartPage": false,
+
+    // Pythonの自動整形を使わない
+    "python.formatting.provider": "none",
+
+    // GLSLの自動整形を行わない
+    "glsl-canvas.useFormatter": false,
+
+    // リアルタイムシェーダーコンパイルを行わない（保存でコンパイル）
+    "glsl-canvas.refreshOnChange": false,
+
+    // Windows titleのスタイルをカスタムにする
+    "window.titleBarStyle": "custom",
+
+    // エクスプローラーのインデントライン表示
+    "workbench.tree.renderIndentGuides": "onHover",
+
+    // 強制的にシェルのキーバインドを使用
+    "terminal.integrated.commandsToSkipShell": [
+        "-workbench.action.quickOpen"
+    ],
+
+    // VSCode自動設定
+    "C_Cpp.updateChannel": "Insiders",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "gauge.recommendedSettings.options": "Apply & Reload"
+}
+
+// MEMO:
+// Install Extensions: vscode-icon, Path Autocomplete, zenkaku, Center Editor Window
+//                     glsl-cancas, Shader languages support, Bash Beautify

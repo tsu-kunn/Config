@@ -1,0 +1,191 @@
+// Place your key bindings in this file to overwrite the defaults
+[
+    // Editor
+    {
+        "key": "ctrl+k ctrl+j",
+        "command": "workbench.action.editor.changeEncoding"
+    },
+    {
+        "key": "alt+r",
+        "command": "cursorPageUp",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+c",
+        "command": "cursorPageDown",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+oem_comma",
+        "command": "cursorTop",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+oem_period",
+        "command": "cursorBottom",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k 0",
+        "command": "editor.action.fontZoomReset"
+    },
+
+    // Editor(カーソル移動をEmacs風にする)
+    {
+        "key": "ctrl+p",
+        "command": "cursorUp",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+n",
+        "command": "cursorDown",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+f",
+        "command": "cursorRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "cursorLeft",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+a",
+        "command": "cursorHome",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "cursorEnd",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+k ctrl+k",
+        "command": "deleteAllRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "deleteLeft",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "ctrl+d",
+        "command": "deleteRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+f",
+        "command": "cursorWordEndRight",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "alt+b",
+        "command": "cursorWordStartLeft",
+        "when": "editorTextFocus"
+    },
+    
+    // Editor(競合したキーはCtrlをAltに置き換える(一部はCtrl+Alt))
+    {
+        "key": "alt+p",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "alt+p",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "alt+n",
+        "command": "workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "ctrl+oem_2",
+        "command": "defaultSettings.action.focusSearch",
+        "when": "defaultSettingsEditor"
+    },
+    {
+        "key": "ctrl+oem_2",
+        "command": "actions.find"
+    },
+    {
+        "key": "ctrl+alt+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "alt+a",
+        "command": "editor.action.selectAll"
+    },
+    {
+        "key": "alt+e",
+        "command": "workbench.action.quickOpenNavigateNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "alt+e",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "alt+h",
+        "command": "editor.action.startFindReplaceAction"
+    },
+    {
+        "key": "alt+d",
+        "command": "editor.action.addSelectionToNextFindMatch",
+        "when": "editorFocus"
+    },
+
+    // Editor Layout
+    {
+        "key": "alt+x 0",
+        "command": "workbench.action.editorLayoutSingle"
+    },
+    {
+        "key": "alt+x 2",
+        "command": "workbench.action.splitEditorDown"
+    },
+    {
+        "key": "alt+x 5",
+        "command": "workbench.action.splitEditorRight"
+    },
+
+    // Terminal
+    {
+        "key": "ctrl+tab",
+        "command": "workbench.action.terminal.focusNext",
+        "when": "terminalFocus" 
+    },
+    {
+        "key": "ctrl+shift+tab",
+        "command": "workbench.action.terminal.focusPrevious",
+        "when": "terminalFocus" 
+    },
+    // {
+    //     "key": "ctrl+oem_3",
+    //     "command": "workbench.action.terminal.toggleTerminal"
+    // },
+    // {
+    //     "key": "ctrl+oem_3",
+    //     "command": "-workbench.action.terminal.toggleTerminal"
+    // },
+    // {
+    //     "key": "ctrl+shift+oem_3",
+    //     "command": "workbench.action.terminal.new"
+    // },
+    // {
+    //     "key": "ctrl+shift+oem_3",
+    //     "command": "-workbench.action.terminal.new"
+    // },
+    {
+        "key": "ctrl+f",
+        "command": "cursorRight",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+k",
+        "command": "deleteAllRight",
+        "when": "terminalFocus"
+    }
+]

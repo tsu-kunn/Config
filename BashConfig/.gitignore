@@ -1,0 +1,23 @@
+# 中間ファイル
+*.o
+*.out
+*.obj
+*.log
+*.tlog
+tags
+
+# VisualStudioの自動生成ファイル
+*.suo
+*.sdf
+*.vcxproj.user
+
+# その他不要ファイル
+.DS_Store
+Thumbs.db
+
+# 特定フォルダを無視
+/.svn
+/binary
+/node_modules
+/build
+

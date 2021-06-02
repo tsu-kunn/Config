@@ -1,0 +1,30 @@
+[user]
+	name = Tsuyoshi.A
+	email = perilla.k@gmail.com
+[credential]
+	helper = manager
+[core]
+	excludesfile = "${HOME}/.gitignore"
+	autocrlf = false
+	editor = vim
+	quotepath = false
+#[http]
+#	proxy = http://proxy.example.com:8080
+#[https]
+#	proxy = http://proxy.example.com:8080
+[color]
+	ui = true
+[alias]
+	co = checkout
+	st = status
+	br = branch
+	cm = commit
+	fe = fetch
+	oneline = "log --date=format:'%y-%m-%d %H:%M' --pretty=format:'%C(yellow)%h%C(reset) %ad %C(green)%an%C(red)%d%C(reset) : %s'"
+	graph = "log --date=format:'%y-%m-%d %H:%M' --pretty=format:'%C(yellow)%h%C(reset) %ad %C(green)%an%C(red)%d%C(reset) : %s' --graph"
+	sgraph = "log --date=format:'%y-%m-%d %H:%M' --pretty=format:'%C(yellow)%h%C(reset) %ad %C(green)%an%C(red)%d%C(reset) : %s' --graph --stat"
+	numstat = "log --date=format:'%y-%m-%d %H:%M' --pretty=format:'%C(yellow)%h%C(reset) %ad %C(green)%an%C(red)%d%C(reset) : %s' --numstat"
+	gone = "log --graph --oneline"
+	gsa = "log --graph --stat --all"
+[diff]
+	compactionHeuristic = true

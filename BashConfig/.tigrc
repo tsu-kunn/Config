@@ -1,0 +1,13 @@
+# main-viewにIDを表示
+set main-view = id date author commit-title:graph=yes,refs=yes
+
+# 行数表示をON
+set blob-view-line-number = yes
+set blame-view-line-number = yes
+
+# タブ
+set tab-size = 4
+
+# マージ diff を表示
+set diff-options = -m --first-parent
+
