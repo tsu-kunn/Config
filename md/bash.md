@@ -76,7 +76,7 @@ function wincmd()
 
 function memow()
 {
-	NDIR="${HOME}/Memo/$1"
+	NDIR="${HOME}/GitHub/Config/md/$1"
 	EXT=$(basename $NDIR)
 	EXT=${EXT##*.}
 
@@ -113,6 +113,14 @@ function baktar()
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
+alias grep='grep --color=auto'
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias bashrc='source ~/.bashrc'
+alias bash_profile='source ~/.bash_profile'
+
 alias proj='. proj.sh' 
 alias nip="memow $(date +"%Y%m")"
 
@@ -130,6 +138,18 @@ export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\]:\w \$\[\e[00m\] '
 
 同じコマンドを入力した場合は履歴に保存しない。
 
+
+## alias
+よく使うコマンドを短縮して使えるように設定。
+
+```
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm -i'
+```
+
+実行する際に確認をする。\
+Linuxではデフォルト確認なしのため、誤操作防止でお勧めするところが多かったので追加。
 
 ## prompt
 `export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\] \w \$\[\e[00m\] '`
