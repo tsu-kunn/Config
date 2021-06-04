@@ -27,28 +27,36 @@ $ sudo apt-get install npm
 ```
 
 ### Windows
-#### Nodist のインストール
-1. [Nodistのサイト](https://github.com/nullivex/nodist/releases) からダウンロード。
-    - 2021/06/03 では NodistSetup-v0.9.1.exe
-1. NodistSetup-vx.x.x.exe を実行して Nodist をインストール。
-    - `nodist -v` でバージョンが表示されれば成功
 
-#### Node.jsのインストール
-1. Node.js の [リリース一覧](https://nodejs.org/ja/download/releases/) からインストーするバージョンを選択する。
-    - 指定がなければ LTS の一番新しいバージョンを入れるのがよい
-1. `nodist + xx.xx.x` で Node.js をインストール。
-    - `nodist xx.xx.x` でインストールしたバージョンに設定
-1. `nodist npm match` で Node.js のバージョンに対応する npm をインストール。
-    - `npm x.xx.x` でインストールしたバージョンに設定
-1. `npm i npx -g` で npx をインストールする。（Nodistでは自動でインストールされない)
+※ Nodist を使用するとパッケージインストールでエラーになるものが多いため、
+公式の Node.js をインストールする方法に変更。（[参考HP](https://zenn.dev/ymasaoka/articles/note-uninstall-nodish-windows)）
 
+Node.js のバージョン管理が必要な場合は docker を使うのが今時っぽい。
+
+#### Node.js のインストール
+1. [Node.jsのサイト](https://nodejs.org/ja/) からダウンロード。
+    - バージョン指定がある場合は [こちら](https://nodejs.org/ja/download/releases/) からダウンロードする。
+    - バージョン指定がない場合は、特別な理由がない限り **LTSの64bit版(推奨版)** を使用する。
+1. node-vxx.xx.x-x64.msi を実行して Node.js をインストール。
+    - `node -v`, `npm -v`, `npx -v` でバージョンが表示されれば成功
 
 ## React App のインストール
-React公式のドキュメントで記載されている方法を使用する。\
+Create React App公式サイトに記載されている方法を使用する。\
 管理は開発元の Facebook が行っているみたいなので確実。
 
+#### npx
 ```
 $ npx create-react-app my-app
+```
+
+#### npm
+```
+$ npm init react-app my-app
+```
+
+#### Yarn
+```
+$ yarn create react-app my-app
 ```
 
 ### 動作確認
@@ -164,6 +172,40 @@ Electronのアプリが起動すれば成功。
     - package.json
 1. コピー先で `npm install` を実行する。
 1. 動作確認を実施する。
+
+## 開発メモ
+### ローカルの画像表示
+- public フォルダに画像ファイルを置いた場合
+    - `${process.env.PUBLIC_URL}` を使用する
+
+    ```JavaScript
+    function PictureChange(props) {
+        const pic1 = "/pict/amiya.png";
+        const pic2 = "/pict/W_05.png";
+        let picPath = props.flg ? pic1 : pic2;
+
+        return (
+            <img src={`${process.env.PUBLIC_URL}` + picPath} alt="絵" height="320" />
+        );
+    }
+    ```
+
+- src フォルダに画像ファイルを置いた場合
+    - import を使用するのが公式のやり方
+
+    ```JavaScript
+    import pic1 from "./pict/amiya.png";
+    import pic2 from "./pict/W_05.png";
+
+    // 表示
+    function PictureChange(props) {
+        let picPath = props.flg ? pic1 : pic2;
+
+        return (
+            <img src={picPath} alt="絵" height="320" />
+        );
+    }
+    ```
 
 
 ## HP
