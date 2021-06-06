@@ -1,3 +1,20 @@
+# Termuxのインストール方法
+Google Playでの更新は終了しており、配布はF-Doroidというサイトから行われている。\
+F-Doroidは全てオープンソースライセンスのものを取り扱っているとのことで、セキュリティはそこそこありそう。\
+
+## 配布先
+[Termux | F-Droid - Free and Open Source Android App Repository](https://f-droid.org/en/packages/com.termux/)
+
+※タイムアウトになるぐらいサイトが重い。タイムアウトになったら再試行を実施する。
+
+### Google Play版からの移行方法
+[Backing up Termux](https://wiki.termux.com/wiki/Backing_up_Termux)
+
+## インストール
+1. 配布サイトからダウンロードした apkファイル を Files などのアプリから実行する。
+1. セキュリティに関する警告が表示されるので許可を与える。
+
+
 # Termuxの設定方法
 
 ## パッケージ一覧
@@ -141,9 +158,10 @@ $ mkdir ~/.termux
 $ touch ~/.termux/termux.properties
 ```
 
-"extra-keys" から始まる2行のコメントアウトを削除し、使いやすいように値を編集する。
+"extra-keys" から始まる行のコメントアウトを削除し、使いやすいように値を編集する。\
+　→ Default と Two rows がある
 
-例）
+例）Two rows
 ```
 extra-keys = [['ESC','TAB','-','HOME','UP','END','PGUP','DEL'], \
               ['CTRL','ALT','/','LEFT','DOWN','RIGHT','PGDN',':']]
