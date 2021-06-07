@@ -1,9 +1,9 @@
 # Termuxのインストール方法
 Google Playでの更新は終了しており、配布はF-Doroidというサイトから行われている。\
-F-Doroidは全てオープンソースライセンスのものを取り扱っているとのことで、セキュリティはそこそこありそう。\
+F-Doroidは全てオープンソースライセンスのものを取り扱っているとのことで、セキュリティはそこそこありそう。
 
 ## 配布先
-[Termux | F-Droid - Free and Open Source Android App Repository](https://f-droid.org/en/packages/com.termux/)
+[Termux | F-Droid - Free and Open Source Android App Repository](https://f-droid.org/packages/com.termux/)
 
 ※タイムアウトになるぐらいサイトが重い。タイムアウトになったら再試行を実施する。
 
@@ -13,6 +13,8 @@ F-Doroidは全てオープンソースライセンスのものを取り扱って
 ## インストール
 1. 配布サイトからダウンロードした apkファイル を Files などのアプリから実行する。
 1. セキュリティに関する警告が表示されるので許可を与える。
+1. インストールが終わったらアプリ一覧から Termux を実行する。
+  - デスクトップに自動でショートカットが作られない 
 
 
 # Termuxの設定方法
@@ -78,7 +80,11 @@ npm と npx のバージョンは 6.14.10
 - make
 
 ビルドツールもあったので C/C++開発も可能。\
-"build-essential" でこれらや Clang をまとめて追加できる。
+以下のコマンドで Clang などの開発ツールをまとめて追加できる。
+
+```
+$ apt install -y build-essential"
+```
 
 
 ## 内部ストレージにアクセス
@@ -94,6 +100,7 @@ storage というディレクトリができ、ここから以下のフォルダ
 - external-1
   - SDカードの "/storage/[SD Card ID]/Android/data/com.termux/files" のリンクとなる。
   - SDカードのルートや他のディレクトリにはアクセスできない。
+  - アプリをアンインストールすると消えてしまうので注意！
 - movies
 - music
 - pictures
@@ -172,7 +179,17 @@ extra-keys = [['ESC','TAB','-','HOME','UP','END','PGUP','DEL'], \
 $ termux-reload-settings
 ```
 
+## Termux のバックアップ
+[ここのページ](https://wiki.termux.com/wiki/Backing_up_Termux)に書かれている内容を実施する。\
+Back up files の保存先は Android ストレージのディレクトリを指定してください。
+
+例)SDカードがない場合
+```
+$ tar -zcf ~/storage/downloads/termux-backup.tar.gz home usr 
+```
+
+
 ## 参考URL
 - [スマフォで始めるWebアプリ開発](https://zenn.dev/endo_hizumi/articles/887826624e04806ed9a2)
 - [Termuxの意外と知らない日本語入力方法、特殊キータブの項目を増やす小技](https://qiita.com/gnuhead/items/3734a9dbf1146b59f12d)
-
+- [Termux Wiki](https://wiki.termux.com/wiki/Main_Page)
