@@ -170,8 +170,12 @@ Electronのアプリが起動すれば成功。
     - .gitignore
     - package-lock.json
     - package.json
-1. コピー先で `npm install` を実行する。
+1. コピー先で `npm ci` を実行する。
 1. 動作確認を実施する。
+
+### 補足 
+`npm install` では "package.json" を書き換えてしまう場合があるため、クリーンインストールを実行する。\
+ただし。"pakage.json" と "package-lock.json" の環境が一致していないとクリーンインストールできない。
 
 ## 開発メモ
 ### ローカルの画像表示
