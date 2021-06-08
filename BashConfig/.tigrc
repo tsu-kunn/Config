@@ -5,9 +5,38 @@ set main-view = id date author commit-title:graph=yes,refs=yes
 set blob-view-line-number = yes
 set blame-view-line-number = yes
 
+# utf-8 文字で画面描画する (~でトグル)
+set line-graphics = utf-8
+
 # タブ
 set tab-size = 4
 
 # マージ diff を表示
 set diff-options = -m --first-parent
+
+# '+行数' の形で Editor に行番号を引数として渡すか
+set editor-line-number = yes
+
+
+### Git command
+# B: checkout -b
+bind branch  B      ?git checkout -b "%(prompt Enter new branch name:)" %(branch)
+bind main    B      ?git checkout -b "%(prompt Enter new branch name: )"
+
+# U: pull
+bind main    U      ?git pull %(remote)
+
+# P: push remote
+bind main    P      ?git push -u %(remote) %(repo:head)
+bind refs    P      ?git push -u origin %(branch)
+
+# ^: reset --soft
+bind main    ^      ?git reset --soft HEAD^
+
+# H: reset --hard
+bind main    H      ?git reset --hard %(commit)
+
+### etc command
+# commitハッシュをコピー
+bind generic y      @sh -c "echo %(commit) | pbcopy"
 
