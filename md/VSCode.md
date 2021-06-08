@@ -137,16 +137,160 @@ $ rm -rf ~/tmp
 - CとC++の標準規格の指定
 
 #### tasks.json の作成
-##### makefile を使用してビルド
+「Terminal > Configure Tasks...」から `C/C++: gcc アクティブなファイルのビルド` を選択し、下記の内容に書き換える。\
+現在表示しているソースファイルをビルドする設定。
 
-～作成中～
+```json
+{
+    "type": "cppbuild",
+    "label": "C/C++: gcc アクティブなファイルのビルド",
+    "command": "/usr/bin/gcc",
+    "args": [
+        "-std=c11",
+        "-Wall",。。
+        "-fexceptions",
+        "-Wuninitialized",
+        "-g",
+        "-I./include",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}"
+    ],
+    "options": {
+        "cwd": "${workspaceFolder}"
+    },
+    "problemMatcher": [
+        "$gcc"
+    ],
+    "group": {
+        "kind": "build",
+        "isDefault": true
+    },
+    "detail": "デバッガーによって生成されたタスク。"
+},
+```
+
+- label
+  - タスク名。"launch.json" で指定する場合に使われるので、わかりやすい名前にする。
+- args
+  - コンパイルの際に使用する引数やパラメーターを指定する。
+- detail
+  - 詳細説明。任意に編集する。
+
+
+##### makefile を使用してビルド
+"tasks.json" に下記のmakeビルドの設定を追加する。
+
+```json
+{
+    "label": "Makefile",
+    "type": "shell",
+    "command":"make",
+    "args": [],
+    "group": "build"
+}
+```
+
+- label
+  - タスク名。"launch.json" で指定する場合に使われるので、わかりやすい名前にする。
+- type
+  - シェルを指定する。（シェルから make を実施するため）
+- command
+  - シェルで実行するコマンド。
+- args
+  - make に渡すパラメーターがある場合記載。（例: NDEBUG=TRUE など）
+- group 
+  - build グループに設定する。
 
 
 #### launch.json の作成
+「Run > Add Configuration...」から `C/C++: (gdb) 起動` を選択し、以下の内容に書き換える。
+
+```json
+{
+    "name": "gcc - アクティブ ファイルのビルドとデバッグ",
+    "type": "cppdbg",
+    "request": "launch",
+    "program": "${fileDirname}/${fileBasenameNoExtension}",
+    "args": [],
+    "stopAtEntry": false,
+    "cwd": "${workspaceFolder}",
+    "environment": [],
+    "externalConsole": false,
+    "MIMode": "gdb",
+    "setupCommands": [
+        {
+            "description": "gdb の再フォーマットを有効にする",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+        }
+    ],
+    "preLaunchTask": "C/C++: gcc アクティブなファイルのビルド",
+    "miDebuggerPath": "/usr/bin/gdb"
+},
+```
+
+- name
+  - "Run and Debug" に表示される名前。分かりやすい名前に変更する。
+- args
+  - 実行ファイルに渡すパラメーターがあれば設定する。
+- preLaunchTask
+  - デバッグをする前に実行するタスクを設定する。
+    - ここでは前に作成したタスクの label値 を指定。
+
 ##### makefile を使用してのデバッグ
+"launch.json" に下記のmakeビルドの設定を追加する。
 
-～作成中～
+```json
+{
+    "name": "blankcut make buid",
+    "type": "cppdbg",
+    "request": "launch",
+    "program": "${workspaceRoot}/blankcut",
+    "args": [
+        "-w",
+        "128",
+        "-h",
+        "128",
+        "-g",
+        "-t",
+        "./pict/sample_256.bmp",
+        "./output/sample_256.blc"
+    ],
+    "stopAtEntry": false,
+    "cwd": "${workspaceFolder}",
+    "environment": [],
+    "externalConsole": false,
+    "MIMode": "gdb",
+    "setupCommands": [
+        {
+            "description": "gdb の再フォーマットを有効にする",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+        }
+    ],
+    "preLaunchTask": "Makefile",
+    "miDebuggerPath": "/usr/bin/gdb"
+}
+```
 
+- name
+  - "Run and Debug" に表示される名前。分かりやすい名前に変更する。
+- args
+  - 実行ファイルに渡すパラメーターがあれば設定する。
+- preLaunchTask
+  - make実行のタスクを指定する。
+    - ここでは前に作成したタスクの label値 を指定。
+
+#### デバッグ開始
+デバッグタブ（Run and Debug）の上部（▶）のリストから、"launch.json" に追加した名前を選択する。\
+▶アイコンかF5キーを押下すればデバッグが開始される。
+
+#### デバッグの終了
+以下のいずれかを実行する。
+
+- デバッグコントロールの□ボタンを押下
+- "Shift-F5" キーを押下
 
 ### React
 #### task.json の作成
