@@ -16,6 +16,8 @@ F-Doroidは全てオープンソースライセンスのものを取り扱って
 1. インストールが終わったらアプリ一覧から Termux を実行する。
   - デスクトップに自動でショートカットが作られない 
 
+※公式サイトでは F-Droid のアプリからインストールすることを推奨している。
+
 
 # Termuxの設定方法
 
@@ -66,6 +68,7 @@ npm と npx のバージョンは 6.14.10
 
 ### 開発言語
 - clang
+- golang
 - perl
 - php
 - python
@@ -155,16 +158,19 @@ Chrome か Firefox で http://localhost:8080 にアクセス。
 ## 日本語入力
 1. ソフトウェアキーボードの上に表示される ESC などが書かれた特殊キーエリアを左にスワイプする。
 1. 空欄が表示され、日本語入力モードになり、日本語が入力可能となる。
+    -  Bluetoothキーボードでも同様の方法で日本語入力が可能になる
 
 ※Vim など、日本語入力を受け付ける画面でないと正常に表示されない。
 
-## 特殊キーエリアの編集
-### 1. extra-keys の設定
+## Termux の設定
+設定ファイルの作成。
+
 ```
 $ mkdir ~/.termux
 $ touch ~/.termux/termux.properties
 ```
 
+### 特殊キーエリアの編集
 "extra-keys" から始まる行のコメントアウトを削除し、使いやすいように値を編集する。\
 　→ Default と Two rows がある
 
@@ -174,7 +180,31 @@ extra-keys = [['ESC','TAB','-','HOME','UP','END','PGUP','DEL'], \
               ['CTRL','ALT','/','LEFT','DOWN','RIGHT','PGDN',':']]
 ```
 
-### 2. 設定の反映
+### ターミナルセッションのショートカットキー
+これを有効にすると screen などの仮想端末を入れなくても、複数のターミナルセッションを利用できる。\
+SSH で外部から接続することがあるなら仮想端末を利用する方がよい。
+
+例) `ctrl + t` は Bash のショートカットキーと被るので変更している。
+```
+# Open a new terminal with ctrl + t (volume down + t)
+shortcut.create-session = ctrl + 1
+
+# Go one session down with (for example) ctrl + 2
+shortcut.next-session = ctrl + 2
+
+# Go one session up with (for example) ctrl + 1
+shortcut.previous-session = ctrl + 3
+```
+
+### フルスクリーンモード
+v0.107 で追加された機能だけど、すべての端末で動作するとは限らない。（まだ不安定）
+
+```
+fullscreen = true
+use-fullscreen-workaround = true
+```
+
+### 設定の反映
 ```
 $ termux-reload-settings
 ```
