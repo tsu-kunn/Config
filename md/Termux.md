@@ -7,8 +7,14 @@ F-Doroidは全てオープンソースライセンスのものを取り扱って
 
 ※タイムアウトになるぐらいサイトが重い。タイムアウトになったら再試行を実施する。
 
-### Google Play版からの移行方法
-[Backing up Termux](https://wiki.termux.com/wiki/Backing_up_Termux)
+### Google Play版からの移行方法（Termux のバックアップ）
+[Backing up Termux](https://wiki.termux.com/wiki/Backing_up_Termux) に書かれている内容を実施する。\
+Back up files の保存先は Android ストレージのディレクトリを指定してください。（Termuxアンインストールで消えてしまうため）
+
+例)SDカードがない場合
+```
+$ tar -zcf ~/storage/downloads/termux-backup.tar.gz home usr 
+```
 
 ## インストール
 1. 配布サイトからダウンロードした apkファイル を Files などのアプリから実行する。
@@ -102,7 +108,7 @@ storage というディレクトリができ、ここから以下のフォルダ
 - downloads
 - external-1
   - SDカードの "/storage/[SD Card ID]/Android/data/com.termux/files" のリンクとなる。
-  - SDカードのルートや他のディレクトリにはアクセスできない。
+  - ~~SDカードのルートや他のディレクトリにはアクセスできない。~~ → "/sdcard/" でアクセス可能でした。
   - アプリをアンインストールすると消えてしまうので注意！
 - movies
 - music
@@ -207,15 +213,6 @@ use-fullscreen-workaround = true
 ### 設定の反映
 ```
 $ termux-reload-settings
-```
-
-## Termux のバックアップ
-[ここのページ](https://wiki.termux.com/wiki/Backing_up_Termux)に書かれている内容を実施する。\
-Back up files の保存先は Android ストレージのディレクトリを指定してください。
-
-例)SDカードがない場合
-```
-$ tar -zcf ~/storage/downloads/termux-backup.tar.gz home usr 
 ```
 
 
