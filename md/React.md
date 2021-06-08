@@ -211,6 +211,28 @@ Electronのアプリが起動すれば成功。
     }
     ```
 
+### デバッグ
+#### Chrome拡張機能
+[React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) をインストールする。
+
+##### Reactアイコンの色
+- 青
+  - Reactが使われているページ(リリース)で、デバッグ不可。
+- 赤
+  - Reactが使われているページ(デバッグ)で、デバッグ可能。
+
+##### デバッグ方法
+1. Reactアイコンが赤のページで、デベロッパーツールを表示する。
+1. 上部メニューから Components を選択する。
+1. デバッグしたいコンポーネントを選択し、"< >"アイコンをクリックする。
+1. デバッグしたい行数をクリックし、ブレークポイントを設定する。
+
+以後デベロッパーツールでのデバッグとなる。
+
+#### VSCode
+"task.json" と "launch.json" を作成してデバッグ設定を行う。\
+詳しくは [VSCode.md](https://github.com/tsu-kunn/Config/blob/master/md/VSCode.md) の「ビルド&デバッグ設定」を参照する。
+
 
 ## HP
 - [React](https://ja.reactjs.org/)

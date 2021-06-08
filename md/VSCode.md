@@ -122,6 +122,112 @@ $ cd ~/
 $ rm -rf ~/tmp
 ```
 
+## ビルド&デバッグ設定
+### C/C++
+
+～作成中～
+
+
+### React
+#### task.json の作成
+「Terminal > Configure Tasks...」から `npm: start` を選択し、下記の内容に書き換える。
+
+```json
+{
+  "type": "npm",
+  "script": "start",
+  "path": "react/my-app/",
+  "label": "npm: start",
+  "detail": "react-scripts start",
+  "isBackground": true,
+  "group": {
+    "kind": "test",
+    "isDefault": true
+  },
+  "problemMatcher": {
+    "owner": "custom",
+    "pattern": {
+      "regexp": "ˆ$"
+    },
+    "background": {
+      "activeOnStart": true,
+      "beginsPattern": "Compiling...",
+      "endsPattern": "Compiled .*"
+    }
+  }
+}
+```
+
+- path
+  - npm を実行する場所。workspaceFolder 直下ではない場合追加される。
+- label
+  - タスク名。"launch.json" で指定する場合に使われるので、わかりやすい名前にする。
+- detail
+  - 詳細説明。任意に変更する。
+- problemMatcher
+  - エラー発生時にVSCodeに渡されるメッセージフォーマットを指定する。
+    - 既存のものを指定する場合は `"problemMatcher": [$tsc]` のような形式になる。
+  - 任意のメッセージを指定する場合は上記のような記載となる。
+    - Reactが実行完了になるまで待つように指定
+
+##### 補足
+`npm start` で自動的にブラウザが起動するが、デバッグで使うブラウザではないので、
+非表示にしたい場合は、以下の内容の ".env" ファイルを npm 実行フォルダに作成する。
+
+```
+BROWSER=none
+```
+
+#### launch.json の作成
+「Run > Add Configuration...」から `{} Chrome: Launch` を選択し、以下の内容に書き換える。
+
+```json
+{
+    "name": "React Debug",
+    "request": "launch",
+    "type": "pwa-chrome",
+    "preLaunchTask": "npm: start",
+    "url": "http://localhost:3000",
+    "webRoot": "${workspaceFolder}/react/my-app",
+    "sourceMaps": true,
+    "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${webRoot}/node_modules/*",
+        "webpack://?:*/*": "${webRoot}/*",
+        "webpack:///./*": "${webRoot}/src/*"
+    }
+},
+```
+
+- name
+  - "Run and Debug" に表示される名前。分かりやすい名前に変更する。
+- preLaunchTask
+  - デバッグをする前に実行するタスクを設定する。
+    - ここでは前に作成したタスクの label値 を指定。
+- webRoot
+  - URLのルートとなるフォルダパスを設定する。
+    - workspaceFolder 直下ではない場合はパスを追加する。
+- sourceMapPathOverrides
+  - `${workspaceFolder}` を `${webRoot}` に置き換える。
+
+#### デバッグ開始
+デバッグタブ（Run and Debug）の上部（▶）のリストから、"launch.json" に追加した名前を選択する。\
+▶アイコンかF5キーを押下すればデバッグが開始される。
+
+#### デバッグの終了
+以下のいずれかを実行する。
+
+- ブラウザを閉じる
+- デバッグコントロールの□ボタンを押下
+- "Shift-F5" キーを押下
+
+引き続きデバッグを行う場合は、タスクは実行したままにする。（デバッグ開始の時間が短縮できる）
+
+#### タスクの終了
+以下のいずれかを実行する。
+
+- ターミナルウィンドウで "Ctr + c" を押下
+- ターミナルウィンドウのごみ箱アイコンを押下
+
 
 ## 参考
 - [Visual Studio Code](https://code.visualstudio.com/)
