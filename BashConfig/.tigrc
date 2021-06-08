@@ -6,7 +6,7 @@ set blob-view-line-number = yes
 set blame-view-line-number = yes
 
 # utf-8 文字で画面描画する (~でトグル)
-set line-graphics = utf-8
+#set line-graphics = utf-8
 
 # タブ
 set tab-size = 4
