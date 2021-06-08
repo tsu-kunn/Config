@@ -124,6 +124,26 @@ $ rm -rf ~/tmp
 
 ## ビルド&デバッグ設定
 ### C/C++
+#### c_cpp_properties.json の作成
+"Ctrl + Shift + P" から "C/C++: Edit Configurations (UI)" を選択する。\
+これらの設定はビルドやインテリセンスの候補に使用される。
+
+- 使用するコンパイラの設定
+  - コンパイラのパス
+  - コンパイラへの引数
+  - IntelliSense モード
+- プロジェクトに追加する include ディレクトリの追加
+- プロジェクトで使用するビルド用定義(define)の追加
+- CとC++の標準規格の指定
+
+#### tasks.json の作成
+##### makefile を使用してビルド
+
+～作成中～
+
+
+#### launch.json の作成
+##### makefile を使用してのデバッグ
 
 ～作成中～
 
