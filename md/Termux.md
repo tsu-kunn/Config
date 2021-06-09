@@ -215,6 +215,22 @@ use-fullscreen-workaround = true
 $ termux-reload-settings
 ```
 
+## フォントの変更
+`~/.termux/` に `font.ttf` を配置して、Termuxを再起動すると反映される。\
+フォントサイズは `Ctrl + Alt + (+/-)` かピンチ操作で変更できます。\
+変更したサイズは保存されているらしく、再起動しても保持されていました。
+
+例) Myrica に変更
+```bash
+$ mkdir ~/tmp
+$ cd ~/tmp
+$ wget https://github.com/tomokuni/Myrica/raw/master/product/Myrica.zip
+$ unzip Myrica.zip
+$ mv Myrica.TTC ~/.termux/font.ttf
+$ termux-reload-settings
+$ cd ~/
+$ rm -rf ~/tmp
+```
 
 ## 参考URL
 - [スマフォで始めるWebアプリ開発](https://zenn.dev/endo_hizumi/articles/887826624e04806ed9a2)
