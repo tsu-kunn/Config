@@ -47,7 +47,7 @@ function baktar()
 		printf "\n"
 	else
 		FNAME=$(basename $1)"_${DATA}.tar.gz"
-		tar cvzf $FNAME $1
+		tar cvzf $FNAME $1 $2 $3 $4
 	fi
 }
 
