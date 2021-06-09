@@ -38,5 +38,10 @@ bind main    H      ?git reset --hard %(commit)
 
 ### etc command
 # commitハッシュをコピー
-bind generic y      @sh -c "echo %(commit) | pbcopy"
+# Windows
+bind generic y      @sh -c "echo %(commit) | clip"
+# macOS
+#bind generic y      @sh -c "echo %(commit) | pbcopy"
+# Linux(sudo apt install xsel)"
+#bind generic y      @sh -c "echo %(commit) | xsel -bi"
 
