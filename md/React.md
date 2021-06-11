@@ -211,6 +211,46 @@ Electronのアプリが起動すれば成功。
     }
     ```
 
+### Styleの動的設定
+動的にCSSを設定する場合は、HTMLタグの style を使って設定する。\
+優先順位は `CSSファイル > style` になるっぽい。
+
+- 直接設定
+  ```JavaScript
+  let msgPadd = msg === null ? 'rgba(222, 219, 202, 0.0)' : 'rgba(222, 219, 202, 0.85)';
+  let rmsgPadd = props.reactMsg === null ? 'rgba(222, 219, 202, 0.0)' : 'rgba(222, 219, 202, 0.85)';
+
+  return (
+      <React.Fragment>
+          <div className="message" style={{ backgroundColor: msgPadd }}>
+              <label>{msg}</label>
+          </div>
+          <div className="react-message" style={{ backgroundColor: rmsgPadd }}>
+              <label>{props.reactMsg}</label>
+          </div>
+      </React.Fragment>
+  );
+  ```
+- 変数で設定（複数を設定する場合）
+  ```JavaScript
+  changeApptimeStyle(bgColor) {
+      let chgStyle = {
+          backgroundColor: bgColor
+      }
+
+      this.setState({
+          apptimeStyle: chgStyle
+      })
+  }
+
+  render() {
+    return (
+      <div className="app-time" style={this.state.apptimeStyle} />
+    );
+  }
+  ```
+
+
 ### デバッグ
 #### Chrome拡張機能
 [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) をインストールする。
