@@ -233,6 +233,22 @@ Electronのアプリが起動すれば成功。
 "task.json" と "launch.json" を作成してデバッグ設定を行う。\
 詳しくは [VSCode.md](https://github.com/tsu-kunn/Config/blob/master/md/VSCode.md) の「ビルド&デバッグ設定」を参照する。
 
+##### Electron
+「Run > Add Configuration...」から `Node.js: Electron Main` を選択。
+
+
+### Webフォント
+Reactで使う分には <link href> で問題ない。\
+Electronで使う場合は選択することになる。
+
+- ローカルに保存（CSS の `@font-face` で `src: url('./font/FONTNAME);` を指定）
+  - オフライン想定はこの方法しかない
+  - リポジトリやアプリサイズが大きくなる＆ライセンス問題が発生
+- レンダラープロセスのHTMLのheadに `<link href='URL'>` を記載
+  - 起動時に毎回ネット接続が必要
+- CSS の先頭で `@import url('URL');`
+  - 1回目はネットにつながないといけないが、２回目以降はキャッシュが使われる...らしい（一番ベター）
+
 
 ## HP
 - [React](https://ja.reactjs.org/)
@@ -241,5 +257,8 @@ Electronのアプリが起動すれば成功。
 - JavaScript
   - [JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript)
   - [JavaScript Primer](https://jsprimer.net/)
+- Web Font
+  - [Google Fonts](https://fonts.google.com/)
 - 参考
   - [React アプリを Electron でデスクトップアプリ化する](https://absarcs.info/how-to/turning-react-apps-into-desktop-apps-with-electron/)
+  - [ElectronでのWebフォントのキャッシュについて](https://qiita.com/pochman/items/22343e771528119dc7f6)
