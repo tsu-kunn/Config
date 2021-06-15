@@ -69,6 +69,18 @@ $ npm start
 
 ※実行停止は Ctrl+c 
 
+## Reat App (PWA) のインストール
+`service-worker.js` が標準でインストールされなくなったので、以下のテンプレートを指定する。
+
+```
+$ npx create-react-app pwaclock --template cra-template-pwa
+```
+
+index.js の末尾の関数を `unregister` から `register` に書き換える。
+```
+serviceWorkerRegistration.register(); 
+```
+
 
 ## Electron のインストール
 React App で作成されたディレクトリ内で下記を実行。（例では my-app ディレクトリ）
@@ -117,6 +129,9 @@ app.on('window-all-closed', () ={
 
 ### package.json の編集
 package.json に以下の項目を追加する。
+
+- homepage
+  -  これを設定しておかないと build で作成した場合に正常に表示されない。
 
 ```json
   "name": "my-app",
@@ -293,6 +308,7 @@ Electronで使う場合は選択することになる。
 ## HP
 - [React](https://ja.reactjs.org/)
   - [Create React App](https://create-react-app.dev/)
+  - [Making a Progressive Web App](https://create-react-app.dev/docs/making-a-progressive-web-app/)
 - [Electron](https://www.electronjs.org/)
 - JavaScript
   - [JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript)
