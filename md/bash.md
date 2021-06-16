@@ -59,6 +59,7 @@
 
 # PATH
 export LANG=ja_JP.UTF-8
+export PROMPT_DIRTRIM=3
 export PATH=$PATH:"${HOME}/bin":
 
 # history
@@ -103,8 +104,8 @@ function baktar()
 		printf "  directory name\n"
 		printf "\n"
 	else
-		FNAME=$(basename $1)"_${DATA}.tar.gz"
-		tar cvzf $FNAME $1
+		FNAME=$(basename "$1")"_${DATA}.tar.gz"
+		tar cvzf "$FNAME" "$@"
 	fi
 }
 
@@ -164,13 +165,143 @@ Linuxではデフォルト確認なしのため、誤操作防止でお勧めす
   - 00　装飾（0: none, 1: bold, 3: italic, 4: under line）
   - 32m　文字色（0: none, 30: 黒, 31: 赤, 32: 緑, 33: 黄, 34: 青, 35: 紫, 36: 水, 37: 灰）
 
+### ディレクトリ階層数の制御
+Bash 4.0以上であれば `PROMPT_DIRTRIM` を使って w/W のディレクトリ階層数を制御できます。
+
+例) export PROMPT_DIRTRIM=3
+```bash
+hoge@EEC-M14708:.../projects/GitHub/appClock $
+```
+
 ## メモ
 - シェルスクリプト内では `~/` は使えないので ${HOME} を使用する
 - シェルスクリプト実行する際は、`. ` を頭に追加する
 - 何も操作を受け付けなくなったら 'Ctrl-q' を押下する
   - それでもダメならターミナルが固まった疑惑
+- bashのバージョン確認
+  - '$ bash --version`
+
+## 計算
+`$((...)) で囲うと計算になる。
+
+例)
+```bash
+$ echo $((5 + 10))
+15
+```
+
+# シェルスクリプト
+
+## 特殊変数
+- $0: シュルスクリプト名
+- $*: "$1 $2 $3 ..." という1つの引数として受け取る
+- $@: "$1" "$2" "$3" ... と複数の引数として受け取る
+- $#: 引数の数
+- $?: 直前に実行したコマンドの終了ステータス(0:true 0以外:false)
+
+### 補足
+引数を受け取る際は "$0", "$1" "$@" というように、"..." で囲むのが安全。\
+引数に * など制御文字が入っていた場合や、空白を含む名前の場合は展開されてしまい、意図しない動作になる恐れがあります。
+
+例) 引数と変数を "..." で囲み、空白を含む名前に対応
+```bash
+FNAME=$(basename "$1")"_${DATA}.tar.gz"
+tar cvzf "$FNAME" "$@"
+```
+
+## 配列
+```bash
+arry=(1 2 3 4)
+
+# 参照
+echo ${arry[0]}
+echo ${arry[3]}
+
+# すべての要素
+echo ${arry[@]}
+
+# 要素数
+echo ${#a[@]}
+```
+
+## 命令
+### if
+```bash
+if [ 比較1 ]
+then
+  比較1が成の場合の処理
+elif [ 比較2 ]
+  比較2が成の場合の処理
+else
+  否の場合の処理
+fi
+```
+
+### case
+```bash
+case string in
+  expr1)
+    expr1が成の場合の処理
+    ;;
+  expr2)
+    expr2が成の場合の処理
+    ;;
+  *)
+    否の場合の処理
+    ;;
+esac
+```
+
+### for
+```bash
+for 変数 in リスト or コマンド
+do
+  処理
+done
+```
+
+### while
+``` bash
+while コマンド
+do
+  コマンドの返値が 0 の場合の処理
+done
+```
+
+### until
+``` bash
+until コマンド
+do
+  コマンドの返値が 0 以外の場合の処理
+done
+```
+
+## 比較
+### 文字列
+- s1 = s2  : 文字列s1 が文字列s2 と等しい
+- s1 != s2 : 文字列s1 が文字列s2 と等しくない
+
+### 数値
+- a -eq b : 数値a とb が等しい
+- a -ne b : 数値a が数値b と等しくない
+- a -gt b : 数値a が数値 b より大きい
+- a -ge b : 数値a が数値b 以上
+- a -lt b : 数値a が数値b より小さい
+- a -le b : 数値a が数値b 以下
+
+## 関数
+`function` は省略可能。
+
+```bash
+function hogeFunc() {
+    for i in "$@"
+    do
+        echo "[$i]"
+    done
+}
+```
 
 
 ## 参考
 - [ターミナルプロンプトの表示・色の変更](https://qiita.com/hmmrjn/items/60d2a64c9e5bf7c0fe60)
-
+- [とほほのBash入門](https://www.tohoho-web.com/ex/shell.html)
