@@ -181,6 +181,9 @@ hoge@EEC-M14708:.../projects/GitHub/appClock $
 - bashのバージョン確認
   - '$ bash --version`
 
+
+# シェルスクリプト
+
 ## 計算
 `$((...)) で囲うと計算になる。
 
@@ -190,7 +193,53 @@ $ echo $((5 + 10))
 15
 ```
 
-# シェルスクリプト
+### 変数で計算
+exprコマンドを使用する。
+
+例)
+```bash
+$ a=5
+$ b=10
+$ expr $a + $b
+15
+```
+
+## 変数
+### 設定
+= の間にスペースを入れない。\
+スペースを入れた場合は引数と判断される。
+
+```bash
+HOGE=10
+HOGE="Hello"
+```
+
+### 値を表示
+```bash
+echo $HOGE
+echo "$HOGE"
+echo ${HOGE}
+echo "${HOGE}"
+```
+
+※注意\
+　シングルコーテーションで囲んだ場合は変数が展開されず、変数名が表示される。
+```bash
+echo '$HOGE'
+$HOGE
+```
+
+### 値に追加
+```bash
+echo ${HOGE}3
+echo ${HOGE}" World"
+```
+
+### 結合表示
+```bash
+echo ${HOGE0}${HOGE1}
+```
+
 
 ## 特殊変数
 - $0: シュルスクリプト名
