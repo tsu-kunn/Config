@@ -2,6 +2,7 @@
 
 # PATH
 export LANG='ja_JP.UTF-8'
+export PROMPT_DIRTRIM=3
 export PATH=$PATH:"${HOME}/bin":
 
 # history
@@ -46,8 +47,8 @@ function baktar()
 		printf "  directory name\n"
 		printf "\n"
 	else
-		FNAME=$(basename $1)"_${DATA}.tar.gz"
-		tar cvzf $FNAME $1 $2 $3 $4
+		FNAME=$(basename "$1")"_${DATA}.tar.gz"
+		tar cvzf "$FNAME" "$@"
 	fi
 }
 
