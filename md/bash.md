@@ -170,7 +170,7 @@ Bash 4.0以上であれば `PROMPT_DIRTRIM` を使って w/W のディレクト�
 
 例) export PROMPT_DIRTRIM=3
 ```bash
-hoge@EEC-M14708:.../projects/GitHub/appClock $
+hoge@hoge-PC:.../projects/GitHub/appClock $
 ```
 
 ## メモ
