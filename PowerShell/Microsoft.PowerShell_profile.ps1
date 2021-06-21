@@ -10,12 +10,11 @@ Add-type -AssemblyName System.Web
 $ENV:PATH += ";C`:\files\bin"
 
 # alias
-Set-Alias -name xyz -Value "C:\Files\xyzzy\xyzzycli.exe"
+Set-Alias -name editer -Value "code"
 
 # variable
 $Projects = "c:\files\work\projects\"
 $Memo = "C:\Files\work\Memo"
-$Nippou = $Memo + "\日報"
 
 # function
 
@@ -26,10 +25,10 @@ $Nippou = $Memo + "\日報"
 	.DESCRIPTION
 	指定のエディタで、PowerShellのプロファイルを開きます。
 #>
-function edit_profile
+function Edit-Profile
 {
 #    notepad $profile
-    xyz $profile
+    editer $profile
 }
 
 <#
@@ -39,10 +38,10 @@ function edit_profile
 	.DESCRIPTION
 	指定のエディタで、PowerShellの履歴ファイルを開きます。
 #>
-function edit_history
+function Edit-History
 {
 #    notepad (Get-PSReadLineOption).HistorySavePath
-    xyz (Get-PSReadLineOption).HistorySavePath
+    editer (Get-PSReadLineOption).HistorySavePath
 }
 
 <#
@@ -55,7 +54,7 @@ function edit_history
 function goto_projects($proj)
 {
 	$path = $Projects + $proj
-    cd $path
+    Set-Location $path
 }
 
 <#
@@ -66,9 +65,9 @@ function goto_projects($proj)
 	指定のアプリケーションを管理者として実行します。
 	(Windows PowerShell専用)
 #>
-function Win-sudo($Program, $Argument)
+function win_sudo($Program, $Argument)
 {
-    if ($Argument -eq $null) {
+    if ($null -eq $Argument) {
         Start-Process $Program -Verb runas
     }
     else {
@@ -102,7 +101,7 @@ function Get-WindowsVersion
 	シェルの機能を使ってゴミ箱へ削除します。
 	(Windows PowerShell専用)
 #>
-function Trash-Item
+function Remove-ItemToTrash
 {
 	if ($args.length -eq 0) {
 		Write-Output "ごみ箱に捨てるファイルかフォルダを指定してください。"
@@ -165,8 +164,48 @@ function Copy-DateAndTime($opt = "None")
 	.NetFrameworkのAPIを使ってランダムなパスワードを生成します。
 	引数で長さを指定できます。
 #>
-function Generate-Password($len, $opt = 2)
+function New-Password($len, $opt = 2)
 {
 	[System.Web.Security.Membership]::GeneratePassword($len, $opt)
 }
 
+<#
+	.SYNOPSIS
+	Webヘルプの表示
+
+	.DESCRIPTION
+	指定コマンドのWebヘルプを表示します。
+#>
+function manweb {
+	Param(
+		[String] $Command = 'Get-Help'
+	)
+	Get-Help $Command -Online
+}
+
+<#
+	.SYNOPSIS
+	新規メモファイルを開く
+
+	.DESCRIPTION
+	指定のファイル名で新規メモファイルを開く。
+	指定がない場合は "yyyymmddhhmmss" で新規メモファイルを開く
+#>
+function memow
+{
+	$FNAME = $Memo + "\"
+
+	if ($args.length -eq 0) {
+		$FNAME += (Get-Date).ToString("yyyyMMddHHmmss")
+	} else {
+		$FNAME += $args[0]
+	}
+
+	Write-Output ([System.IO.Path]::GetExtension($FNAME))
+
+	if ([System.IO.Path]::GetExtension($FNAME) -eq "") {
+		$FNAME += ".md"
+	}
+
+	editer $FNAME
+}
