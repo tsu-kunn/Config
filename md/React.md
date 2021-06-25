@@ -192,6 +192,38 @@ Electronのアプリが起動すれば成功。
 `npm install` では "package.json" を書き換えてしまう場合があるため、クリーンインストールを実行する。\
 ただし。"pakage.json" と "package-lock.json" の環境が一致していないとクリーンインストールできない。
 
+## Redux
+状態の管理に Redux を使用する場合に実行する。
+
+Redux を使う場合とつかわない場合の違い
+- React単体の場合、Reactコンポーネント自身が個別に状態管理をする。
+- React+Reduxの場合、状態管理する専用の場所(ストア)で状態管理し、Reactコンポーネントはそれを映すだけに徹する。
+
+### インストール
+```
+$ npm install redux react-redux
+```
+
+### メモ
+- Reducer でやってはいけないこと
+  - 引数に手を加える
+  - 副作用を起こす　例）APIコールやページ遷移
+  - 純粋ではない(毎回値が変わる)関数を呼び出す　例）Data.now() や Math.random()
+- Reducer の return では、全ての state の値を返す必要がある
+  - 一部変更の場合
+  ```JavaScript
+  return {
+    ...state,
+    count0: state.count0 + 1,
+  };
+  ```
+
+
+### 参考HP
+- [Reac初心者でも読みば必ずわかるReactのRedux講座](https://reffect.co.jp/react/react-redux-for-beginner)
+- [Todoリスト作成を通してしっかり学ぶRedux](https://reffect.co.jp/react/react-redux-todo)
+
+
 ## 開発メモ
 ### ローカルの画像表示
 - public フォルダに画像ファイルを置いた場合
