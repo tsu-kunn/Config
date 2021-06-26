@@ -204,6 +204,24 @@ Redux を使う場合とつかわない場合の違い
 $ npm install redux react-redux
 ```
 
+### デバッグ
+#### 設定追加
+createStoreに `window.__....` を追加する。
+
+```JavaScript
+ const store = createStore(
+   reducer, /* preloadedState, */
++  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+ );
+```
+
+#### Chrome拡張をインストール
+[Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) をChromeにインストールする。
+
+#### 動作確認
+アプリを動作させた後に Redux DevTools のアイコンをクリックしてツールを起動する。\
+アプリを操作すると State や Action などを確認することができる。
+
 ### メモ
 - Reducer でやってはいけないこと
   - 引数に手を加える
@@ -222,6 +240,7 @@ $ npm install redux react-redux
 ### 参考HP
 - [Reac初心者でも読みば必ずわかるReactのRedux講座](https://reffect.co.jp/react/react-redux-for-beginner)
 - [Todoリスト作成を通してしっかり学ぶRedux](https://reffect.co.jp/react/react-redux-todo)
+- [reduxjs/redux-devtools](https://github.com/reduxjs/redux-devtools)
 
 
 ## 開発メモ
