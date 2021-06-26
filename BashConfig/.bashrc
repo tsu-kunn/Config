@@ -57,6 +57,7 @@ function baktar()
 alias la='ls -a'
 alias lla='ls -al'
 alias grep='grep --color=auto'
+alias diff='diff -u'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
