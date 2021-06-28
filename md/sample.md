@@ -86,6 +86,25 @@ normal ***bold*** normal
 
 [GitHub]: https://github.com/
 
+## 折り畳み
+<details>
+<summary>概要</summary>
+本文。  
+空白2つや"\"の改行は無効になるっぽい。
+
+[GitHubマイページ](https://github.com/tsu-kunn)
+
+```bash
+function wincmd()
+{
+    CMD=$1
+    shift
+    $CMD $* 2>&1 | iconv -f cp932 -t utf-8
+}
+```
+Qiitaと違ってGitHubはcode記述もいけるっぽい。
+</details>
+
 
 # GitHub Flavored Markdown(GFM)
 GitHubの独自仕様のMarkdown記法。  
