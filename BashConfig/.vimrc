@@ -65,8 +65,8 @@ set virtualedit=block
 "タブの画面上での幅
 set tabstop=4
 
-"タブをスペースに展開しない (expandtab:展開する)
-set noexpandtab
+"タブをスペースに展開 (noexpandtab:展開しない)
+set expandtab
 
 "シフト移動幅
 set shiftwidth=4
@@ -181,26 +181,3 @@ if &term =~ "xterm"
 
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
-
-"---------------------------------------------------------------
-" neocomplcacheの設定
-"---------------------------------------------------------------
-"let g:neocomplcache_enable_at_startup = 1
-"
-"function InsertTabWrapper()
-"	if pumvisible()
-"		return "\<c-n>"
-"	endif
-"	let col = col('.') - 1
-"	if !col || getline('.')[col - 1] !~ '\k\|<\|/'
-"		return "\<tab>"
-"	elseif exists('&omnifunc') && &omnifunc == ''
-"		return "\<c-n>"
-"	else
-"		return "\<c-x>\<c-o>"
-"	endif
-"endfunction
-"
-""inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-"inoremap <expr><C-x><C-f>  neocomplcache#manual_filename_complete()
-
