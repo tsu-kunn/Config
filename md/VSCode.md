@@ -147,7 +147,7 @@ $ rm -rf ~/tmp
     "command": "/usr/bin/gcc",
     "args": [
         "-std=c11",
-        "-Wall",。。
+        "-Wall",
         "-fexceptions",
         "-Wuninitialized",
         "-g",
