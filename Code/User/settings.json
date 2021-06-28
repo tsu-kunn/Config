@@ -147,12 +147,9 @@
 
     // VSCode自動設定
     "C_Cpp.updateChannel": "Insiders",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
     "gauge.recommendedSettings.options": "Apply & Reload"
 }
 
