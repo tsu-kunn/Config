@@ -80,7 +80,7 @@ setw -g mouse on
 set-option -g mouse on
 
 # コピーモードのキー操作をviライクにする
-#set-window-option -g mode-keys vi
+set-window-option -g mode-keys vi
 
 ```
 
