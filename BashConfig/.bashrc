@@ -20,15 +20,21 @@ function wincmd()
 
 function memow()
 {
-	NDIR="${HOME}/GitHub/Config/md/$1"
+	FN=$(date +"%Y%m")
+
+	if [ "$1" != "" ]; then
+		FN=$1
+	fi
+
+	NDIR="/C/Files/work/Memo/日報/$FN"
 	EXT=$(basename $NDIR)
 	EXT=${EXT##*.}
 
-	if [ "$1" = "$EXT" ]; then
+	if [ "$FN" = "$EXT" ]; then
 		NDIR="${NDIR}.txt"
 	fi
 
-	vim $NDIR
+	vim "$NDIR"
 }
 
 function baktar()
