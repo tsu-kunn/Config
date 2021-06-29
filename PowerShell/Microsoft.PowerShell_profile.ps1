@@ -189,14 +189,15 @@ function manweb {
 
 	.DESCRIPTION
 	指定のファイル名で新規メモファイルを開く。
-	指定がない場合は "yyyymmddhhmmss" で新規メモファイルを開く
+	指定がない場合は "yyyymmddhh" で新規メモファイルを開く
 #>
 function memow
 {
 	$FNAME = $Memo + "\"
 
 	if ($args.length -eq 0) {
-		$FNAME += (Get-Date).ToString("yyyyMMddHHmmss")
+		# $FNAME += (Get-Date).ToString("yyyyMMddHHmmss")
+		$FNAME += (Get-Date).ToString("yyyyMMddHH")
 	} else {
 		$FNAME += $args[0]
 	}
