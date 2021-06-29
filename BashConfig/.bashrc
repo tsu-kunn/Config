@@ -21,7 +21,7 @@ function wincmd()
 
 function memow()
 {
-	FN=$(date +"%Y%m")
+	FN=$(date +"%Y%m%d")
 
 	if [ "$1" != "" ]; then
 		FN=$1
