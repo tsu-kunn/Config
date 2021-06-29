@@ -202,8 +202,6 @@ function memow
 		$FNAME += $args[0]
 	}
 
-	Write-Output ([System.IO.Path]::GetExtension($FNAME))
-
 	if ([System.IO.Path]::GetExtension($FNAME) -eq "") {
 		$FNAME += ".md"
 	}
