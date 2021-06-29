@@ -83,7 +83,7 @@ function memow()
 		FN=$1
 	fi
 
-	NDIR="/C/Files/work/Memo/日報/$FN"
+	NDIR="${HOME}/GitHub/Config/md/$FN"
 	EXT=$(basename $NDIR)
 	EXT=${EXT##*.}
 
