@@ -65,6 +65,7 @@ export PATH=$PATH:"${HOME}/bin":
 # history
 export HISTSIZE=1000
 export HISTCONTROL=ignoredups
+PROMPT_COMMAND='history -a'
 
 # function
 # cmd output SJIS->UTF-8

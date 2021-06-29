@@ -8,6 +8,7 @@ export PATH=$PATH:"${HOME}/bin":
 # history
 export HISTSIZE=1000
 export HISTCONTROL=ignoredups
+PROMPT_COMMAND='history -a'
 
 # function
 # cmd output SJIS->UTF-8
@@ -82,4 +83,3 @@ export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\]:\w \$\[\e[00m\] '
 alias python='winpty python'
 alias docker='winpty docker'
 alias npm='winpty npm'
-
