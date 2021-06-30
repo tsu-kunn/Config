@@ -21,18 +21,18 @@ function wincmd()
 
 function memow()
 {
-	FN=$(date +"%Y%m%d")
+	FNAME=$(date +"%Y%m%d")
 
 	if [ "$1" != "" ]; then
-		FN=$1
+		FNAME=$1
 	fi
 
-	NDIR="${HOME}/GitHub/Config/md/$FN"
-	EXT=$(basename $NDIR)
-	EXT=${EXT##*.}
+	NDIR="${HOME}/GitHub/Config/md/$FNAME"
+	BNAME=$(basename $NDIR)
+	EXT=${BNAME##*.}
 
-	if [ "$FN" = "$EXT" ]; then
-		NDIR="${NDIR}.md"
+	if [ "$BNAME" = "$EXT" ]; then
+		NDIR="${NDIR}.txt"
 	fi
 
 	vim "$NDIR"
@@ -73,7 +73,7 @@ alias bashrc='source ~/.bashrc'
 alias bash_profile='source ~/.bash_profile'
 
 alias proj='. proj.sh'
-alias nip="memow $(date +"%Y%m")"
+alias nip="memow 日報/$(date +"%Y%m")"
 
 # prompt
 # \w full path \W current path
