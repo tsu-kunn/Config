@@ -32,7 +32,7 @@ function memow()
 	EXT=${BNAME##*.}
 
 	if [ "$BNAME" = "$EXT" ]; then
-		NDIR="${NDIR}.txt"
+		NDIR="${NDIR}.md"
 	fi
 
 	vim "$NDIR"
