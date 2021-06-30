@@ -95,7 +95,7 @@ function memow()
 	vim "$NDIR"
 }
 
-function baktar()
+function bakarc()
 {
 	# ファイル名設定
 	DATA=`date '+%Y%m%d_%k%M'`
