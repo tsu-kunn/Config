@@ -7,7 +7,7 @@
 Add-type -AssemblyName System.Web
 
 # path
-$ENV:PATH += ";C`:\files\bin"
+$ENV:PATH += ";C`:\files\bin;C:\Program Files\Git\usr\bin;"
 
 # alias
 Set-Alias -name editer -Value "code"
@@ -15,6 +15,13 @@ Set-Alias -name editer -Value "code"
 # variable
 $Projects = "c:\files\work\projects\"
 $Memo = "C:\Files\work\Memo"
+
+# bash風のtab補完
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
+
+# キーバインドをEmacs風に変更
+Set-PSReadLineOption -EditMode Emacs
+
 
 # function
 

@@ -2,6 +2,9 @@
 
 Windows PowerShell と PowerShell を使用する際のメモ。
 
+## スクリプト置き場
+[Config/PowerShell](https://github.com/tsu-kunn/Config/tree/master/PowerShell)
+
 ## メモ
 ### スクリプトの実行を有効にする
 管理者権限でPSを実行し、以下のコマンドレットを実行する必要がある。
@@ -13,6 +16,49 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 ### プロファイルの場所
 `$profile` に配置される。\
 自動で作成はされないので、手動で作成する必要がある。
+
+```PowerShell
+> new-item -path $profile -itemtype file -force
+```
+
+
+### Bash風の設定
+```PowerShell
+# bash風のtab補完
+Set-PSReadLineKeyHandler -Key Tab -Function Complete
+
+# キーバインドをEmacs風に変更
+Set-PSReadLineOption -EditMode Emacs
+```
+
+`-EditMode` には `Windows`, `Emacs`, `Vi` が設定できる。（default: Windows)
+
+#### 番外: コマンドプロンプトのVim
+- [Vim — KaoriYa](https://www.kaoriya.net/software/vim/)
+
+または環境変数に以下のパスを通す。
+
+```PowerShell
+> $env:Path += ";C:\Program Files\Git\usr\bin"
+```
+
+### シンボリックリンク
+管理者権限で起動する必要あり。
+
+#### コマンドプロンプト
+```
+> mklink リンク名 ターゲット名
+> mklink /D フォルダ名 ターゲットフォルダ名
+```
+
+#### PowerShell
+```PowerShell
+> New-Item -Value 'リンク名' -Path 'ターゲット名'  -ItemType SymbolicLink
+> New-Item -Value 'フォルダ名' -Path 'ターゲットフォルダ名'  -ItemType SymbolicLink
+```
+
+#### 補足
+`ItemType` には `Junction`, `HardLink` も設定することができる。
 
 
 ## Web
