@@ -1,5 +1,5 @@
 #
-# ŠÇ—ÒŒ ŒÀ‚ÅPS‚ğÀs‚µAˆÈ‰º‚ÌƒRƒ}ƒ“ƒhƒŒƒbƒg‚ğÀs‚·‚é•K—v‚ª‚ ‚éB
+# ç®¡ç†è€…æ¨©é™ã§PSã‚’å®Ÿè¡Œã—ã€ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ãƒ¬ãƒƒãƒˆã‚’å®Ÿè¡Œã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 # > Set-ExecutionPolicy RemoteSigned -Scope Process
 #
 
@@ -16,23 +16,39 @@ Set-Alias -name editer -Value "code"
 $Projects = "c:\files\work\projects\"
 $Memo = "C:\Files\work\Memo"
 
-# bash•—‚Ìtab•âŠ®
+# bashé¢¨ã®tabè£œå®Œ
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
 
-# ƒL[ƒoƒCƒ“ƒh‚ğEmacs•—‚É•ÏX
+# ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã‚’Emacsé¢¨ã«å¤‰æ›´
 Set-PSReadLineOption -EditMode Emacs
 
-# ƒr[ƒv‰¹‚ğƒIƒt
+# ãƒ“ãƒ¼ãƒ—éŸ³ã‚’ã‚ªãƒ•
 Set-PSReadlineOption -BellStyle None
+
 
 # function
 
 <#
 	.SYNOPSIS
-	PowerShell‚Ìƒvƒƒtƒ@ƒCƒ‹•ÒW
+	PowerShellã®ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆå¤‰æ›´
 
 	.DESCRIPTION
-	w’è‚ÌƒGƒfƒBƒ^‚ÅAPowerShell‚Ìƒvƒƒtƒ@ƒCƒ‹‚ğŠJ‚«‚Ü‚·B
+	ãƒ—ãƒ­ãƒ³ãƒ—ãƒˆã‚’Bashé¢¨ã«è¡¨ç¤ºã™ã‚‹ã€‚
+#>
+function prompt
+{
+	Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
+	Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
+	Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
+	return "> "
+}
+
+<#
+	.SYNOPSIS
+	PowerShellã®ãƒ—ãƒ­ãƒ•ã‚¡ã‚¤ãƒ«ç·¨é›†
+
+	.DESCRIPTION
+	æŒ‡å®šã®ã‚¨ãƒ‡ã‚£ã‚¿ã§ã€PowerShellã®ãƒ—ãƒ­ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¾ã™ã€‚
 #>
 function Edit-Profile
 {
@@ -42,10 +58,10 @@ function Edit-Profile
 
 <#
 	.SYNOPSIS
-	PowerShell‚Ì—š—ğƒtƒ@ƒCƒ‹•ÒW
+	PowerShellã®å±¥æ­´ãƒ•ã‚¡ã‚¤ãƒ«ç·¨é›†
 
 	.DESCRIPTION
-	w’è‚ÌƒGƒfƒBƒ^‚ÅAPowerShell‚Ì—š—ğƒtƒ@ƒCƒ‹‚ğŠJ‚«‚Ü‚·B
+	æŒ‡å®šã®ã‚¨ãƒ‡ã‚£ã‚¿ã§ã€PowerShellã®å±¥æ­´ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¾ã™ã€‚
 #>
 function Edit-History
 {
@@ -55,10 +71,10 @@ function Edit-History
 
 <#
 	.SYNOPSIS
-	projectsƒtƒHƒ‹ƒ_‚ÖˆÚ“®
+	projectsãƒ•ã‚©ãƒ«ãƒ€ã¸ç§»å‹•
 
 	.DESCRIPTION
-	Œ»İ‚ÌƒpƒX‚ğprojectsƒtƒHƒ‹ƒ_‚É•ÏX‚µ‚Ü‚·B
+	ç¾åœ¨ã®ãƒ‘ã‚¹ã‚’projectsãƒ•ã‚©ãƒ«ãƒ€ã«å¤‰æ›´ã—ã¾ã™ã€‚
 #>
 function goto_projects($proj)
 {
@@ -68,11 +84,11 @@ function goto_projects($proj)
 
 <#
 	.SYNOPSIS
-	ŠÇ—Ò‚Æ‚µ‚ÄÀs
+	ç®¡ç†è€…ã¨ã—ã¦å®Ÿè¡Œ
 
 	.DESCRIPTION
-	w’è‚ÌƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğŠÇ—Ò‚Æ‚µ‚ÄÀs‚µ‚Ü‚·B
-	(Windows PowerShellê—p)
+	æŒ‡å®šã®ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç®¡ç†è€…ã¨ã—ã¦å®Ÿè¡Œã—ã¾ã™ã€‚
+	(PowerShellå°‚ç”¨)
 #>
 function win_sudo($Program, $Argument)
 {
@@ -86,11 +102,11 @@ function win_sudo($Program, $Argument)
 
 <#
 	.SYNOPSIS
-	Windows‚Ìƒo[ƒWƒ‡ƒ“‚ÆOSƒrƒ‹ƒh‚ğæ“¾
+	Windowsã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¨OSãƒ“ãƒ«ãƒ‰ã‚’å–å¾—
 
 	.DESCRIPTION
-	ƒŒƒWƒXƒgƒŠ‚©‚ç•K—v‚Èî•ñ‚ğæ“¾‚µ‚Ü‚·B
-	(Windows PowerShellê—p)
+	ãƒ¬ã‚¸ã‚¹ãƒˆãƒªã‹ã‚‰å¿…è¦ãªæƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã€‚
+	(Windowså°‚ç”¨)
 #>
 function Get-WindowsVersion
 {
@@ -104,32 +120,32 @@ function Get-WindowsVersion
 
 <#
 	.SYNOPSIS
-	ƒSƒ~” ‚Éƒtƒ@ƒCƒ‹‚âƒtƒHƒ‹ƒ_‚ğíœ‚·‚é
+	ã‚´ãƒŸç®±ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‚„ãƒ•ã‚©ãƒ«ãƒ€ã‚’å‰Šé™¤ã™ã‚‹
 
 	.DESCRIPTION
-	ƒVƒFƒ‹‚Ì‹@”\‚ğg‚Á‚ÄƒSƒ~” ‚Öíœ‚µ‚Ü‚·B
-	(Windows PowerShellê—p)
+	ã‚·ã‚§ãƒ«ã®æ©Ÿèƒ½ã‚’ä½¿ã£ã¦ã‚´ãƒŸç®±ã¸å‰Šé™¤ã—ã¾ã™ã€‚
+	(Windowså°‚ç”¨)
 #>
 function Remove-ItemToTrash
 {
 	if ($args.length -eq 0) {
-		Write-Output "‚²‚İ” ‚ÉÌ‚Ä‚éƒtƒ@ƒCƒ‹‚©ƒtƒHƒ‹ƒ_‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B"
+		Write-Output "ã”ã¿ç®±ã«æ¨ã¦ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒ•ã‚©ãƒ«ãƒ€ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚"
 		return
 	}
 
 	$shell = new-object -comobject Shell.Application;
 
 	for ($i = 0; $i -lt $args.length; $i++) {
-		# w’èƒAƒCƒeƒ€‚Ì‘¶İŠm”F
+		# æŒ‡å®šã‚¢ã‚¤ãƒ†ãƒ ã®å­˜åœ¨ç¢ºèª
 		$isPath = Test-Path $args[$i]
 		if ($isPath -eq 0) {
-			$msg = $args[$i] + " ‚ª‘¶İ‚µ‚Ü‚¹‚ñB"
+			$msg = $args[$i] + " ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚"
 			Write-Output $msg
 			continue
 		}
 
-		# ‘Š‘ÎƒpƒX‚ğâ‘ÎƒpƒX‚É•ÏŠ·
-		# ƒƒCƒ‹ƒhƒJ[ƒh‚Ìê‡‚Í”z—ñ‚ª•Ô‚é‚Ì‚ÅA‚»‚êˆÈŠO‚Å‚à”z—ñ‚É‚È‚é‚æ‚¤‚É‚·‚é
+		# ç›¸å¯¾ãƒ‘ã‚¹ã‚’çµ¶å¯¾ãƒ‘ã‚¹ã«å¤‰æ›
+		# ãƒ¯ã‚¤ãƒ«ãƒ‰ã‚«ãƒ¼ãƒ‰ã®å ´åˆã¯é…åˆ—ãŒè¿”ã‚‹ã®ã§ã€ãã‚Œä»¥å¤–ã§ã‚‚é…åˆ—ã«ãªã‚‹ã‚ˆã†ã«ã™ã‚‹
 		$path = @((Resolve-Path $args[$i]).Path)
 
 		for ($j = 0; $j -lt $path.length; $j++) {
@@ -148,15 +164,15 @@ function Remove-ItemToTrash
 
 <#
 	.SYNOPSIS
-	Œ»İ‚Ì“ú‚ğƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[
+	ç¾åœ¨ã®æ—¥æ™‚ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼
 
 	.DESCRIPTION
-	Œ»İ‚Ì“ú‚ğƒNƒŠƒbƒvƒ{[ƒh‚ÉƒRƒs[‚µ‚Ü‚·B
-	"-q"‚Å•W€o—Í‚ğ—}§‚µ‚Ü‚·B
+	ç¾åœ¨ã®æ—¥æ™‚ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã™ã€‚
+	"-q"ã§æ¨™æº–å‡ºåŠ›ã‚’æŠ‘åˆ¶ã—ã¾ã™ã€‚
 #>
 function Copy-DateAndTime($opt = "None")
 {
-	$NowDateTime = (Get-Date).ToString("yyyy”NMMŒdd“ú(ddd) HH:mm")
+	$NowDateTime = (Get-Date).ToString("yyyyå¹´MMæœˆddæ—¥(ddd) HH:mm")
 
 	if ($opt -ne "-q") {
 		Write-Output $NowDateTime
@@ -167,11 +183,12 @@ function Copy-DateAndTime($opt = "None")
 
 <#
 	.SYNOPSIS
-	ƒ‰ƒ“ƒ_ƒ€‚ÈƒpƒXƒ[ƒhì¬
+	ãƒ©ãƒ³ãƒ€ãƒ ãªãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ä½œæˆ
 
 	.DESCRIPTION
-	.NetFramework‚ÌAPI‚ğg‚Á‚Äƒ‰ƒ“ƒ_ƒ€‚ÈƒpƒXƒ[ƒh‚ğ¶¬‚µ‚Ü‚·B
-	ˆø”‚Å’·‚³‚ğw’è‚Å‚«‚Ü‚·B
+	.NetFrameworkã®APIã‚’ä½¿ã£ã¦ãƒ©ãƒ³ãƒ€ãƒ ãªãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç”Ÿæˆã—ã¾ã™ã€‚
+	å¼•æ•°ã§é•·ã•ã‚’æŒ‡å®šã§ãã¾ã™ã€‚
+	(Windows PowerShellå°‚ç”¨)
 #>
 function New-Password($len, $opt = 2)
 {
@@ -180,10 +197,10 @@ function New-Password($len, $opt = 2)
 
 <#
 	.SYNOPSIS
-	Webƒwƒ‹ƒv‚Ì•\¦
+	Webãƒ˜ãƒ«ãƒ—ã®è¡¨ç¤º
 
 	.DESCRIPTION
-	w’èƒRƒ}ƒ“ƒh‚ÌWebƒwƒ‹ƒv‚ğ•\¦‚µ‚Ü‚·B
+	æŒ‡å®šã‚³ãƒãƒ³ãƒ‰ã®Webãƒ˜ãƒ«ãƒ—ã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
 #>
 function manweb {
 	Param(
@@ -194,11 +211,11 @@ function manweb {
 
 <#
 	.SYNOPSIS
-	V‹Kƒƒ‚ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	æ–°è¦ãƒ¡ãƒ¢ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 
 	.DESCRIPTION
-	w’è‚Ìƒtƒ@ƒCƒ‹–¼‚ÅV‹Kƒƒ‚ƒtƒ@ƒCƒ‹‚ğŠJ‚«‚Ü‚·B
-	w’è‚ª‚È‚¢ê‡‚Í "yyyymmddHH" ‚ÅV‹Kƒƒ‚ƒtƒ@ƒCƒ‹‚ğŠJ‚«‚Ü‚·B
+	æŒ‡å®šã®ãƒ•ã‚¡ã‚¤ãƒ«åã§æ–°è¦ãƒ¡ãƒ¢ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¾ã™ã€‚
+	æŒ‡å®šãŒãªã„å ´åˆã¯ "yyyymmddHH" ã§æ–°è¦ãƒ¡ãƒ¢ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã¾ã™ã€‚
 #>
 function memow
 {
@@ -220,15 +237,15 @@ function memow
 
 <#
 	.SYNOPSIS
-	ƒoƒbƒNƒAƒbƒvƒA[ƒJƒCƒu‚ğì¬
+	ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‚’ä½œæˆ
 
 	.DESCRIPTION
-	‘æˆêˆø”‚Ì–¼‘O + "yyyyMMddHHmmss" ‚ÅƒA[ƒJƒCƒu‚ğì¬‚µ‚Ü‚·B
-	•¡”w’è‚·‚éê‡‚ÍƒXƒy[ƒX‚Å‹æØ‚Á‚Ä‚­‚¾‚³‚¢B
+	ç¬¬ä¸€å¼•æ•°ã®åå‰ + "yyyyMMddHHmmss" ã§ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–ã‚’ä½œæˆã—ã¾ã™ã€‚
+	è¤‡æ•°æŒ‡å®šã™ã‚‹å ´åˆã¯ã‚¹ãƒšãƒ¼ã‚¹ã§åŒºåˆ‡ã£ã¦ãã ã•ã„ã€‚
 #>
 function bakarc
 {
-	# ˆø”‚Ìƒ`ƒFƒbƒN
+	# å¼•æ•°ã®ãƒã‚§ãƒƒã‚¯
 	if ($args.length -eq 0) {
         Write-Output "bakarc [option] [file/dirname]..."
         Write-Output ""
@@ -239,11 +256,11 @@ function bakarc
 		Write-Output "  file/directory name"
         Write-Output ""
 	} else {
-		# ƒtƒ@ƒCƒ‹–¼İ’è
+		# ãƒ•ã‚¡ã‚¤ãƒ«åè¨­å®š
 		$Date = (Get-Date).ToString("yyyyMMddHHmmss")
 		$FName = (Get-Item $args[0]).BaseName + "_${Date}.zip"
 
-		# ˆ³k
+		# åœ§ç¸®
 		Compress-Archive -Path $args[0..$args.Length] -DestinationPath $FName -Force
 	}
 }
