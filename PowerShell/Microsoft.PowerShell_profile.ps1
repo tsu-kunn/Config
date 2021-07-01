@@ -47,6 +47,10 @@ Set-PSReadlineOption -BellStyle None
 #>
 function prompt
 {
+	# Window Title
+	$Host.ui.RawUI.WindowTitle = "PS: $pwd"
+
+	# prompt
 	Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
 
 	if ([Environment]::OSVersion.Platform -ne "Win32NT") {
