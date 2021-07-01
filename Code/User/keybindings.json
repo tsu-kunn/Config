@@ -2,10 +2,6 @@
 [
     // Editor
     {
-        "key": "ctrl+k ctrl+j",
-        "command": "workbench.action.editor.changeEncoding"
-    },
-    {
         "key": "alt+r",
         "command": "cursorPageUp",
         "when": "editorTextFocus"
