@@ -13,6 +13,7 @@ PROMPT_COMMAND='history -a'
 # setting
 BDIR="${HOME}/GitHub/Config/md"
 BEXT=".md"
+PROJ_PATH="${HOME}/GitHub/"
 alias editor='vim'
 
 # function
@@ -62,6 +63,13 @@ function bakarc()
 		FNAME=$(basename "$1")"_${DATA}.tar.gz"
 		tar cvzf "$FNAME" "$@"
 	fi
+}
+
+function goto_projects()
+{
+	# 指定のディレクトリへ移動
+	MOVE_PATH="${PROJ_PATH}/$1"
+	cd "$MOVE_PATH"
 }
 
 
