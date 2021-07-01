@@ -12,7 +12,7 @@ if ([Environment]::OSVersion.Platform -ne "Win32NT") {
 	Set-Alias -name editer -Value "vim"
 
 	# variable
-	$Projects = "${HOME}/GitHub"
+	$Projects = "${HOME}/GitHub/"
 	$Memo = "${HOME}/GitHub/Config/md"
 } else {
 	# path
@@ -51,7 +51,7 @@ function prompt
 
 	if ([Environment]::OSVersion.Platform -ne "Win32NT") {
 		$PC = [Environment]::MachineName
-		Write-Host "$env:USER@${PC}:" -ForegroundColor "DarkGreen" -nonewline
+		Write-Host "$env:USER@${PC}" -ForegroundColor "DarkGreen" -nonewline
 	} else {
 		Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
 	}
