@@ -21,6 +21,17 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 > new-item -path $profile -itemtype file -force
 ```
 
+### PowerShellのバージョン確認
+```PowerShell
+> $PSVersionTable
+```
+
+### Gitなどで日本語が文字化けする
+以下のコマンドを実行する。
+
+```PowerShell
+> Set-Item env:LANG -Value ja_JP.UTF-8
+```
 
 ### Bash風の設定
 ```PowerShell
@@ -60,6 +71,44 @@ Set-PSReadLineOption -EditMode Emacs
 #### 補足
 `ItemType` には `Junction`, `HardLink` も設定することができる。
 
+### 16進ダンプ
+`Format-Hex <ファイル名> | more`
+
+### プロンプトの変更
+`function prompt` を作成する。\
+最後に `return` を書かないと "PS>" が自動で表示される。
+
+色を付けるには "Write-Host" の `-ForegroundColor` を利用する。
+
+|値|色名|
+|:--|:--|
+|0|Black|
+|1|DarkBlue|
+|2|DarkGreen|
+|3|DarkCyan|
+|4|DarkRed|
+|5|DarkMagenta|
+|6|DarkYellow|
+|7|Gray|
+|8|DarkGray|
+|9|Blue|
+|10|Green|
+|11|Cyan|
+|12|Red|
+|13|Magenta|
+|14|Yellow|
+|15|White|
+
+例）Bash風
+```PowerShell
+function prompt
+{
+    Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
+    Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
+    Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
+    return "> "
+}
+```
 
 ## スクリプト
 ### 比較演算子
@@ -90,6 +139,20 @@ Set-PSReadLineOption -EditMode Emacs
 `$()` でくくると期待した動作になる。
 
 ※Sub-Expression Operator といって、$()内部を先に評価してから式の評価を行うようになる。
+
+### ファイル名などの取得
+- .NET関数を利用:
+  - ファイル名（拡張子あり）:  `[System.IO.Path]::GetFileName()` 
+  - ファイル名（拡張子なし）:  `[System.IO.Path]::GetFileNameWithoutExtension()` 
+  - 拡張子:  `[System.IO.Path]::GetExtension()` 
+  - ディレクトリ名:  `[System.IO.Path]::GetDirectoryName()` 
+- Get-Itemを利用
+  - ファイル名（拡張子あり）: `(Get-Item <File/Directory>).Name`
+  - ファイル名（拡張子なし）: `(Get-Item <File/Directory>).BaseName`
+  - 拡張子: `(Get-Item <File/Directory>).Extension`
+  - ディレクトリ名: `(Get-Item <File/Directory>).DirectoryName`
+
+※.NET関数は指定の名前がない場合は "" を返すが、Get-Itemではエラーとなる。
 
 
 ## Web
