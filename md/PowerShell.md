@@ -61,6 +61,37 @@ Set-PSReadLineOption -EditMode Emacs
 `ItemType` には `Junction`, `HardLink` も設定することができる。
 
 
+## スクリプト
+### 比較演算子
+|比較演算子|動作|
+|:--|:--|
+|-eq|=|
+|-ne|!=|
+|-gt|>|
+|-ge|>=|
+|-lt|<|
+|-le|<=|
+|-like|ワイルドカードと等しい|
+|-nolike|ワイルドカードと等しくない|
+|-match|正規表現と等しい|
+|-nomatch|正規表現と等しくない|
+
+### ダブルクォーテーション内での配列型変数の展開
+- NG
+  ```
+  > $FName = "`"$a[0]_${Date}.zip`""
+  ```
+- OK
+  ```
+  > $FName = "`"$($a[0])_${Date}.zip`""
+  ```
+
+`$a[0]` や `${a[0]}` や `${a}[0]` では期待した展開にならない。\
+`$()` でくくると期待した動作になる。
+
+※Sub-Expression Operator といって、$()内部を先に評価してから式の評価を行うようになる。
+
+
 ## Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
 - [PowerShell ドキュメント](https://docs.microsoft.com/ja-jp/powershell/)
