@@ -7,7 +7,7 @@
 Add-type -AssemblyName System.Web
 
 # path
-$ENV:PATH += ";C`:\files\bin;C:\Program Files\Git\usr\bin;"
+$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
 
 # alias
 Set-Alias -name editer -Value "code"
@@ -22,6 +22,8 @@ Set-PSReadLineKeyHandler -Key Tab -Function Complete
 # キーバインドをEmacs風に変更
 Set-PSReadLineOption -EditMode Emacs
 
+# ビープ音をオフ
+Set-PSReadlineOption -BellStyle None
 
 # function
 
@@ -195,23 +197,53 @@ function manweb {
 	新規メモファイルを開く
 
 	.DESCRIPTION
-	指定のファイル名で新規メモファイルを開く。
-	指定がない場合は "yyyymmddhh" で新規メモファイルを開く
+	指定のファイル名で新規メモファイルを開きます。
+	指定がない場合は "yyyymmddHH" で新規メモファイルを開きます。
 #>
 function memow
 {
-	$FNAME = $Memo + "\"
+	$FName = $Memo + "\"
 
 	if ($args.length -eq 0) {
-		# $FNAME += (Get-Date).ToString("yyyyMMddHHmmss")
-		$FNAME += (Get-Date).ToString("yyyyMMddHH")
+		# $FName += (Get-Date).ToString("yyyyMMddHHmmss")
+		$FName += (Get-Date).ToString("yyyyMMddHH")
 	} else {
-		$FNAME += $args[0]
+		$FName += $args[0]
 	}
 
-	if ([System.IO.Path]::GetExtension($FNAME) -eq "") {
-		$FNAME += ".md"
+	if ([System.IO.Path]::GetExtension($FName) -eq "") {
+		$FName += ".md"
 	}
 
-	editer $FNAME
+	editer $FName
+}
+
+<#
+	.SYNOPSIS
+	バックアップアーカイブを作成
+
+	.DESCRIPTION
+	第一引数の名前 + "yyyyMMddHHmmss" でアーカイブを作成します。
+	複数指定する場合はスペースで区切ってください。
+#>
+function bakarc
+{
+	# 引数のチェック
+	if ($args.length -eq 0) {
+        Write-Output "bakarc [option] [file/dirname]..."
+        Write-Output ""
+        Write-Output "[option]"
+        Write-Output "  -h      : Help"
+        Write-Output ""
+		Write-Output "[file/dirname]"
+		Write-Output "  file/directory name"
+        Write-Output ""
+	} else {
+		# ファイル名設定
+		$Date = (Get-Date).ToString("yyyyMMddHHmmss")
+		$FName = (Get-Item $args[0]).BaseName + "_${Date}.zip"
+
+		# 圧縮
+		Compress-Archive -Path $args[0..$args.Length] -DestinationPath $FName -Force
+	}
 }
