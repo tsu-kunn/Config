@@ -6,15 +6,25 @@
 # add-type
 Add-type -AssemblyName System.Web
 
-# path
-$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
+# ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
+if ([Environment]::OSVersion.Platform -ne "Win32NT") {
+	# alias
+	Set-Alias -name editer -Value "vim"
 
-# alias
-Set-Alias -name editer -Value "code"
+	# variable
+	$Projects = "${HOME}/GitHub"
+	$Memo = "${HOME}/GitHub/Config/md"
+} else {
+	# path
+	$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
 
-# variable
-$Projects = "c:\files\work\projects\"
-$Memo = "C:\Files\work\Memo"
+	# alias
+	Set-Alias -name editer -Value "code"
+
+	# variable
+	$Projects = "c:\files\work\projects\"
+	$Memo = "C:\Files\work\Memo"
+}
 
 # bash風のtab補完
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
@@ -38,7 +48,14 @@ Set-PSReadlineOption -BellStyle None
 function prompt
 {
 	Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
-	Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
+
+	if ([Environment]::OSVersion.Platform -ne "Win32NT") {
+		$PC = [Environment]::MachineName
+		Write-Host "$env:USER@${PC}:" -ForegroundColor "DarkGreen" -nonewline
+	} else {
+		Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
+	}
+
 	Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
 	return "> "
 }
@@ -88,7 +105,7 @@ function goto_projects($proj)
 
 	.DESCRIPTION
 	指定のアプリケーションを管理者として実行します。
-	(PowerShell専用)
+	(Windows専用)
 #>
 function win_sudo($Program, $Argument)
 {
