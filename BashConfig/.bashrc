@@ -10,6 +10,11 @@ export HISTSIZE=1000
 export HISTCONTROL=ignoredups
 PROMPT_COMMAND='history -a'
 
+# setting
+BDIR="${HOME}/GitHub/Config/md"
+BEXT=".md"
+alias editor='vim'
+
 # function
 # cmd output SJIS->UTF-8
 function wincmd()
@@ -27,15 +32,15 @@ function memow()
 		FNAME=$1
 	fi
 
-	NDIR="${HOME}/GitHub/Config/md/$FNAME"
+	NDIR="${BDIR}/$FNAME"
 	BNAME=$(basename $NDIR)
 	EXT=${BNAME##*.}
 
 	if [ "$BNAME" = "$EXT" ]; then
-		NDIR="${NDIR}.md"
+		NDIR="${NDIR}${BEXT}"
 	fi
 
-	vim "$NDIR"
+	editor "$NDIR"
 }
 
 function bakarc()
