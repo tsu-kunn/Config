@@ -102,13 +102,13 @@ function bakarc()
 
 	# 引数のチェック
 	if [ $# -eq 0 -o "$1" = "-h" ]; then
-		printf "baktar [option] [dirname]\n"
+		printf "bakarc [option] [file/dirname]...\n"
 		printf "\n"
 		printf "[option]\n"
 		printf "  -h      : Help\n"
 		printf "\n"
-		printf "[dirname]\n"
-		printf "  directory name\n"
+		printf "[file/dirname]\n"
+		printf "  file/directory name\n"
 		printf "\n"
 	else
 		FNAME=$(basename "$1")"_${DATA}.tar.gz"
