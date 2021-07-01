@@ -12,7 +12,8 @@ VSCode(Windows/Linux) + Git Bash(Windows)環境の設定ファイルが中心。
   - Settings Syncでうまく同期できなかった時用のバックアップ。
 - PowerShell
   - PowerShellの設定ファイル。
-  - 一部の関数はWindows依存のため、6(Core)以降で使う場合は修正が必要。
+    - Windows PowerShellとPowerShellのprofileを分離。
+  - 一部の関数はWindows依存になっている。
 - xyzzy
   - VSCodeが1.5になるまで20年以上愛用したエディターの個人設定ファイル。 
 - Office
