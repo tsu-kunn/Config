@@ -194,6 +194,14 @@ function prompt
 ※.NET関数は指定の名前がない場合は "" を返すが、Get-Itemではエラーとなる。
 
 
+## 覚えるべきコマンドレット
+|コマンドレット|alias|動作|
+|:--|:--|:--|
+|Get-ChildItem|dir|ファイルとディレクトリの表示|
+|Select-String|sls|対象から指定もの時列を検索|
+|Out-String -Stream|oss|オブジェクトをテキストとして表示|
+
+
 ## Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
 - [PowerShell ドキュメント](https://docs.microsoft.com/ja-jp/powershell/)
