@@ -1,20 +1,13 @@
 #
 # 管理者権限でPSを実行し、以下のコマンドレットを実行する必要がある。
-# > Set-ExecutionPolicy RemoteSigned -Scope Process
+# > Set-ExecutionPolicy RemoteSigned -Force
 #
 
 # add-type
 Add-type -AssemblyName System.Web
 
 # ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
-if ([Environment]::OSVersion.Platform -ne "Win32NT") {
-	# alias
-	Set-Alias -name editer -Value "vim"
-
-	# variable
-	$Projects = "${HOME}/GitHub/"
-	$Memo = "${HOME}/GitHub/Config/md"
-} else {
+if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# path
 	$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
 
@@ -24,6 +17,27 @@ if ([Environment]::OSVersion.Platform -ne "Win32NT") {
 	# variable
 	$Projects = "c:\files\work\projects\"
 	$Memo = "C:\Files\work\Memo"
+	$Div = "\\"
+
+	# use linux diff
+	try {
+		# 2回目以降はエラーになる
+		Remove-Item alias:diff -Force -ErrorAction Stop
+	} catch {
+	} Finally {
+		function diff
+		{
+			diff.exe -u $args
+		}
+	}
+} else {
+	# alias
+	Set-Alias -name editer -Value "vim"
+
+	# variable
+	$Projects = "${HOME}/GitHub/"
+	$Memo = "${HOME}/GitHub/Config/md"
+	$Div = "/"
 }
 
 # bash風のtab補完
@@ -47,20 +61,28 @@ Set-PSReadlineOption -BellStyle None
 #>
 function prompt
 {
-	# Window Title
-	$Host.ui.RawUI.WindowTitle = "PS: $pwd"
+	# trim directory
+	$curPath = $(Get-Location).Path -split $Div
+	$dirTrim = 3
 
-	# prompt
-	Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
-
-	if ([Environment]::OSVersion.Platform -ne "Win32NT") {
-		$PC = [Environment]::MachineName
-		Write-Host "$env:USER@${PC}" -ForegroundColor "DarkGreen" -nonewline
+	if ($curPath.Length -gt $dirTrim) {
+		$s = $curPath.Length - $dirTrim
+		$curPath = ".../" + $($curPath[$s..$curPath.Length] -join "/")
 	} else {
-		Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
+		$curPath = $curPath -join "/"
 	}
 
-	Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
+	# Window Title
+	$Host.ui.RawUI.WindowTitle = "PS: $curPath"
+
+	# prompt
+	$PC = [Environment]::MachineName
+	$UN = [Environment]::UserName
+
+	Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
+	Write-Host "${UN}@${PC}" -ForegroundColor "DarkGreen" -nonewline
+	# Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
+	Write-Host ":$curPath" -ForegroundColor "DarkCyan" -nonewline
 	return "> "
 }
 
@@ -282,6 +304,21 @@ function bakarc
 		$FName = (Get-Item $args[0]).BaseName + "_${Date}.zip"
 
 		# 圧縮
-		Compress-Archive -Path $args[0..$args.Length] -DestinationPath $FName -Force
+		Compress-Archive -Path $args -DestinationPath $FName -Force
 	}
+}
+
+<#
+	.SYNOPSIS
+	テキストファイルの比較
+
+	.DESCRIPTION
+	Compare-ObjectとSelect-ObjectとSort-Objectを使って、
+	結果を見やすくしています。
+#>
+function comp
+{
+	Compare-Object @(Get-Content $args[0]) @(Get-Content $args[1]) |`
+	  Select-Object -Property @{Name = 'ReadCount'; Expression = { $_.InputObject.ReadCount } }, * |`
+	  Sort-Object -Property ReadCount
 }

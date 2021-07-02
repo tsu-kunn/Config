@@ -10,7 +10,7 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 管理者権限でPSを実行し、以下のコマンドレットを実行する必要がある。
 
 ```PowerShell
-> Set-ExecutionPolicy RemoteSigned -Scope Process
+> Set-ExecutionPolicy RemoteSigned -Force
 ```
 
 ### プロファイルの場所
@@ -25,6 +25,20 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 ```PowerShell
 > $PSVersionTable
 ```
+
+### OSの確認
+- Windows PowerShellも対象
+  ```PowerShell
+  if ([Environment]::OSVersion.Platform -ne "Win32NT") {...}
+  ```
+- PowerShell 6.0～
+  ```PowerShell
+  if ($PSVersionTable.Platform -ne "Win32NT") {...}
+  ```
+
+OSは `Win32NT`, `MacOSX`, `Unix` がある。\
+※Linux = Unix
+
 
 ### Gitなどで日本語が文字化けする
 以下のコマンドを実行する。
@@ -103,10 +117,35 @@ Set-PSReadLineOption -EditMode Emacs
 ```PowerShell
 function prompt
 {
-    Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
-    Write-Host "$env:USERNAME@$env:COMPUTERNAME" -ForegroundColor "DarkGreen" -nonewline
-    Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
-    return "> "
+  if ([Environment]::OSVersion.Platform -eq "Win32NT") {
+    $Div = "\\"
+  } else {
+    $Div = "/"
+  }
+
+  # trim directory
+  $curPath = $(Get-Location).Path -split $Div
+  $dirTrim = 3
+
+  if ($curPath.Length -gt $dirTrim) {
+    $s = $curPath.Length - $dirTrim
+    $curPath = ".../" + $($curPath[$s..$curPath.Length] -join "/")
+  } else {
+    $curPath = $curPath -join "/"
+  }
+
+  # Window Title
+  $Host.ui.RawUI.WindowTitle = "PS: $curPath"
+
+  # prompt
+  $PC = [Environment]::MachineName
+  $UN = [Environment]::UserName
+
+  Write-Host "PS " -ForegroundColor "DarkYellow" -nonewline
+  Write-Host "${UN}@${PC}" -ForegroundColor "DarkGreen" -nonewline
+  # Write-Host ":$(Split-Path (Get-Location) -Leaf)" -ForegroundColor "DarkCyan" -nonewline
+  Write-Host ":$curPath" -ForegroundColor "DarkCyan" -nonewline
+  return "> "
 }
 ```
 
