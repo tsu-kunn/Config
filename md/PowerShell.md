@@ -200,6 +200,7 @@ function prompt
 |Get-ChildItem|dir|ファイルとディレクトリの表示|
 |Select-String|sls|対象から指定もの時列を検索|
 |Out-String -Stream|oss|オブジェクトをテキストとして表示|
+|Get-Content|type|ファイルの中身を表示|
 
 
 ## Web
