@@ -201,10 +201,23 @@ function prompt
 |Select-String|sls|対象から指定もの時列を検索|
 |Out-String -Stream|oss|オブジェクトをテキストとして表示|
 |Get-Content|type|ファイルの中身を表示|
+|Show-Markdown|-|Markdownテキストの表示|
+|ConvertFrom-Markdown|-|Markdownからオブジェクトに変換|
+
+## コマンド例
+### ファイルとディレクトリの数とサイズ取得
+```PowerShell
+> Get-ChildItem -Recurse | Measure-Object Length -Maximum -Minimum -Average -Sum
+```
+
+### JSONCをWindows PowerShellで読み込む場合の対応
+```PowerShell
+> $x = Get-Content -Path .\settings.json | Where-Object{ $_ -notmatch "^\s*//.*$" } | ConvertFrom-Json
+```
 
 
 ## Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
 - [PowerShell ドキュメント](https://docs.microsoft.com/ja-jp/powershell/)
 - [PowerShell Core入門 - 基本コマンドの使い方｜連載一覧｜](https://news.mynavi.jp/itsearch/series/devsoft/powershell_core_-.html)
-
+- [Windows にまつわる e.t.c.](https://www.vwnet.jp/Windows/etc.asp#PowerShell)
