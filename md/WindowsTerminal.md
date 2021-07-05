@@ -24,7 +24,7 @@
 ## フォントの変更
 `setting.json` を開いて `"profiles": ` の `"defaults"` に以下を追加する。
 
-```
+```JSON
 "fontFace": "Myrica M",
 "fontSize": 12
 ```
@@ -32,7 +32,7 @@
 シェルごとに設定したい場合は、`"profiles": ` の `"list"` の変更したいシェル設定に追加する。
 
 例）Git Bashのフォントを変更
-```
+```JSON
 {
     "commandline": "C:\\Program Files\\Git\\bin\\bash.exe",
     "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
@@ -58,14 +58,14 @@
 ### 設定
 `setting.json` を開いて `"profiles": ` の `"defaults"` に以下を追加する。
 
-```
+```JSON
 "colorScheme": "テーマ名"
 ```
 
 シェルごとに設定したい場合は、`"profiles": ` の `"list"` の変更したいシェル設定に追加する。
 
 例）PowerShellのテーマを変更
-```
+```JSON
 {
     "commandline": "powershell.exe",
     "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -133,13 +133,13 @@
 - Git Bash の追加
   - 既定プロファイルに設定
 - profiles の default 変更 
-  ```
+  ```JSON
   "colorScheme": "One Half Dark",
   "fontFace": "Myrica M",
   "fontSize": 12
   ```
 - profiles の PowerShell のテーマを変更
-  ```
+  ```JSON
   "colorScheme": "Campbell Powershell"
   ```
 
