@@ -29,11 +29,11 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 ### OSの確認
 - Windows PowerShellも対象
   ```PowerShell
-  if ([Environment]::OSVersion.Platform -ne "Win32NT") {...}
+  if ([Environment]::OSVersion.Platform -eq "Win32NT") {...}
   ```
 - PowerShell 6.0～
   ```PowerShell
-  if ($PSVersionTable.Platform -ne "Win32NT") {...}
+  if ($PSVersionTable.Platform -eq "Win32NT") {...}
   ```
 
 OSは `Win32NT`, `MacOSX`, `Unix` がある。\
@@ -82,11 +82,27 @@ Set-PSReadLineOption -EditMode Emacs
 > New-Item -Value 'フォルダ名' -Path 'ターゲットフォルダ名'  -ItemType SymbolicLink
 ```
 
-#### 補足
+#### 補足1
 `ItemType` には `Junction`, `HardLink` も設定することができる。
 
-### 16進ダンプ
-`Format-Hex <ファイル名> | more`
+#### 補足2
+コマンドプロンプトでmklinkを実行する。\
+引数は `"..."` で囲む必要がある。
+
+```
+> Start-Process cmd -Verb runas -ArgumentList "/c mklink /d c:\files\work\projects\Memo c:\files\work\Memo"
+or
+> win_sudo cmd "/c mklink /d c:\files\work\projects\Memo c:\files\work\Memo"
+```
+
+### 一時ディレクトリ
+`Temp:`
+
+有効になっていない場合は以下のコマンドを実行する。
+
+```PowerShell
+> Enable-ExperimentalFeature -Name PSTempDrive
+```
 
 ### プロンプトの変更
 `function prompt` を作成する。\
@@ -149,7 +165,6 @@ function prompt
 }
 ```
 
-## スクリプト
 ### 比較演算子
 |比較演算子|動作|
 |:--|:--|
@@ -163,6 +178,77 @@ function prompt
 |-nolike|ワイルドカードと等しくない|
 |-match|正規表現と等しい|
 |-nomatch|正規表現と等しくない|
+|-contains|参照値がコレクションに含まれている|
+|-notcontains|参照値がコレクションに含まれていない|
+|-in|テスト値がコレクションに含まれている|
+|-notin|テスト値がコレクションに含まれていない|
+|-replace|文字列パターンを入れ替え(大文字と小文字の区別なし)|
+|-creplace|文字列パターンを入れ替え(大文字と小文字の区別あり)|
+|-is|オブジェクトの双方の型が等しい|
+|-isnot|オブジェクトの双方の型が等しくない|
+
+### 算術演算子
+|算術演算子|動作|
+|:--|:--|
+|+|加算・結合|
+|-|減算|
+|*|乗算|
+|/|除算|
+|%|剰余算|
+|-band|ビットAND|
+|-bnot|ビットNOT|
+|-bor|ビットOR|
+|-bxor|ビットXOR|
+|-shl|左へビットシフト|
+|-shr|右へビットシフト|
+
+### リダイレクト
+|演算子|動作|
+|:--|:--|
+|>|ファイルへ書き込み|
+|>>|ファイルへ追記|
+|>&n|ストリームn へリダイレクト|
+|> $null|Bashの `> /dev/null` と同様|
+
+|ストリーム番号|内容|
+|:--|:--|
+|1|サクセスストリーム|
+|2|エラーストリーム|
+|3|ワーニングストリーム|
+|4|冗長ストリーミング|
+|5|デバッグストリーム|
+|6|インフォメーションストリーム|
+|*|すべてのストリーム|
+
+### PowerShellGet
+- バージョンの確認
+  ```PowerShell
+  > Get-Command -Module PowerShellGet
+  ```
+- モジュールの検索
+  - [PowerShell Gallery](https://www.powershellgallery.com/)
+- インストール
+  ```PowerShell
+  > Install-Module [モジュール名]
+  ```
+- アップデート
+  ```PowerShell
+  > Update-Module
+  ```
+
+## スクリプト
+
+### 関数名
+関数名は「動詞 - 名詞」の組み合わせが推奨されている。(VSCodeのPowerShell拡張で指摘される)\
+組み合わせは [PowerShell コマンドに承認されている動詞](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7.1) を参照。
+
+### バッチファイルから管理者権限を変更して実行
+権限を一時的に変更しているので戻す操作不要。\
+PowerShellの権限を変更していない環境で有効。
+
+```
+powershell -sta -ExecutionPolicy Unrestricted -File %0\..\[スクリプト名].ps1
+```
 
 ### ダブルクォーテーション内での配列型変数の展開
 - NG
@@ -193,6 +279,26 @@ function prompt
 
 ※.NET関数は指定の名前がない場合は "" を返すが、Get-Itemではエラーとなる。
 
+### パイプラインチェイン(7.0以上)
+- コマンド1 && コマンド2
+  - コマンド1が正常終了するとコマンド2が実行される。
+- コマンド1 || コマンド2
+  - コマンド1が異常終了するとコマンド2が実行される。
+
+※if文と $?(直前の式の結果) の組み合わせの代替処理
+
+### Null演算子
+- Null合体演算子
+  - 変数 ?? 値
+    - 変数の値が $null なら値を使用する。
+- Null合体代入演算子
+  - 変数 ??= 値
+    - 変数の値が $null なら値を代入する。
+- Null条件演算子
+  - 変数?
+    - 変数の値が $null なら以降を実行しない。
+    - 例）`${f}?.OpenText()?.ReadToEnd()`
+
 
 ## 覚えるべきコマンドレット
 |コマンドレット|alias|動作|
@@ -205,6 +311,11 @@ function prompt
 |ConvertFrom-Markdown|-|Markdownからオブジェクトに変換|
 
 ## コマンド例
+### 16進ダンプ
+```PowerShell
+> Format-Hex <ファイル名> | more
+```
+
 ### ファイルとディレクトリの数とサイズ取得
 ```PowerShell
 > Get-ChildItem -Recurse | Measure-Object Length -Maximum -Minimum -Average -Sum
