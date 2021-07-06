@@ -12,6 +12,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
 
 	# alias
+	Set-Alias -name vi -Value "vim.exe"
 	Set-Alias -name editer -Value "code"
 
 	# variable
@@ -118,6 +119,9 @@ function Edit-History
 
 	.DESCRIPTION
 	現在のパスをprojectsフォルダに変更します。
+
+	.PARAMETER proj
+	追加のプロジェクトパス。
 #>
 function goto_projects($proj)
 {
@@ -132,6 +136,13 @@ function goto_projects($proj)
 	.DESCRIPTION
 	指定のアプリケーションを管理者として実行します。
 	(Windows専用)
+
+	.PARAMETER Program
+	管理者権限で実行するプログラム名
+
+	.PARAMETER Argument
+	プログラムへ渡す引数。
+	複数指定する場合は "" で囲んでください。
 #>
 function win_sudo($Program, $Argument)
 {
@@ -139,7 +150,7 @@ function win_sudo($Program, $Argument)
         Start-Process $Program -Verb runas
     }
     else {
-        Start-Process $Program -Verb runas $Argument
+        Start-Process $Program -Verb runas -ArgumentList $Argument
     }
 }
 
@@ -168,6 +179,10 @@ function Get-WindowsVersion
 	.DESCRIPTION
 	シェルの機能を使ってゴミ箱へ削除します。
 	(Windows専用)
+
+	.PARAMETER
+	ごみ箱に削除するファイル or ディレクトリ名。
+	複数指定やワイルドカード指定ができます。
 #>
 function Remove-ItemToTrash
 {
@@ -232,6 +247,12 @@ function Copy-DateAndTime($opt = "None")
 	.NetFrameworkのAPIを使ってランダムなパスワードを生成します。
 	引数で長さを指定できます。
 	(Windows PowerShell専用)
+
+	.PARAMETER len
+	パスワードの長さ。
+	
+	.PARAMETER opt
+	パスワードに含める英数字以外の文字数。(default:2)
 #>
 function New-Password($len, $opt = 2)
 {
