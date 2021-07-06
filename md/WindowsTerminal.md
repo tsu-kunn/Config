@@ -86,6 +86,11 @@
 |Ctrl + c|テキストのコピー|
 |Ctrl + v|貼り付け|
 
+※注意\
+コピー＆ペーストは `setting.json` で上書きされている。\
+`default.json` では `Ctrl+Shift+C`, `Ctrl+Shift+V` となっているので、\
+Vimを使う場合は矩形選択とバッティングするので、default.jsonのショートカットキーが望ましい。
+
 ## ウィンドウ
 |key|動作|
 |:--|:--|
@@ -125,22 +130,31 @@
 
 
 # 変更点
-- スタートアップ＞起動サイズの変更
-  - 列: 140
-  - 行: 60
 - 外観＞アクティブなターミナルのタイトルをアプリケーションのタイトルとして使用
   - オフ
 - Git Bash の追加
-  - 既定プロファイルに設定
+- 起動サイズと位置を変更
+  ```JSON
+  "initialCols": 140,
+  "initialRows": 60,
+  "initialPosition": "740, 80",
+  ```
 - profiles の default 変更 
   ```JSON
   "colorScheme": "One Half Dark",
   "fontFace": "Myrica M",
   "fontSize": 12
   ```
-- profiles の PowerShell のテーマを変更
+- profiles の Windows PowerShell のテーマを変更
   ```JSON
   "colorScheme": "Campbell Powershell"
+  ```
+- コピー＆ペーストのショートカットキーを変更
+  ```JSON
+  // Copy
+  "keys": "Ctrl+Shift+C"
+  // Paste
+  "keys": "Ctrl+Shift+V"
   ```
 
 # 参考
