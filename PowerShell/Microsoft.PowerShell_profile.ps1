@@ -40,8 +40,9 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Memo = "${HOME}/GitHub/Config/md"
 	$Div = "/"
 
-	function diff {
-		diff -u $args
+	function diff
+    {
+		/usr/bin/diff -u $args
 	}
 }
 
