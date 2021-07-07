@@ -242,6 +242,12 @@ function prompt
 関数名は「動詞 - 名詞」の組み合わせが推奨されている。(VSCodeのPowerShell拡張で指摘される)\
 組み合わせは [PowerShell コマンドに承認されている動詞](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7.1) を参照。
 
+### Windows/macOS/Linuxで動作させる
+スクリプトファイルの先頭に以下を記載する。\
+```PowerShell
+#!/usr/bin/env pwsh
+```
+
 ### バッチファイルから管理者権限を変更して実行
 権限を一時的に変更しているので戻す操作不要。\
 PowerShellの権限を変更していない環境で有効。
@@ -249,6 +255,9 @@ PowerShellの権限を変更していない環境で有効。
 ```
 powershell -sta -ExecutionPolicy Unrestricted -File %0\..\[スクリプト名].ps1
 ```
+
+### 終了コード
+exit の終了コードは `$LASTEXITCODE` に保存される。
 
 ### ダブルクォーテーション内での配列型変数の展開
 - NG
@@ -298,6 +307,28 @@ powershell -sta -ExecutionPolicy Unrestricted -File %0\..\[スクリプト名].p
   - 変数?
     - 変数の値が $null なら以降を実行しない。
     - 例）`${f}?.OpenText()?.ReadToEnd()`
+
+### JSONファイル読み書き
+```PowerShell
+# JSON読み込み
+$JsonData = Get-Content -Path .\json_test.json
+$ObjectData = $JsonData | ConvertFrom-Json
+
+# JSONの表示
+Write-Host $ObjectData.num_list
+Write-Host $ObjectData.user_info
+
+Write-Host $ObjectData.num_list[3]
+Write-Host $ObjectData.user_info[0]
+
+Write-Output $ObjectData[0].name
+Write-Output $ObjectData[0].age
+Write-Output $ObjectData[2].'user_info'.user_name
+
+# JSON保存
+$JsonData = $ObjectData | ConvertTo-Json
+Set-Content -path json_test_output.json -Value $JsonData
+```
 
 
 ## 覚えるべきコマンドレット

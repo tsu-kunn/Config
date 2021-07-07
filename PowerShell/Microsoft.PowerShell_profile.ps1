@@ -21,15 +21,15 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Div = "\\"
 
 	# use linux diff
-	try {
-		# 2回目以降はエラーになる
+	# Get-Alias diff *> $null && Remove-Item alias:diff -Force # ver.7.0～
+	Get-Alias diff *> $null
+	if ($?) {
 		Remove-Item alias:diff -Force -ErrorAction Stop
-	} catch {
-	} Finally {
-		function diff
-		{
-			diff.exe -u $args
-		}
+	}
+
+	function diff
+	{
+		diff.exe -u $args
 	}
 } else {
 	# alias
@@ -39,6 +39,10 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Projects = "${HOME}/GitHub/"
 	$Memo = "${HOME}/GitHub/Config/md"
 	$Div = "/"
+
+	function diff {
+		diff -u $args
+	}
 }
 
 # bash風のtab補完
