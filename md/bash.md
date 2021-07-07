@@ -54,6 +54,8 @@
 
 
 # .bashrc
+全体は [Config/BashConfig/.bashrc](https://github.com/tsu-kunn/Config/blob/master/BashConfig/.bashrc) を参照。
+
 ```bash
 #!/etc/bash
 
@@ -67,83 +69,13 @@ export HISTSIZE=1000
 export HISTCONTROL=ignoredups
 PROMPT_COMMAND='history -a'
 
-# setting
-BDIR="${HOME}/GitHub/Config/md"
-BEXT=".md"
-PROJ_PATH="${HOME}/GitHub/"
-alias editor='vim'
-
-# function
-# cmd output SJIS->UTF-8
-function wincmd()
-{
-	CMD=$1
-	shift
-	$CMD $* 2>&1 | iconv -f cp932 -t utf-8
-}
-
-function memow()
-{
-	FNAME=$(date +"%Y%m%d")
-
-	if [ "$1" != "" ]; then
-		FNAME=$1
-	fi
-
-	NDIR="${BDIR}/$FNAME"
-	BNAME=$(basename $NDIR)
-	EXT=${BNAME##*.}
-
-	if [ "$BNAME" = "$EXT" ]; then
-		NDIR="${NDIR}${BEXT}"
-	fi
-
-	editor "$NDIR"
-}
-
-function bakarc()
-{
-	# ファイル名設定
-	DATA=`date '+%Y%m%d_%k%M'`
-
-	# 引数のチェック
-	if [ $# -eq 0 -o "$1" = "-h" ]; then
-		printf "bakarc [option] [file/dirname]...\n"
-		printf "\n"
-		printf "[option]\n"
-		printf "  -h      : Help\n"
-		printf "\n"
-		printf "[file/dirname]\n"
-		printf "  file/directory name\n"
-		printf "\n"
-	else
-		FNAME=$(basename "$1")"_${DATA}.tar.gz"
-		tar cvzf "$FNAME" "$@"
-	fi
-}
-
-function goto_projects()
-{
-	# 指定のディレクトリへ移動
-	MOVE_PATH="${PROJ_PATH}/$1"
-	cd "$MOVE_PATH"
-}
-
+～ 一部省略 ～
 
 # alias
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -al'
 alias grep='grep --color=auto'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
-
-alias bashrc='source ~/.bashrc'
-alias bash_profile='source ~/.bash_profile'
-
-alias proj='. proj.sh' 
-alias nip="memow 日報/$(date +"%Y%m")"
 
 # prompt
 # \u username \h hostname \w full path \W current path
@@ -339,16 +271,20 @@ done
 
 ## 比較
 ### 文字列
-- s1 = s2  : 文字列s1 が文字列s2 と等しい
-- s1 != s2 : 文字列s1 が文字列s2 と等しくない
+|比較|動作|
+|:--|:--|
+|s1 = s2|文字列s1 が文字列s2 と等しい|
+|s1 != s2|文字列s1 が文字列s2 と等しくない|
 
 ### 数値
-- a -eq b : 数値a とb が等しい
-- a -ne b : 数値a が数値b と等しくない
-- a -gt b : 数値a が数値 b より大きい
-- a -ge b : 数値a が数値b 以上
-- a -lt b : 数値a が数値b より小さい
-- a -le b : 数値a が数値b 以下
+|比較|動作|
+|:--|:--|
+|a -eq b|a == b|
+|a -ne b|a !=b|
+|a -gt b|a > b|
+|a -ge b|a >=b|
+|a -lt b|a < b|
+|a -le b|a <= b|
 
 ## 関数
 `function` は省略可能。
@@ -362,8 +298,97 @@ function hogeFunc() {
 }
 ```
 
+## OS判別
 
-## メモ
+```bash
+$OS='None'
+$UN=$(uname)
+
+if [ "$UN" == 'Darwin' ]; then
+  OS='Mac'
+elif [ "$(expr substr $UN 1 5)" == 'Linux' ]; then
+  OS='Linux'
+elif [ "$(expr substr $UN 1 10)" == 'MINGW64_NT' ]; then
+  OS='Windows'
+elif [ "$(expr substr $UN 1 7)" == 'MSYS_NT' ]; then
+  OS='Windows'
+else
+  echo "Your platform is not supported."
+fi
+```
+
+## JSON
+BashでJSONを扱う場合は `jq` というツールを使うのがベターっぽい。\
+⇒[公式サイト](https://stedolan.github.io/jq/)
+
+### インストール
+#### Windows
+1. 公式サイトのダウンロードから `Windows(64-bit)` を選択。
+1. `jq-win64.exe` を `jq.exe` にリネーム。
+1. PATHが通っているフォルダへコピー。
+
+#### Linux
+```bash
+$ sudo apt install jq
+```
+
+### 使い方
+#### 整形
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq .
+$ cat json_test.json | jq .
+```
+
+#### 絞り込み
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.name'
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '."color list"[1]'
+$ cat json_test.json | jq '.[0].name'
+$ cat json_test.json | jq '.[1].num_list[1]'
+$ cat json_test.json | jq '.[0].user_info
+$ cat json_test.json | jq '.[].user_info'
+```
+
+#### 変数へ代入
+```bash
+$ a=$(echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.name')
+$ b=$(cat json_test.json | jq '.[].user_info')
+```
+
+#### 保存
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq . > jq_test.json
+$ cat json_test.json | jq . > jq_test.json
+```
+
+#### JSON作成
+ヒアドキュメント機能を使用する。
+
+```bash
+$ num=100
+$ str="Miyuki"
+$ json=$(cat << EOS
+{
+  "number": ${num},
+  "string": "${str}"
+}
+EOS
+)
+```
+
+#### オプション
+|Option|動作|
+|:--|:--|
+|-r|ダブルクォーテーションなし|
+|-C|色付きのJSONを出力|
+|--tab|インデントをタブにする|
+|--indent n|指定された数のスペースを使用(MAX:7)|
+
+### 参考
+- [jq コマンドを使う日常のご紹介](https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af)
+- [jqコマンドでjsonデータを整形・絞り込み](https://qiita.com/Nakau/items/272bfd00b7a83d162e3a)
+
+# メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
   - Git Bashでは環境変数に HOME を追加しないといけないかも…
 - シェルスクリプト実行する際は、`. ` を頭に追加する
@@ -373,6 +398,6 @@ function hogeFunc() {
   - '$ bash --version`
 
 
-## 参考
+# 参考
 - [ターミナルプロンプトの表示・色の変更](https://qiita.com/hmmrjn/items/60d2a64c9e5bf7c0fe60)
 - [とほほのBash入門](https://www.tohoho-web.com/ex/shell.html)
