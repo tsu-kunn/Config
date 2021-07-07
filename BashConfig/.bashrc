@@ -72,6 +72,17 @@ function goto_projects()
 	cd "$MOVE_PATH"
 }
 
+function Edit-Profile()
+{
+	# PowerShellの関数と合わせているので .bashrc を対象とする
+	editor "${HOME}/.bashrc"
+}
+
+function Edit-History()
+{
+	editor "${HOME}/.bash_history"
+}
+
 
 # alias
 alias la='ls -a'
@@ -85,7 +96,6 @@ alias rm='rm -i'
 alias bashrc='source ~/.bashrc'
 alias bash_profile='source ~/.bash_profile'
 
-alias proj='. proj.sh'
 alias nip="memow 日報/$(date +"%Y%m")"
 
 # prompt
