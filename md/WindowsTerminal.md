@@ -88,7 +88,7 @@
 
 ※注意\
 コピー＆ペーストは `setting.json` で上書きされている。\
-`default.json` では `Ctrl+Shift+C`, `Ctrl+Shift+V` となっているので、\
+`default.json` では `Ctrl+Shift+C`, `Ctrl+Shift+V` となっており、\
 Vimを使う場合は矩形選択とバッティングするので、default.jsonのショートカットキーが望ましい。
 
 ## ウィンドウ
