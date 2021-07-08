@@ -357,8 +357,8 @@ function hogeFunc() {
 ## OS判別
 
 ```bash
-$OS='None'
-$UN=$(uname)
+OS='None'
+UN=$(uname)
 
 if [ "$UN" == 'Darwin' ]; then
   OS='Mac'

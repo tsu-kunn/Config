@@ -49,6 +49,24 @@ function bakarc()
     fi
 }
 
+function whatos()
+{
+    OS='None'
+    UN=$(uname)
+
+    if [ "$UN" == 'Darwin' ]; then
+        OS='Mac'
+    elif [ "$(expr substr $UN 1 5)" == 'Linux' ]; then
+        OS='Linux'
+    elif [ "$(expr substr $UN 1 10)" == 'MINGW64_NT' ]; then
+        OS='Windows'
+    elif [ "$(expr substr $UN 1 7)" == 'MSYS_NT' ]; then
+        OS='Windows'
+    fi
+
+    echo $OS
+}
+
 function goto_projects()
 {
     # 指定のディレクトリへ移動
