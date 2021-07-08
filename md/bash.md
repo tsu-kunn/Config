@@ -125,6 +125,37 @@ Bash 4.0以上であれば `PROMPT_DIRTRIM` を使って w/W のディレクト�
 hoge@hoge-PC:.../projects/GitHub/appClock $
 ```
 
+## Proxy
+Proxyを設定する必要がある場合は下記のように設定する。
+
+### bashrc
+```bash
+export http_proxy=http://proxy.example.com:8080
+export https_proxy=http://proxy.example.com:8080
+export HTTP_PROXY=http://proxy.example.com:8080
+export HTTPS_PROXY=http://proxy.example.com:8080
+```
+
+### .wgetrc
+wget でうまくPorxy設定がいかない場合は `.wgetrc` を作成して以下を記載する。
+
+```bash
+use_proxy=on
+http_proxy=http://proxy.example.com:8080
+https_proxy=http://proxy.example.com:8080
+check_certificate = off
+```
+
+### apt
+sudo を付けるとrootの設定を参照するため別途設定する。\
+または `sudo -E` として、ユーザー設定を維持して実行でも可。
+
+`/etc/apt/apt.conf.d/01proxy` を作成して以下を記載する。
+```bash
+Acquire::http::Proxy "http://proxy.example.com:8080";
+Acquire::https::Proxy "http://proxy.example.com:8080";
+```
+
 
 # シェルスクリプト
 
@@ -392,6 +423,7 @@ EOS
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
   - Git Bashでは環境変数に HOME を追加しないといけないかも…
 - シェルスクリプト実行する際は、`. ` を頭に追加する
+  - または `source` を追加
 - 何も操作を受け付けなくなったら 'Ctrl-q' を押下する（Ctrl-sを押下した可能性あり）
   - それでもダメならターミナルが固まった疑惑
 - bashのバージョン確認

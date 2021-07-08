@@ -25,3 +25,12 @@ alias docker='winpty docker'
 # \w full path \W current path
 export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\]:\w \$\[\e[00m\] '
 
+# proxy
+export http_proxy=http://proxy.example.com:8080
+export https_proxy=http://proxy.example.com:8080
+export HTTP_PROXY=http://proxy.example.com:8080
+export HTTPS_PROXY=http://proxy.example.com:8080
+
+# npm proxy
+export ELECTRON_GET_USE_PROXY=true
+export GLOBAL_AGENT_HTTPS_PROXY=http://proxy.example.com:8080/
