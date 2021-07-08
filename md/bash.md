@@ -54,7 +54,10 @@
 
 
 # .bashrc
-全体は [Config/BashConfig/.bashrc](https://github.com/tsu-kunn/Config/blob/master/BashConfig/.bashrc) を参照。
+全体は以下を参照。
+- [.bashrc](https://github.com/tsu-kunn/Config/blob/master/BashConfig/.bashrc)
+- [.bash_conf](https://github.com/tsu-kunn/Config/blob/master/BashConfig/.bash_conf)
+- [.bash_func](https://github.com/tsu-kunn/Config/blob/master/BashConfig/.bash_func)
 
 ```bash
 #!/etc/bash
@@ -68,8 +71,6 @@ export PATH=$PATH:"${HOME}/bin":
 export HISTSIZE=1000
 export HISTCONTROL=ignoredups
 PROMPT_COMMAND='history -a'
-
-～ 一部省略 ～
 
 # alias
 alias grep='grep --color=auto'
@@ -160,7 +161,7 @@ Acquire::https::Proxy "http://proxy.example.com:8080";
 # シェルスクリプト
 
 ## 計算
-`$((...)) で囲うと計算になる。
+`$((...))` で囲うと計算になる。
 
 例)
 ```bash
@@ -214,18 +215,22 @@ echo ${HOGE}" World"
 ```bash
 echo ${HOGE0}${HOGE1}
 ```
-
+### ローカル変数
+```bash
+local tmp="HOGE"
+```
 
 ## 特殊変数
 - $0: シュルスクリプト名
-- $*: "$1 $2 $3 ..." という1つの引数として受け取る
+- $*: "$1 $2 $3 ... ${10} ${11} ..." という1つの引数として受け取る
 - $@: "$1" "$2" "$3" ... と複数の引数として受け取る
 - $#: 引数の数
 - $?: 直前に実行したコマンドの終了ステータス(0:true 0以外:false)
 
 ### 補足
 引数を受け取る際は "$0", "$1" "$@" というように、"..." で囲むのが安全。\
-引数に * など制御文字が入っていた場合や、空白を含む名前の場合は展開されてしまい、意図しない動作になる恐れがあります。
+引数に * など制御文字が入っていた場合や、空白を含む名前の場合は展開されてしまい、\
+意図しない動作になる恐れがあります。
 
 例) 引数と変数を "..." で囲み、空白を含む名前に対応
 ```bash
@@ -317,6 +322,26 @@ done
 |a -lt b|a < b|
 |a -le b|a <= b|
 
+### 条件
+|条件|動作|
+|:--|:--|
+|&&(-a)| AND|
+|\|\|(-o)| OR|
+
+### testコマンド(ファイル)
+|option|動作|
+|:--|:--|
+|test -e file|file が存在するならば真|
+|test -f file|file が普通のファイルならば真|
+|test -d file|file がディレクトリならば真|
+|test -s file|file が 0 より大きいサイズならば真|
+|test -r file|file が読み取り可能ならば真|
+|test -w file|file が書き込み可能ならば真|
+|test -x file|file が実行可能ならば真|
+
+※真(0), 偽(1)\
+※testコマンドは [ 条件式 ] で代用可能
+
 ## 関数
 `function` は省略可能。
 
@@ -346,6 +371,21 @@ elif [ "$(expr substr $UN 1 7)" == 'MSYS_NT' ]; then
 else
   echo "Your platform is not supported."
 fi
+```
+
+## オプション解析
+値が必要なオプションには `:` を付ける。\
+エラーメッセージを表示しない場合は、オプションの先頭に `:` を付ける。
+
+```bash
+while getopts :ab:c: OPT
+do
+  case $OPT in
+    "a" ) FLG_A="TRUE" ;;
+    "b" ) FLG_B="TRUE" ; VALUE_B="$OPTARG" ;;
+    "c" ) FLG_C="TRUE" ; VALUE_C="$OPTARG" ;;
+  esac
+done
 ```
 
 ## JSON
@@ -419,6 +459,19 @@ EOS
 - [jq コマンドを使う日常のご紹介](https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af)
 - [jqコマンドでjsonデータを整形・絞り込み](https://qiita.com/Nakau/items/272bfd00b7a83d162e3a)
 
+## デバッグ
+- `bash -x` で実行中の変数や変数に設定する値が出力される
+  - `+` がシェルスクリプトで実行されたコマンド
+  - `++` が バッククオート内で実行されたコマンド
+- `bash -v` で実行されるコマンドが出力される
+  - 変数は展開されない
+  - `-x` との併用可能
+- スクリプト中に `:` で始まる行はヌルコマンドとなり処理されない
+  - `-x` と併用することが前提
+  - `$?` には影響を与えるので注意
+  - 文字列の先頭を半角にしないと日本語が化ける
+
+
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
   - Git Bashでは環境変数に HOME を追加しないといけないかも…
@@ -428,8 +481,14 @@ EOS
   - それでもダメならターミナルが固まった疑惑
 - bashのバージョン確認
   - '$ bash --version`
+- WSL2
+  - Windows->Linux 
+    - `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
+  - Linux->Windows
+    - `/mnt/c/`
 
 
 # 参考
 - [ターミナルプロンプトの表示・色の変更](https://qiita.com/hmmrjn/items/60d2a64c9e5bf7c0fe60)
 - [とほほのBash入門](https://www.tohoho-web.com/ex/shell.html)
+- [UNIX & Linux コマンド・シェルスクリプト リファレンス](https://shellscript.sunone.me/)
