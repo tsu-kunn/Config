@@ -100,8 +100,8 @@
             "icon": "terminal-cmd"
         },
         "Git Bash": {
-            "source": "Git Bash",
-            "icon": "c:/Program Files/Git/mingw64/share/git/git-for-windows.ico"
+            "source": "Git Bash"
+            // "icon": "c:/Program Files/Git/mingw64/share/git/git-for-windows.ico"
         }
     },
 
