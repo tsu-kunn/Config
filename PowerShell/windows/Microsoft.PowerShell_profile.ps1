@@ -9,7 +9,7 @@ Add-type -AssemblyName System.Web
 # ($PSVersionTable.Platform -eq "Unix") ‚Í PowerShell 6.0 ‚©‚ç‘Î‰ž
 if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# path
-	$ENV:PATH += ";C:\Program Files\Git\usr\bin;C`:\files\bin;"
+	$ENV:PATH += ";C:\Program Files\Git\usr\bin;${HOME}\bin;"
 
 	# alias
 	Set-Alias -name vi -Value "vim.exe"
@@ -18,6 +18,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# variable
 	$Projects = "c:\files\work\projects\"
 	$Memo = "C:\Files\work\Memo"
+	$Bext = ".md"
 	$Div = "\\"
 
 	# use linux diff
@@ -38,6 +39,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# variable
 	$Projects = "${HOME}/GitHub/"
 	$Memo = "${HOME}/GitHub/Config/md"
+	$Bext = ".md"
 	$Div = "/"
 
 	function diff {
@@ -297,7 +299,7 @@ function memow
 	}
 
 	if ([System.IO.Path]::GetExtension($FName) -eq "") {
-		$FName += ".md"
+		$FName += $Bext
 	}
 
 	editer $FName
