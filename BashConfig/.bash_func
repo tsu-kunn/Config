@@ -60,7 +60,7 @@ function whatos()
         Linux*)
             OS='Linux'
             ;;
-        mingw64_NT*)
+        MINGW64_NT*)
             OS='Windows'
             ;;
         MSYS_NT*)
@@ -80,8 +80,8 @@ function goto_projects()
 
 function Edit-Profile()
 {
-    # PowerShellの関数と合わせているので .bashrc を対象とする
-    editor "${HOME}/.bashrc"
+    # PowerShellの関数と合わせているので .bash_func を対象とする
+    editor "${HOME}/.bash_func"
 }
 
 function Edit-History()
