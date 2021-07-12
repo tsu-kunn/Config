@@ -358,19 +358,24 @@ function hogeFunc() {
 
 ```bash
 OS='None'
-UN=$(uname)
 
-if [ "$UN" == 'Darwin' ]; then
-  OS='Mac'
-elif [ "$(expr substr $UN 1 5)" == 'Linux' ]; then
-  OS='Linux'
-elif [ "$(expr substr $UN 1 10)" == 'MINGW64_NT' ]; then
-  OS='Windows'
-elif [ "$(expr substr $UN 1 7)" == 'MSYS_NT' ]; then
-  OS='Windows'
-else
-  echo "Your platform is not supported."
-fi
+case $(uname -a) in
+    Darwin*)
+        OS='Mac'
+        ;;
+    Linux*)
+        OS='Linux'
+        ;;
+    MINGW64_NT*)
+        OS='Windows'
+        ;;
+    MSYS_NT*)
+        OS='Windows'
+        ;;
+    *)
+        echo "Your platform is not supported."
+        ;;
+esac
 ```
 
 ## オプション解析
