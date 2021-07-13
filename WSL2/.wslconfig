@@ -1,0 +1,3 @@
+[wsl2]
+memory=4GB
+swap=2GB
