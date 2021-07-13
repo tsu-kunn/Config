@@ -156,6 +156,8 @@ Vimを使う場合は矩形選択とバッティングするので、default.jso
   // Paste
   "keys": "Ctrl+Shift+V"
   ```
+- WSL2のディレクトリの開始\
+  `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
 
 # 参考
 - [Windows ターミナルの概要](https://docs.microsoft.com/ja-jp/windows/terminal/)
