@@ -119,6 +119,12 @@
     // "terminal.integrated.fontWeight": "normal",
     // "terminal.integrated.fontWeightBold": "normal",
 
+    // ターミナルのタイトルをエスケープシーケンスによる変更を許可
+    "terminal.integrated.titleMode": "sequence",
+
+    // ターミナルの表示位置を editor に設定（default:view）
+    "terminal.integrated.defaultLocation": "editor",
+
     // テレメトリーを無効にする（MSに送らない）
     "telemetry.enableTelemetry": false,
 
