@@ -76,6 +76,26 @@ $ sudo apt install -y docker-ce docker-ce-cli containerd.io && sync
 $ sudo service docker start
 ```
 
+### Docker Compose
+1. 以下のコマンドを実行して最新版をダウンロードする
+  ```bash
+  $ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+  ```
+
+    - [最新版の確認](https://github.com/docker/compose/releases)
+    - ※Proxy環境下の場合は `sudo -E` にする
+1. 実行権限の付与
+  ```bash
+  $ sudo chmod +x /usr/local/bin/docker-compose
+  ```
+1. コマンドライン補完をインストール
+  ```bash
+  $ sudo curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+  ```
+1. インストールの確認
+  ```bash
+  $ docker-compose --version
+  ```
 
 ## Porxy
 Proxyを設定する必要がある場合は下記のように設定する。
