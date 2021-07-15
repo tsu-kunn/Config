@@ -75,6 +75,20 @@
 },
 ```
 
+## Pixel Shaders
+`setting.json` の default に以下の設定を追加する。
+
+```json
+"experimental.pixelShaderPath": "<path to a .hlsl pixel shader>"
+```
+
+## サンプル
+- [terminal/samples/PixelShaders/](https://github.com/microsoft/terminal/tree/main/samples/PixelShaders)
+
+## 参考HP
+- [Windows Terminalの背景でレイマーチング](https://gam0022.net/blog/2021/03/08/raymarching-in-windows-terminal/)
+
+
 # ショートカットキー
 
 ## 編集
@@ -161,4 +175,5 @@ Vimを使う場合は矩形選択とバッティングするので、default.jso
 
 # 参考
 - [Windows ターミナルの概要](https://docs.microsoft.com/ja-jp/windows/terminal/)
+- [microsoft/terminal](https://github.com/microsoft/terminal)
 
