@@ -76,14 +76,27 @@ $ sudo apt install -y docker-ce docker-ce-cli containerd.io && sync
 $ sudo service docker start
 ```
 
-### Docker Compose
+### コンテナの実行
+```bash
+$  docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 -u node --name nodejs_14173 node:14.17.3 /bin/bash
+```
+
+- `-it` でホスト保持、入力可能になる
+- `-v [ホストのディレクトリ]:[コンテナのディレクトリ]` でファイルを共有・永続化できる
+- `-w [作業ディレクトリ]` で開始の作業ディレクトリを指定できる
+- `-p [ホストのポート]:[コンテナのポート]` でマッピングができる
+- `-u [コンテナのユーザー名]` でルート以外のユーザーにへこうできる
+  - コンテナにユーザーを追加するにはイメージを作り直す必要あり
+
+## Docker Compose
+※Proxy環境下の場合は `sudo -E` にする。
+
 1. 以下のコマンドを実行して最新版をダウンロードする
   ```bash
   $ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
   ```
 
     - [最新版の確認](https://github.com/docker/compose/releases)
-    - ※Proxy環境下の場合は `sudo -E` にする
 1. 実行権限の付与
   ```bash
   $ sudo chmod +x /usr/local/bin/docker-compose
@@ -96,6 +109,52 @@ $ sudo service docker start
   ```bash
   $ docker-compose --version
   ```
+
+### Node.jsでの使用例
+#### 1 - イメージ取得
+```bash
+$ docker pull node:14.17.3
+```
+
+#### 2 - Docker Compose 定義
+以下の内容の `docker-compose.yaml` を作成する。
+
+```yaml
+version: '3'
+
+services:
+    app:
+        image: node:14.17.3
+        container_name: nodejs_LTS
+        tty: true
+        volumes:
+            - ./src:/src
+        working_dir: "/src"
+```
+
+#### 3 - Node.jsの実行
+##### 実行ディレクトリの構造
+
+```
+.
++ docker-compose.yaml
++ src
+  + sample.js
+```
+
+##### 実行手順
+
+```bash
+# コンテナ起動
+$ docker-compose up -d
+# sample.js 実行
+$ docker-compose run --rm app node sample.js
+```
+
+#### 参考HP
+- [Docker コンテナを使って Node.js 開発を始める](https://zenn.dev/ymasaoka/articles/start-nodejs-development-with-docker)
+- [Docker入門（第一回）～Dockerとは何か、何が良いのか～](https://knowledge.sakura.ad.jp/13265/)
+
 
 ## Porxy
 Proxyを設定する必要がある場合は下記のように設定する。
