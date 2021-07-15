@@ -123,7 +123,7 @@
     "terminal.integrated.titleMode": "sequence",
 
     // ターミナルの表示位置を editor に設定（default:view）
-    "terminal.integrated.defaultLocation": "editor",
+    "terminal.integrated.defaultLocation": "view",
 
     // テレメトリーを無効にする（MSに送らない）
     "telemetry.enableTelemetry": false,
