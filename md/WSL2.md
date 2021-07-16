@@ -107,7 +107,7 @@ Node.js公式のDockerイメージに、Proxy設定とvimを追加する。
 
 #### Dockerfile
 ```
-FROM node:14.17.3                                                                                                                         2
+FROM node:14.17.3
 RUN echo "Acquire::http::Proxy \"http://proxy.example.co.jp:8080\";" > /etc/apt/apt.conf.d/01proxy \
     && echo "Acquire::https::Proxy \"http://proxy.example.co.jp:8080\";" >> /etc/apt/apt.conf.d/01proxy
 RUN npm -g config set proxy http://proxy.example.co.jp:8080/ \
