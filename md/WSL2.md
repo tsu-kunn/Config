@@ -88,6 +88,9 @@ $  docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 -u n
 - `-u [コンテナのユーザー名]` でルート以外のユーザーにへこうできる
   - コンテナにユーザーを追加するにはイメージを作り直す必要あり
 
+### 参考HP
+- [Docker Documentation](https://docs.docker.com/)
+
 ## Docker Compose
 ※Proxy環境下の場合は `sudo -E` にする。
 
@@ -194,12 +197,12 @@ Acquire::https::Proxy "http://proxy.example.com:8080";
 ```bash
 export no_proxy="127.0.0.1,localhost"
 export NO_PROXY="127.0.0.1,localhost"
-export https_proxy="http://proxy.nanao.co.jp:8080/"
-export HTTPS_PROXY="http://proxy.nanao.co.jp:8080/"
-export http_proxy="http://proxy.nanao.co.jp:8080/"
-export HTTP_PROXY="http://proxy.nanao.co.jp:8080/"
-export ftp_proxy="http://proxy.nanao.co.jp:8080/"
-export FTP_PROXY="http://proxy.nanao.co.jp:8080/"
+export https_proxy="http://proxy.example.co.jp:8080/"
+export HTTPS_PROXY="http://proxy.example.co.jp:8080/"
+export http_proxy="http://proxy.example.co.jp:8080/"
+export HTTP_PROXY="http://proxy.example.co.jp:8080/"
+export ftp_proxy="http://proxy.example.co.jp:8080/"
+export FTP_PROXY="http://proxy.example.co.jp:8080/"
 ```
 
 ## ディストリビューションアップグレード
