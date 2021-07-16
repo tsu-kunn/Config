@@ -88,8 +88,52 @@ $  docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 -u n
 - `-u [コンテナのユーザー名]` でルート以外のユーザーにへこうできる
   - コンテナにユーザーを追加するにはイメージを作り直す必要あり
 
+※`sudo` が使えない可能性があるので `-u` は指定せず、`su <ユーザー名>` を利用した方がよい。
+
+### 変更したコンテナからイメージ作成
+#### Dockerコンテナの実行を停止する。
+
+```bash
+$ docker stop <コンテナ名>
+```
+
+#### Dockerイメージ作成
+```bash
+$ docker commit <コンテナ名> <作成するDockerイメージ名>
+```
+
+### Dockerfile からイメージ作成
+Node.js公式のDockerイメージに、Proxy設定とvimを追加する。
+
+#### Dockerfile
+```
+FROM node:14.17.3                                                                                                                         2
+RUN echo "Acquire::http::Proxy \"http://proxy.example.co.jp:8080\";" > /etc/apt/apt.conf.d/01proxy \
+    && echo "Acquire::https::Proxy \"http://proxy.example.co.jp:8080\";" >> /etc/apt/apt.conf.d/01proxy
+RUN npm -g config set proxy http://proxy.example.co.jp:8080/ \
+    && npm -g config set https-proxy http://proxy.example.co.jp:8080/
+RUN echo "\n" >> /home/node/.bashrc \
+    && echo "export ELECTRON_GET_USE_PROXY=true" >> /home/node/.bashrc \
+    && echo "export GLOBAL_AGENT_HTTPS_PROXY=http://proxy.example.com:8080/" >> /home/node/.bashrc
+RUN apt update && apt install -y vim
+ADD --chown=node:node .vimrc /home/node/
+ADD --chown=node:node .wgetrc /home/node/
+ENTRYPOINT /bin/bash
+```
+
+※COPY/ADD は `Dockerfile` があるディレクトリがルートディレクトリになるっぽい。\
+　上位のファイルをフルパスで書いてもコピーに失敗する。
+
+#### 実行
+```bash
+$ docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 --name nodejs-proxy node-proxy:14.17.3
+```
+
+※root ユーザーで入り、作業をする際は `su node` でユーザーを切り替えて作業する。
+
 ### 参考HP
 - [Docker Documentation](https://docs.docker.com/)
+- [Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/)
 
 ## Docker Compose
 ※Proxy環境下の場合は `sudo -E` にする。
