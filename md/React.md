@@ -15,8 +15,8 @@ $ npm -g config set https-proxy http://proxy.example.com:8080
 下記を環境変数に追加する。
 
 ```
-ELECTRON_GET_USE_PROXY=true 
-GLOBAL_AGENT_HTTPS_PROXY=http://proxy.example.com:8080
+export ELECTRON_GET_USE_PROXY=true 
+export GLOBAL_AGENT_HTTPS_PROXY=http://proxy.example.com:8080
 ```
 
 ## Node.js のインストール
