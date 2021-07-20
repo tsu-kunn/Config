@@ -158,7 +158,9 @@ Vimを使う場合は矩形選択とバッティングするので、default.jso
   "colorScheme": "One Half Dark",
   "fontFace": "Myrica M",
   "fontSize": 12
-  ```
+  "acrylicOpacity": 0.5,
+  "useAcrylic": true
+```
 - profiles の Windows PowerShell のテーマを変更
   ```JSON
   "colorScheme": "Campbell Powershell"
