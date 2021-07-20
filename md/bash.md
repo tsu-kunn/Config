@@ -385,37 +385,64 @@ esac
 ```bash
 while getopts :ab:c: OPT
 do
-  case $OPT in
-    "a" ) FLG_A="TRUE" ;;
-    "b" ) FLG_B="TRUE" ; VALUE_B="$OPTARG" ;;
-    "c" ) FLG_C="TRUE" ; VALUE_C="$OPTARG" ;;
-  esac
+    case $OPT in
+        "a" ) FLG_A="TRUE" ;;
+        "b" ) FLG_B="TRUE" ; VALUE_B="$OPTARG" ;;
+        "c" ) FLG_C="TRUE" ; VALUE_C="$OPTARG" ;;
+    esac
 done
 ```
 
-## JSON
+## 関数のパイプ対応
+testコマンドの `-p` は名前付きパイプであれば true になる。\
+パイプによる入力がある場合は標準入力を変数に入れる。
+
+```bash
+str=$@
+
+if [ -p /dev/stdin ]; then
+    if [ "`echo $@`" == "" ]; then 
+        str=`cat -`
+    fi
+fi
+```
+
+## デバッグ
+- `bash -x` で実行中の変数や変数に設定する値が出力される
+  - `+` がシェルスクリプトで実行されたコマンド
+  - `++` が バッククオート内で実行されたコマンド
+- `bash -v` で実行されるコマンドが出力される
+  - 変数は展開されない
+  - `-x` との併用可能
+- スクリプト中に `:` で始まる行はヌルコマンドとなり処理されない
+  - `-x` と併用することが前提
+  - `$?` には影響を与えるので注意
+  - 文字列の先頭を半角にしないと日本語が化ける
+
+
+# JSON
 BashでJSONを扱う場合は `jq` というツールを使うのがベターっぽい。\
 ⇒[公式サイト](https://stedolan.github.io/jq/)
 
-### インストール
-#### Windows
+## インストール
+### Windows
 1. 公式サイトのダウンロードから `Windows(64-bit)` を選択。
 1. `jq-win64.exe` を `jq.exe` にリネーム。
 1. PATHが通っているフォルダへコピー。
 
-#### Linux
+### Linux
 ```bash
 $ sudo apt install jq
 ```
 
-### 使い方
-#### 整形
+## 使い方
+### 整形
 ```bash
 $ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq .
 $ cat json_test.json | jq .
 ```
 
-#### 絞り込み
+### 絞り込み
 ```bash
 $ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.name'
 $ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '."color list"[1]'
@@ -425,19 +452,19 @@ $ cat json_test.json | jq '.[0].user_info
 $ cat json_test.json | jq '.[].user_info'
 ```
 
-#### 変数へ代入
+### 変数へ代入
 ```bash
 $ a=$(echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.name')
 $ b=$(cat json_test.json | jq '.[].user_info')
 ```
 
-#### 保存
+### 保存
 ```bash
 $ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq . > jq_test.json
 $ cat json_test.json | jq . > jq_test.json
 ```
 
-#### JSON作成
+### JSON作成
 ヒアドキュメント機能を使用する。
 
 ```bash
@@ -452,7 +479,7 @@ EOS
 )
 ```
 
-#### オプション
+### オプション
 |Option|動作|
 |:--|:--|
 |-r|ダブルクォーテーションなし|
@@ -460,22 +487,41 @@ EOS
 |--tab|インデントをタブにする|
 |--indent n|指定された数のスペースを使用(MAX:7)|
 
-### 参考
+## 参考
 - [jq コマンドを使う日常のご紹介](https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af)
 - [jqコマンドでjsonデータを整形・絞り込み](https://qiita.com/Nakau/items/272bfd00b7a83d162e3a)
 
-## デバッグ
-- `bash -x` で実行中の変数や変数に設定する値が出力される
-  - `+` がシェルスクリプトで実行されたコマンド
-  - `++` が バッククオート内で実行されたコマンド
-- `bash -v` で実行されるコマンドが出力される
-  - 変数は展開されない
-  - `-x` との併用可能
-- スクリプト中に `:` で始まる行はヌルコマンドとなり処理されない
-  - `-x` と併用することが前提
-  - `$?` には影響を与えるので注意
-  - 文字列の先頭を半角にしないと日本語が化ける
+# curl
+wgetとよく比較されるツール…ではなく、ライブラリらしい。\
+wgetは再帰的取得、1URLに対してどれだけ処理ができるかが特徴。\
+ファイルをダウンロードするだけなら好きな方を使えばよい。
 
+## オプション
+|Option|動作|
+|:--|:--|
+|-o|ファイル出力|
+|-O|リクエスト先の名前でファイル出力|
+|-s|プログレス出力抑制|
+|-I|HTTP Header出力|
+|-i|Response Header, Body出力|
+|-v|リクエスト時のHeader出力|
+|-u|<ユーザー:パスワード>指定(BASIC認証)|
+|-L|リダイレクト先までアクセス|
+|-anyauth|認証方式自動判別|
+
+## URLエンコード
+```bash
+$ u=$(curl -s -w '%{url_effective}\n' --data-urlencode '日本語エンコード' -G '')
+$ echo ${u:2}
+```
+
+### ※補足: URLデコード
+```bash
+$ echo ${u:2} | nkf --url-input
+```
+
+## 参考
+- [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
