@@ -172,6 +172,13 @@ Vimを使う場合は矩形選択とバッティングするので、default.jso
   ```
 - WSL2のディレクトリの開始\
   `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
+- キーバインドの追加・変更
+  ```JSON
+  "keybindings": [
+      { "command": { "action": "splitPane", "split": "horizontal", "profile": "PowerShell" }, "keys": "alt+shift+P" },
+      { "command": { "action": "splitPane", "split": "horizontal", "profile": "Ubuntu-20.04" }, "keys": "alt+shift+L" }
+  ],
+  ```
 
 # 参考
 - [Windows ターミナルの概要](https://docs.microsoft.com/ja-jp/windows/terminal/)
