@@ -1,6 +1,7 @@
 #!/etc/bash
 
 # 共通関数
+
 # cmd output SJIS->UTF-8
 function wincmd()
 {
@@ -78,9 +79,36 @@ function goto_projects()
     cd "$MOVE_PATH"
 }
 
+function urlencode()
+{
+    str=$@
+
+    if [ -p /dev/stdin ]; then
+        if [ "`echo $@`" == "" ]; then 
+            str=`cat -`
+        fi
+    fi
+
+    url=$(curl -s -w '%{url_effective}\n' --data-urlencode "$str" -G '')
+    echo "${url:2}"
+}
+
+function urldecode()
+{
+    str=$@
+
+    if [ -p /dev/stdin ]; then
+        if [ "`echo $@`" == "" ]; then 
+            str=`cat -`
+        fi
+    fi
+
+    echo "$str" | nkf --url-input
+}
+
+# PowerShell関数の実装
 function Edit-Profile()
 {
-    # PowerShellの関数と合わせているので .bash_func を対象とする
     editor "${HOME}/.bash_func"
 }
 
