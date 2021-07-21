@@ -405,7 +405,31 @@ if [ -p /dev/stdin ]; then
         str=`cat -`
     fi
 fi
+
+～ $str を使った処理～
 ```
+
+if文をまとめてもよい。
+```bash
+if [ -p /dev/stdin ] && [ "`echo $@`" == "" ]; then
+    str=`cat -`
+fi
+```
+
+### パイプのみ
+パイプ処理のみで使用する場合はこちらの方がよい…かも。\
+cat出力をパイプした場合、ちゃんと改行されるので。
+
+```bash
+function urlencode()
+{
+    while read -r line
+    do
+        ～ $line を使った処理～
+    done
+}
+```
+
 
 ## デバッグ
 - `bash -x` で実行中の変数や変数に設定する値が出力される
