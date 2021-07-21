@@ -352,6 +352,14 @@ OTHER_WRITABLE 01;34 # dir that is other-writable (o+w) and not sticky
 eval $(dircolors -b ~/.dircolors)
 ```
 
+## path変換
+```bash
+$ wslpath "c:\files\work"
+```
+
+- `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
+- `-w` でWSLパスをWindowsパスに変換
+
 
 # 参考HP
 - [Windows 10 用 Windows Subsystem for Linux のインストール ガイド](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10)
