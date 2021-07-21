@@ -81,21 +81,25 @@ function goto_projects()
 
 function urlencode()
 {
-    str=$@
-
-    if [ -p /dev/stdin ]; then
-        if [ "`echo $@`" == "" ]; then 
-            str=`cat -`
-        fi
+    if [ -p /dev/stdin ] && [ "`echo $@`" == "" ]; then 
+        # パイプからの入力
+        while read -r line
+        do
+            url=$(curl -s -w '%{url_effective}\n' --data-urlencode "$line" -G '')
+            echo "${url:2}"
+        done
+    else
+        # 引数からの入力
+        str="$@"
+        url=$(curl -s -w '%{url_effective}\n' --data-urlencode "$str" -G '')
+        echo "${url:2}"
     fi
 
-    url=$(curl -s -w '%{url_effective}\n' --data-urlencode "$str" -G '')
-    echo "${url:2}"
 }
 
 function urldecode()
 {
-    str=$@
+    str="$@"
 
     if [ -p /dev/stdin ]; then
         if [ "`echo $@`" == "" ]; then 
