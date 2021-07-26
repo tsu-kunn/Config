@@ -21,7 +21,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Bext = ".txt"
 	$Div = "\\"
 
-	# use linux diff
+	# use linux command(Git Bash or WSL2)
 	# Get-Alias diff *> $null && Remove-Item alias:diff -Force # ver.7.0～
 	Get-Alias diff *> $null
 	if ($?) {
@@ -31,6 +31,14 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	function diff
 	{
 		diff.exe -u $args
+		# wsl diff -u $args
+	}
+	function grep {
+		# windowsから呼び出すと'\'を'/'に変換できないので、'\\'に置き換えて実行
+		$args[-1] = wsl wslpath $args[-1].Replace('\', '\\')
+
+		$input | grep.exe --color=auto $args
+		# $input | wsl grep --color=auto $args
 	}
 } else {
 	# alias
@@ -42,9 +50,15 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Bext = ".md"
 	$Div = "/"
 
+	# Windowsの場合と表示を合わせる
 	function diff
     {
 		/usr/bin/diff -u $args
+	}
+
+	function grep
+	{
+		$input | /usr/bin/grep --color=auto $args
 	}
 }
 
