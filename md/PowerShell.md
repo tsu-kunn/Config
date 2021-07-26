@@ -351,6 +351,37 @@ $JsonData = $ObjectData | ConvertTo-Json
 Set-Content -path json_test_output.json -Value $JsonData
 ```
 
+### パイプライン入力
+#### 自動変数で受け取る
+- `$input` オブジェクトから読み取る
+  - `$input.Name` といった感じでプロパティを指定して使う
+- `$PSItem` オブジェクトから読み取る
+  - `process {...}` ブロック内で使用可能
+  - 引数で値を渡した場合は値がない
+
+### 変数で受け取る
+パラメーターの `ValueFromPipeline` 属性を有効にする。\
+引数とパイプライン両方で値を受け取ることが可能になる。（配列もOK）
+
+```PowerShell
+param ([Parameter(ValueFromPipeline=$true)]$str)
+```
+
+### begin/process/end ブロック
+`$input` 以外でパイプライン入力を受け取る場合は `process` ブロックが必要。\
+`begin`, `end` は省略可能。
+
+``` PowerShell
+begin {
+    初期化処理
+}
+process {
+    メイン処理（必須）
+}
+end {
+    終了処理
+}
+```
 
 ## 覚えるべきコマンドレット
 |コマンドレット|alias|動作|
