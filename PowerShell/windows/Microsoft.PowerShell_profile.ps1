@@ -18,7 +18,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# variable
 	$Projects = "c:\files\work\projects\"
 	$Memo = "C:\Files\work\Memo"
-	$Bext = ".md"
+	$Bext = ".txt"
 	$Div = "\\"
 
 	# use linux diff
@@ -42,8 +42,9 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	$Bext = ".md"
 	$Div = "/"
 
-	function diff {
-		diff -u $args
+	function diff
+    {
+		/usr/bin/diff -u $args
 	}
 }
 
@@ -125,6 +126,7 @@ function Edit-History
 
 	.DESCRIPTION
 	現在のパスをprojectsフォルダに変更します。
+	（Bashと共通関数）
 
 	.PARAMETER proj
 	追加のプロジェクトパス。
@@ -286,6 +288,7 @@ function manweb {
 	.DESCRIPTION
 	指定のファイル名で新規メモファイルを開きます。
 	指定がない場合は "yyyymmddHH" で新規メモファイルを開きます。
+	（Bashと共通関数）
 #>
 function memow
 {
@@ -312,6 +315,7 @@ function memow
 	.DESCRIPTION
 	第一引数の名前 + "yyyyMMddHHmmss" でアーカイブを作成します。
 	複数指定する場合はスペースで区切ってください。
+	（Bashと共通関数）
 #>
 function bakarc
 {
@@ -349,3 +353,40 @@ function comp
 	  Select-Object -Property @{Name = 'ReadCount'; Expression = { $_.InputObject.ReadCount } }, * |`
 	  Sort-Object -Property ReadCount
 }
+
+<#
+	.SYNOPSIS
+	文字列をURLエンコード
+
+	.DESCRIPTION
+	指定された文字列をURLエンコードします。
+	パイプライン対応。
+	（Bashと共通関数）
+#>
+function urlencode
+{
+	param ([Parameter(ValueFromPipeline=$true)]$str)
+
+	process {
+		[System.Web.HttpUtility]::UrlEncode($str)
+	}
+}
+
+<#
+	.SYNOPSIS
+	URLエンコードを文字列にデコード
+
+	.DESCRIPTION
+	指定されたURLエンコードを文字列にデコードします。
+	パイプライン対応。
+	（Bashと共通関数）
+#>
+function urldecode
+{
+	param ([Parameter(ValueFromPipeline = $true)]$str)
+
+	process {
+		[System.Web.HttpUtility]::UrlDecode($str)
+	}
+}
+
