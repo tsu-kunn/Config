@@ -60,7 +60,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 
 	function grep
 	{
-		$input | /usr/bin/grep --color=auto $args
+		$input | /bin/grep --color=auto $args
 	}
 }
 
