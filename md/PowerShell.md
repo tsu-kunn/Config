@@ -424,7 +424,11 @@ end {
 
 ### ファイルとディレクトリの数とサイズ取得
 ```PowerShell
+# 隠しファイル非対象
 > Get-ChildItem -Recurse | Measure-Object Length -Maximum -Minimum -Average -Sum
+
+# 隠しファイル対象
+> Get-ChildItem -Recurse -Force | Measure-Object Length -Maximum -Minimum -Average -Sum
 ```
 
 ### JSONCをWindows PowerShellで読み込む場合の対応
@@ -446,6 +450,23 @@ end {
 |-NotMatch|一致しない行を表示|
 |-Contex 行数|一致した前後を行数分表示|
 |-CaseSensitive|大文字と小文字を区別|
+
+### 進数変換
+#### 10進数から変換
+```PowerShell
+# 2進数
+> [Convert]::ToString(<値>, 2)
+# 16進数
+> [Convert]::ToString(<値>, 16)
+```
+
+#### 2, 16進数から変換
+```PowerShell
+# 2進数
+> [Convert]::ToInt32(<2進数>, 2)
+# 16進数
+> [Convert]::ToInt32(<16進数>, 16)
+```
 
 
 ## Web
