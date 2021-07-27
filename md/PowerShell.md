@@ -220,6 +220,29 @@ function prompt
 |6|インフォメーションストリーム|
 |*|すべてのストリーム|
 
+### 正規表現
+|表現|動作|
+|:--|:--|
+|.|任意の1文字|
+|^|行頭|
+|$|行末|
+|\文字|エスケープ|
+|[文字列]|ブランケット内の1文字に一致|
+|[^文字列]|ブランケット内に存在しない1文字に一致|
+|[始-終]|範囲指定でのブランケット|
+|\w|文字に一致|
+|\W|文字以外に一致|
+|\s|ホワイトスペースに一致|
+|\S|ホワイトスペース以外に一致|
+|\d|数字に一致|
+|\D|数字以外に一致|
+|?|0回または1回の繰り返し|
+|*|0回以上の繰り返し|
+|+|1回以上の繰り返し|
+|{n}|n回繰り返し|
+|{n,}|n回以上繰り返し|
+|{n,m}|n回以上m回以下繰り返し|
+
 ### PowerShellGet
 - バージョンの確認
   ```PowerShell
@@ -344,7 +367,7 @@ Write-Host $ObjectData.user_info[0]
 
 Write-Output $ObjectData[0].name
 Write-Output $ObjectData[0].age
-Write-Output $ObjectData[2].'user_info'.user_name
+Write-Output $ObjectData[2].user_info.user_name
 
 # JSON保存
 $JsonData = $ObjectData | ConvertTo-Json
@@ -408,6 +431,21 @@ end {
 ```PowerShell
 > $x = Get-Content -Path .\settings.json | Where-Object{ $_ -notmatch "^\s*//.*$" } | ConvertFrom-Json
 ```
+
+### grepに近い動作
+```PowerShell
+> ls | oss | sls <条件or正規表現>
+```
+
+※`ls | sls` だと一覧に含まれるファイルの中まで検索してしまうので、`oss` でテキストにして渡す。
+
+### Select-String のよく使うオプション
+|オプション|動作|
+|:--|:--|
+|-SimpleMatch|正規表現を使用せずに検索|
+|-NotMatch|一致しない行を表示|
+|-Contex 行数|一致した前後を行数分表示|
+|-CaseSensitive|大文字と小文字を区別|
 
 
 ## Web
