@@ -34,10 +34,12 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 		# wsl diff -u $args
 	}
 	function grep {
-		# windowsから呼び出すと'\'を'/'に変換できないので、'\\'に置き換えて実行
-		$args[-1] = wsl wslpath $args[-1].Replace('\', '\\')
-
+		# 簡易的な変換のみ実施
+		$args[-1] = $args[-1].Replace('\', '/')
 		$input | grep.exe --color=auto $args
+
+		# windowsから呼び出すと'\'を'/'に変換できないので、'\\'に置き換えて実行
+		# $args[-1] = wsl wslpath $args[-1].Replace('\', '\\')
 		# $input | wsl grep --color=auto $args
 	}
 } else {
@@ -288,7 +290,8 @@ function New-Password($len, $opt = 2)
 	.DESCRIPTION
 	指定コマンドのWebヘルプを表示します。
 #>
-function manweb {
+function manweb
+{
 	Param(
 		[String] $Command = 'Get-Help'
 	)
@@ -350,6 +353,7 @@ function bakarc
 
 		# 圧縮
 		Compress-Archive -Path $args -DestinationPath $FName -Force
+		# tar cvzf $FName $args
 	}
 }
 
