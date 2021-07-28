@@ -215,10 +215,63 @@ echo ${HOGE}" World"
 ```bash
 echo ${HOGE0}${HOGE1}
 ```
+
+### 部分文字列
+#### オフセット
+```bash
+echo ${HOGE:0:2}
+echo ${HOGE:2:4}
+```
+
+#### 最後からオフセット
+```bash
+echo ${HOGE:0:-2}
+```
+
+#### 右端から最短パターン一致までを除外
+```bash
+HOGE=abc.def.ghi
+echo ${HOGE%.*}
+# => abc.def
+```
+
+#### 右端から最長パターン一致までを除外
+```bash
+HOGE=abc.def.ghi
+echo ${HOGE%%.*}
+# => abc
+```
+
+#### 左端から最短パターン一致まで除外
+```bash
+HOGE=abc.def.ghi
+echo ${HOGE#*.}
+# => def.ghi
+```
+
+#### 左端から最長パターン一致まで除外
+```bash
+HOGE=abc.def.ghi
+echo ${HOGE##*.}
+# => ghi
+```
+
 ### ローカル変数
 ```bash
 local tmp="HOGE"
 ```
+
+## 変数展開
+|記述|動作|
+|:--|:--|
+|${param:-word}|${param}が NULL の場合 word に置き換える|
+|${param:=word}|${param}が NULL の場合 word に置き換え、${param}に word を代入する|
+|${param:?[word]}|${param}が NULL の場合 word を出力してシェルをエラー終了する|
+|${param:+word}|${param}が NULL 以外の場合 word に置き換える|
+|${#param}|${param}の文字列数に置き換える|
+
+### 参考HP
+- [シェルの変数展開](https://qiita.com/bsdhack/items/597eb7daee4a8b3276ba)
 
 ## 特殊変数
 - $0: シュルスクリプト名
@@ -432,6 +485,8 @@ function urlencode()
 
 
 ## デバッグ
+- `bash -n` でシンタックスチェックを実施
+  - `-x` と `-v` との併用可能
 - `bash -x` で実行中の変数や変数に設定する値が出力される
   - `+` がシェルスクリプトで実行されたコマンド
   - `++` が バッククオート内で実行されたコマンド
@@ -515,6 +570,7 @@ EOS
 - [jq コマンドを使う日常のご紹介](https://qiita.com/takeshinoda@github/items/2dec7a72930ec1f658af)
 - [jqコマンドでjsonデータを整形・絞り込み](https://qiita.com/Nakau/items/272bfd00b7a83d162e3a)
 
+
 # curl
 wgetとよく比較されるツール…ではなく、ライブラリらしい。\
 wgetは再帰的取得、1URLに対してどれだけ処理ができるかが特徴。\
@@ -544,6 +600,16 @@ $ echo ${u:2}
 $ echo ${u:2} | nkf --url-input
 ```
 
+### 連番保存
+```bash
+$ curl -O "http://example.com/[001-100].jpg"
+```
+
+#### 名前が重複する場合
+```bash
+curl -o test#1 "http://example.com/[001-100].jpg"
+```
+
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
@@ -561,6 +627,13 @@ $ echo ${u:2} | nkf --url-input
     - `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
   - Linux->Windows
     - `/mnt/c/`
+  - path変換
+  ```bash
+  $ wslpath "c:\files\work"
+  ```
+    - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
+    - `-w` でWSLパスをWindowsパスに変換
+
 
 
 # 参考
