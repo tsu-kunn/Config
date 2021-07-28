@@ -374,6 +374,10 @@ $JsonData = $ObjectData | ConvertTo-Json
 Set-Content -path json_test_output.json -Value $JsonData
 ```
 
+#### 補足
+`ConvertTo-Json` と　`ConvertFrom-Json` でネストが深いと変換されないことがある。\
+その場合はオプションの `-Depth` でネストの深さを設定する。(default:2)
+
 ### パイプライン入力
 #### 自動変数で受け取る
 - `$input` オブジェクトから読み取る
@@ -415,6 +419,8 @@ end {
 |Get-Content|type|ファイルの中身を表示|
 |Show-Markdown|-|Markdownテキストの表示|
 |ConvertFrom-Markdown|-|Markdownからオブジェクトに変換|
+|Where-Object|?|プロパティ値に基づいてコレクションからオブジェクトを選択|
+|ForEach-Object|%|入力オブジェクトのコレクション内の各アイテムに対して操作を実行|
 
 ## コマンド例
 ### 16進ダンプ
@@ -467,6 +473,18 @@ end {
 # 16進数
 > [Convert]::ToInt32(<16進数>, 16)
 ```
+
+### 時間・日数計算
+```PowerShell
+# 8時間前
+> (Get-Date).AddHours(-8)
+# 30日後
+> (Get-Date).AddDays(30)
+# 指定日から60日前
+> ([DateTime]"2021/07/28").AddDays(-60)
+```
+
+### 日付
 
 
 ## Web
