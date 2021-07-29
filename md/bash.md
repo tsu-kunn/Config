@@ -157,8 +157,13 @@ Acquire::http::Proxy "http://proxy.example.com:8080";
 Acquire::https::Proxy "http://proxy.example.com:8080";
 ```
 
-
-# シェルスクリプト
+## リダイレクト
+```bash
+$ <command> > log.txt
+$ <command> > log.txt 2> error.txt # 標準出力とエラー出力を分ける
+$ <command> > log.txt 2>&1         # 標準出力とエラー出力をまとめる
+$ <command> > /dev/null            # 標準出力を破棄
+```
 
 ## 計算
 `$((...))` で囲うと計算になる。
@@ -177,6 +182,8 @@ exprコマンドを使用する。
 $ a=5
 $ b=10
 $ expr $a + $b
+15
+$ echo $(($a + $b))
 15
 ```
 
@@ -305,6 +312,9 @@ echo ${arry[@]}
 # 要素数
 echo ${#a[@]}
 ```
+
+
+# シェルスクリプト
 
 ## 命令
 ### if
@@ -613,6 +623,92 @@ curl -o test#1 "http://example.com/[001-100].jpg"
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
+# コマンド備忘録
+## 代表的なフィルターコマンド
+|コマンド名|動作|
+|:--|:--|
+|cat|入力をそのまま表示|
+|head|先頭の部分を表示|
+|tail|末尾の部分を表示|
+|grep|指定した検索パターンに一致する行だけを表示|
+|sort|順番に並べる|
+|uniq|重複した行を取り除く|
+|tac|逆順に出力|
+|wc|行数やバイト数を表示|
+
+## wc
+```bash
+$ wc -l <ファイル名> # 行数を表示
+$ wc -w <ファイル名> # 単語数を表示
+$ wc -c <ファイル名> # バイト数を表示
+```
+
+## sort
+```bash
+$ ls -l | sort -k <フィールド番号> # フィールドの値でソート
+$ cat hoge.txt | sort -n           # 文字列を数字とみなしてソート
+$ cat hoge.txt | sort -r           # 逆順にソート
+```
+
+## cut
+```bash
+$ cut -d <区切り文字> -f <フィールド番号> [<ファイル名>]
+```
+
+## grep
+```bash
+$ grep [オプション] <検索パターン> <ファイル名>
+```
+
+- オプション(一部)
+  - `-v`: 正規表現で一致しない行のみ表示
+  - `-c`: マッチした行数を表示
+  - `-n`: マッチした行の前に行番号を表示
+  - `-i`: 大文字と小文字を区別しない
+  - `-w`: 完全な単語マッチした行のみ表示
+  - `-r`: 各ディレクトリ下のすべてのファイルを再帰的に読み取る
+
+## find
+```bash
+$ find <検索パス> -name <検索文字>
+$ find <検索パス> -type<f/d/l/b/c/p/s> -name <検索文字>
+$ find <検索パス> -regextype posix-basic --regex <正規表現>
+```
+
+- type
+  - f: ファイル
+  - d: ディレクトリ
+  - l: シンボリックリンク
+  - b: ブロックデバイスファイル
+  - c: キャラクタデバイスファイル
+  - p: 名前付きパイプ
+  - s: ソケット
+
+## sed
+```bash
+$ sed 1d test.txt    # 1行目を削除
+$ sed 2,5d test.txt  # 2～5行目を削除
+$ sed /^B/d test.txt # 先頭がBで始まる行を削除
+$ sed s/置換前文字列/置換後文字列/フラグ
+```
+
+- フラグ
+  - `g`: 見つかったすべての文字列を置換
+  - `p`: 置換が発生した場合のみ出力
+
+## awk
+```bash
+$ ls -l | awk '{print $5,$9}'                  # 5行目と9行目を表示
+$ ls -l | awk '{print $(NF-1),$NF}'            # 後ろから2番目と1番目のフィールドを表示
+$ ls -l | awk '$NF ~ /^W/ {print $(NF-1),$NF}' # 最後のフィールドが 'W' で始まる行を表示
+$ ls -l | awk '/^-/ {print $(NF-1),$NF}'       # '-' で始まる行を表示
+$ awk -F "," `{print $2}` test.csv             # "," 区切りの2番目を表示
+```
+
+※`$NF`: 最後のフィールド番号
+※`$NR`: 行番号(1～)
+
+
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
   - Git Bashでは環境変数に HOME を追加しないといけないかも…
@@ -621,7 +717,9 @@ curl -o test#1 "http://example.com/[001-100].jpg"
 - 何も操作を受け付けなくなったら 'Ctrl-q' を押下する（Ctrl-sを押下した可能性あり）
   - それでもダメならターミナルが固まった疑惑
 - bashのバージョン確認
-  - '$ bash --version`
+  - `bash --version`
+- `Ctrl + D` でシェルを終了しない
+  - `set -o ignoreeof`
 - WSL2
   - Windows->Linux 
     - `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
