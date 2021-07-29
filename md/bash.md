@@ -686,9 +686,10 @@ $ find <検索パス> -regextype posix-basic --regex <正規表現>
 
 ## sed
 ```bash
-$ sed 1d test.txt    # 1行目を削除
-$ sed 2,5d test.txt  # 2～5行目を削除
-$ sed /^B/d test.txt # 先頭がBで始まる行を削除
+$ sed 1d test.txt       # 1行目を削除
+$ sed 2,5d test.txt     # 2～5行目を削除
+$ sed /^B/d test.txt    # 先頭がBで始まる行を削除
+$ sed -n /^-/p test.txt # 一致する行を表示
 $ sed s/置換前文字列/置換後文字列/フラグ
 ```
 
