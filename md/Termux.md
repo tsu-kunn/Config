@@ -12,7 +12,7 @@ F-Doroidは全てオープンソースライセンスのものを取り扱って
 Back up files の保存先は Android ストレージのディレクトリを指定してください。（Termuxアンインストールで消えてしまうため）
 
 例)SDカードがない場合
-```
+```bash
 $ tar -zcf ~/storage/downloads/termux-backup.tar.gz home usr 
 ```
 
@@ -32,7 +32,7 @@ Git Hubの [termux-packages](https://github.com/termux/termux-packages/tree/mast
 ここにないものはパッケージ追加できないので、パッケージ以外の方法で追加する必要がある。
 
 ## パッケージの更新
-```
+```bash
 $ apt update
 $ apt upgrade
 ```
@@ -41,18 +41,25 @@ Google Play からインストールしたばかりではパケージが古い�
 Termux 0.101 では100MB近くのパッケージ更新がある。
 
 ## 開発環境のパッケージを追加
-```
+```bash
 $ apt install -y vim git openssh
 ```
 
-エディターとしてVimを使い、ソース管理としてGitを利用する。
-Vimeは操作を覚えるまで使いにくいが、ワンキーでカーソル操作や編集ができるので、ソフトウェアキーボードとの相性がとても良い。
+エディターとしてVimを使い、ソース管理としてGitを利用する。\
+Vimeは操作を覚えるまで使いにくいが、ワンキーでカーソル操作や編集ができるので、ソフトウェアキーボードとの相性がとても良い。\
 Emacsの操作はCtrlとの組み合わせを多用するので、Vimほど快適に使いにづらい。
 
 GitHubとのやり取りを SSH で行いたいので、 Open SSH も追加する。
 
-### tig
+### bash-completion
+```bash
+$ apt install -y bash-completion
 ```
+
+BashでLinuxコマンドのオプションを補完をできるようにする。
+
+### tig
+```bash
 $ apt install -y tig
 ```
 
@@ -61,7 +68,7 @@ Git操作をコマンドラインでできない場合は必須、できる場�
 Windows の Git Bashでも使えたりします。
 
 ### Node.js
-```
+```bash
 $ apt install -y nodejs yarn
 ```
 
@@ -91,13 +98,13 @@ npm と npx のバージョンは 6.14.10
 ビルドツールもあったので C/C++開発も可能。\
 以下のコマンドで Clang などの開発ツールをまとめて追加できる。
 
-```
+```bash
 $ apt install -y build-essential"
 ```
 
 
 ## 内部ストレージにアクセス
-```
+```bash
 $ termux-setup-storage
 ```
 
@@ -118,27 +125,27 @@ storage というディレクトリができ、ここから以下のフォルダ
 ## code-server のインストール
 
 ### 1. 必要パッケージをインストール
-```
+```bash
 $ apt install -y nodejs yarn vim
 ```
 
 ### 2. code-sererをインストール
-```
+```bash
 $ yarn global add code-server
 ```
 
 ※端末性能により5〜15分ほどかかる
 
 ### 3. "config.yaml" の作成
-```
+```bash
 $ code-server
-^C ※Ctrl + C
+^C # Ctrl + C
 ```
 
 1度実行して設定ファイルを作成する。
 
 ### 4. code-serverの設定
-```
+```bash
 $ vi ~/.config/code-server/config.yaml
 ```
 
@@ -154,7 +161,7 @@ cert: false
 
 ### 5. code-serverへのアクセス
 #### code-server 起動
-```
+```bash
 $ code-server
 ```
 
@@ -171,7 +178,7 @@ Chrome か Firefox で http://localhost:8080 にアクセス。
 ## Termux の設定
 設定ファイルの作成。
 
-```
+```bash
 $ mkdir ~/.termux
 $ touch ~/.termux/termux.properties
 ```
@@ -211,7 +218,7 @@ use-fullscreen-workaround = true
 ```
 
 ### 設定の反映
-```
+```bash
 $ termux-reload-settings
 ```
 
