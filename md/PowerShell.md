@@ -484,7 +484,10 @@ end {
 > ([DateTime]"2021/07/28").AddDays(-60)
 ```
 
-### 日付
+### GUID
+```PowerShell
+> New-Guid
+```
 
 
 ## Web
