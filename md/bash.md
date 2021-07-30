@@ -394,16 +394,27 @@ done
 ### testコマンド(ファイル)
 |option|動作|
 |:--|:--|
-|test -e file|file が存在するならば真|
-|test -f file|file が普通のファイルならば真|
-|test -d file|file がディレクトリならば真|
-|test -s file|file が 0 より大きいサイズならば真|
-|test -r file|file が読み取り可能ならば真|
-|test -w file|file が書き込み可能ならば真|
-|test -x file|file が実行可能ならば真|
+|-e file|file が存在するならば真|
+|-f file|file が普通のファイルならば真|
+|-d file|file がディレクトリならば真|
+|-L file|file がシンボリックリンクならば真|
+|-s file|file が 0 より大きいサイズならば真|
+|-r file|file が読み取り可能ならば真|
+|-w file|file が書き込み可能ならば真|
+|-x file|file が実行可能ならば真|
+|file1 -nt file2|file1 の変更時刻が file2 より新しい|
+|file1 -ot file2|file1 の変更時刻が file2 より古い|
 
 ※真(0), 偽(1)\
 ※testコマンドは [ 条件式 ] で代用可能
+
+### testコマンド(文字列)
+|option|動作|
+|:--|:--|
+|-z|変数が空のとき真|
+|-n|変数が空でないとき真|
+|-v|変数が定義されているとき真|
+
 
 ## 関数
 `function` は省略可能。
@@ -493,6 +504,16 @@ function urlencode()
 }
 ```
 
+## 区切り文字変更
+```bash
+_IFS=$IFS
+IFS=$'\n'
+
+～処理～
+
+IFS=$_IFS
+```
+
 
 ## デバッグ
 - `bash -n` でシンタックスチェックを実施
@@ -508,6 +529,8 @@ function urlencode()
   - `$?` には影響を与えるので注意
   - 文字列の先頭を半角にしないと日本語が化ける
 
+
+# コマンド備忘録
 
 # JSON
 BashでJSONを扱う場合は `jq` というツールを使うのがベターっぽい。\
@@ -623,7 +646,7 @@ curl -o test#1 "http://example.com/[001-100].jpg"
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
-# コマンド備忘録
+
 ## 代表的なフィルターコマンド
 |コマンド名|動作|
 |:--|:--|
@@ -667,6 +690,32 @@ $ grep [オプション] <検索パターン> <ファイル名>
   - `-i`: 大文字と小文字を区別しない
   - `-w`: 完全な単語マッチした行のみ表示
   - `-r`: 各ディレクトリ下のすべてのファイルを再帰的に読み取る
+  - `-H`: 常にファイル名を表示
+
+## sed
+```bash
+$ sed 1d txt       # 1行目を削除
+$ sed 2,5d txt     # 2～5行目を削除
+$ sed /^B/d txt    # 先頭がBで始まる行を削除
+$ sed -n /^-/p txt # 一致する行を表示
+$ sed s/置換前文字列/置換後文字列/フラグ
+```
+
+- フラグ
+  - `g`: 見つかったすべての文字列を置換
+  - `p`: 置換が発生した場合のみ出力
+
+## awk
+```bash
+$ ls -l | awk '{print $5,$9}'                  # 5行目と9行目を表示
+$ ls -l | awk '{print $(NF-1),$NF}'            # 後ろから2番目と1番目のフィールドを表示
+$ ls -l | awk '$NF ~ /^W/ {print $(NF-1),$NF}' # 最後のフィールドが 'W' で始まる行を表示
+$ ls -l | awk '/^-/ {print $(NF-1),$NF}'       # '-' で始まる行を表示
+$ awk -F "," `{print $2}` csv             # "," 区切りの2番目を表示
+```
+
+※`$NF`: 最後のフィールド番号
+※`$NR`: 行番号(1～)
 
 ## find
 ```bash
@@ -684,30 +733,16 @@ $ find <検索パス> -regextype posix-basic --regex <正規表現>
   - p: 名前付きパイプ
   - s: ソケット
 
-## sed
-```bash
-$ sed 1d test.txt       # 1行目を削除
-$ sed 2,5d test.txt     # 2～5行目を削除
-$ sed /^B/d test.txt    # 先頭がBで始まる行を削除
-$ sed -n /^-/p test.txt # 一致する行を表示
-$ sed s/置換前文字列/置換後文字列/フラグ
+## xargs
+```bash 
+$ xargs <コマンド>
+
+# マッチした markdonw file の先頭5行を表示
+$ find . -type f -name "*.md" | xargs head -n 5
+
+# マッチした markdown file から "メモ" を検索
+$ find . -type f -name "*.md" | xargs grep "メモ"
 ```
-
-- フラグ
-  - `g`: 見つかったすべての文字列を置換
-  - `p`: 置換が発生した場合のみ出力
-
-## awk
-```bash
-$ ls -l | awk '{print $5,$9}'                  # 5行目と9行目を表示
-$ ls -l | awk '{print $(NF-1),$NF}'            # 後ろから2番目と1番目のフィールドを表示
-$ ls -l | awk '$NF ~ /^W/ {print $(NF-1),$NF}' # 最後のフィールドが 'W' で始まる行を表示
-$ ls -l | awk '/^-/ {print $(NF-1),$NF}'       # '-' で始まる行を表示
-$ awk -F "," `{print $2}` test.csv             # "," 区切りの2番目を表示
-```
-
-※`$NF`: 最後のフィールド番号
-※`$NR`: 行番号(1～)
 
 
 # メモ
@@ -727,11 +762,11 @@ $ awk -F "," `{print $2}` test.csv             # "," 区切りの2番目を表�
   - Linux->Windows
     - `/mnt/c/`
   - path変換
-  ```bash
-  $ wslpath "c:\files\work"
-  ```
-    - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
-    - `-w` でWSLパスをWindowsパスに変換
+    ```bash
+    $ wslpath "c:\files\work"
+    ```
+      - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
+      - `-w` でWSLパスをWindowsパスに変換
 
 
 
