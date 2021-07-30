@@ -1,4 +1,4 @@
-#!/etc/bash
+#!/bin/bash
 
 # .bash_confが存在すればそれを読み込む
 if [ -f "${HOME}/.bash_conf" ]; then

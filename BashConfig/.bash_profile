@@ -1,4 +1,4 @@
-#!/etc/bash
+#!/bin/bash
 
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc
