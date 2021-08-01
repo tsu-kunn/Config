@@ -139,23 +139,23 @@ $ docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 --nam
 ※Proxy環境下の場合は `sudo -E` にする。
 
 1. 以下のコマンドを実行して最新版をダウンロードする
-  ```bash
-  $ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-  ```
+    ```bash
+    $ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+    ```
 
     - [最新版の確認](https://github.com/docker/compose/releases)
 1. 実行権限の付与
-  ```bash
-  $ sudo chmod +x /usr/local/bin/docker-compose
-  ```
+    ```bash
+    $ sudo chmod +x /usr/local/bin/docker-compose
+    ```
 1. コマンドライン補完をインストール
-  ```bash
-  $ sudo curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
-  ```
+    ```bash
+    $ sudo curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+    ```
 1. インストールの確認
-  ```bash
-  $ docker-compose --version
-  ```
+    ```bash
+    $ docker-compose --version
+    ```
 
 ### Node.jsでの使用例
 #### 1 - イメージ取得
