@@ -530,8 +530,6 @@ IFS=$_IFS
   - 文字列の先頭を半角にしないと日本語が化ける
 
 
-# コマンド備忘録
-
 # JSON
 BashでJSONを扱う場合は `jq` というツールを使うのがベターっぽい。\
 ⇒[公式サイト](https://stedolan.github.io/jq/)
@@ -646,6 +644,8 @@ curl -o test#1 "http://example.com/[001-100].jpg"
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
+
+# コマンド備忘録
 
 ## 代表的なフィルターコマンド
 |コマンド名|動作|
