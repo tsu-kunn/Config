@@ -277,9 +277,9 @@ noremap! <C-A> <Home>
 noremap! <C-E> <End>
 noremap! <C-K> <Esc><Right>Da
 
-" 挿入モードでUndo/Redoを行えるようにする
-inoremap <C-Z> <Esc>ua
-inoremap <C-Y> <Esc><C-r>a
+" 挿入モードでUndo/Redoを行えるようにする(不都合があるためコメントアウト)
+"inoremap <C-Z> <Esc>ua
+"inoremap <C-Y> <Esc><C-r>a
 
 " 挿入モードでCtrl+sを行えるようにする
 inoremap <C-S> <Esc>:w<CR>a
@@ -322,9 +322,9 @@ endif
 
 # Vimメモ
 ## インデントの空白、スペース切り替え
-- タブに設定
+- タブに設定\
   `set noexpandtab`
-- 空白に設定
+- 空白に設定\
   `set expandtab`
 
 ## インデントの空白、スペース相互変換
