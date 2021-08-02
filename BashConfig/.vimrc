@@ -141,9 +141,9 @@ noremap! <C-A> <Home>
 noremap! <C-E> <End>
 noremap! <C-K> <Esc><Right>Da
 
-" 挿入モードでUndo/Redoを行えるようにする
-inoremap <C-Z> <Esc>ua
-inoremap <C-Y> <Esc><C-r>a
+" 挿入モードでUndo/Redoを行えるようにする(不都合があるためコメントアウト)
+"inoremap <C-Z> <Esc>ua
+"inoremap <C-Y> <Esc><C-r>a
 
 " 挿入モードでCtrl+sを行えるようにする
 inoremap <C-S> <Esc>:w<CR>a
