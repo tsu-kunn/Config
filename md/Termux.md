@@ -5,7 +5,7 @@ F-Doroidは全てオープンソースライセンスのものを取り扱って
 ## 配布先
 [Termux | F-Droid - Free and Open Source Android App Repository](https://f-droid.org/packages/com.termux/)
 
-※タイムアウトになるぐらいサイトが重い。タイムアウトになったら再試行を実施する。
+※タイムアウトになるぐらいサイトが重い時がある。
 
 ### Google Play版からの移行方法（Termux のバックアップ）
 [Backing up Termux](https://wiki.termux.com/wiki/Backing_up_Termux) に書かれている内容を実施する。\
@@ -78,6 +78,13 @@ code-server を追加するなら入れましょう。
 ※2021/05/29\
 node のバージョンは v14.15.4\
 npm と npx のバージョンは 6.14.10
+
+### nkf
+パケージにはないので Git Hub からソースコードを取得し、 clang でコンパイルする。\
+nkf 2.1.5 + Termix 0.116でコンパイルしたバイナリやインストール手順、コンパイル方法は下記を参照。
+
+ [Release ver.2.1.5 Termux version · tsu-kunn/nkf](https://github.com/tsu-kunn/nkf/releases/tag/v2_1_5_Termux)。
+
 
 ### 開発言語
 - clang
@@ -200,13 +207,13 @@ SSH で外部から接続することがあるなら仮想端末を利用する�
 例) `ctrl + t` は Bash のショートカットキーと被るので変更している。
 ```
 # Open a new terminal with ctrl + t (volume down + t)
-shortcut.create-session = ctrl + 1
+shortcut.create-session = ctrl + 3
 
 # Go one session down with (for example) ctrl + 2
 shortcut.next-session = ctrl + 2
 
 # Go one session up with (for example) ctrl + 1
-shortcut.previous-session = ctrl + 3
+shortcut.previous-session = ctrl + 1
 ```
 
 ### フルスクリーンモード
