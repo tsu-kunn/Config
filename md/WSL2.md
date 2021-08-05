@@ -383,6 +383,31 @@ $ wslpath "c:\files\work"
 - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
 - `-w` でWSLパスをWindowsパスに変換
 
+## WSL2環境のバックアップ
+PowerShellで wsl の機能を使て行う。
+
+### エクスポート
+```PowerShell
+> wsl --export [ディストリビューション名] [保存先フォルダ/ファイル名.tar]
+
+# 例
+> wsl --export Ubuntu-20.04 .\backup\Ubuntu-20.04.tar
+```
+
+### インポート
+```PowerShell
+> wsl --import [ディストリビューション名] [インストール先のパス] [バックアップしたファイル] --version 2
+
+# 例
+> wsl --import Ubuntu-20.04 c:\ubuntu20\ .\backup\Ubuntu-20.04.tar --version 2
+```
+
+import するとユーザーが root になるのでデフォルトユーザーを変更する。
+
+```PowerShell
+> Function WSL-SetDefaultUser ($distro, $user) { Get-ItemProperty Registry::HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Lxss\*\ DistributionName | Where-Object -Property DistributionName -eq $distro | Set-ItemProperty -Name DefaultUid -Value ((wsl -d $distro -u $user -e id -u) | Out-String); };
+> WSL-SetDefaultUser [ディストリビューション名] [ユーザー名]
+```
 
 # 参考HP
 - [Windows 10 用 Windows Subsystem for Linux のインストール ガイド](https://docs.microsoft.com/ja-jp/windows/wsl/install-win10)
