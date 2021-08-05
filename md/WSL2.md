@@ -50,6 +50,29 @@ $ sudo update-locale LANG=ja_JP.UTF-8
 $ sudo apt install manpages-ja manpages-ja-dev
 ```
 
+## Git
+デフォルトで入ってたと思うけど、ない場合は下記を実行する。
+```bash
+$ sudo apt install git
+```
+
+設定方法は [こちら](https://github.com/tsu-kunn/Config/blob/master/md/git.md) を参照。
+
+### Git 資格情報マネージャーセットアップ
+> Git 資格情報マネージャー (GCM) Core を使用すると、2 要素認証や Azure Active Directory のような複雑な認証パターンがある場合や、Git プッシュごとに SSH キー パスワードを必要とする SSH リモート URL を使用している場合でも、リモート Git サーバーを認証できます。
+
+これを使用する場合は **Git for Windows をインストール**する必要があります。
+
+```bash
+$ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe"
+```
+
+※これを設定することで、Git for Windows で作成したリポジトリを、WSL2のBashから push できるようになる。
+
+### 参考HP
+- [概要WSL で Git を使用する | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/tutorials/wsl-git)
+
+
 ## docker
 ### インストール
 以下のコマンドを順番に実行していく。
