@@ -747,6 +747,25 @@ $ find . -type f -name "*.md" | xargs head -n 5
 $ find . -type f -name "*.md" | xargs grep "メモ"
 ```
 
+## 圧縮・解凍
+### 圧縮
+```bash
+$ tar cvzf hoge.tar.gz [file/directory]
+$ tar cvjf hoge.tar.bz2 [file/directory]
+$ 7za a hoge.7z [file/directory]
+$ 7za a -tzip hoge.zip [file/directory]
+$ zip -r hoge.zip [file/directory]
+$ zip -r -p [password] hoge.zip [file/directory]
+```
+
+### 解凍
+```bash
+$ tar xvf hoge.tar.gz
+$ tar xvf hoge.tar.bz2
+$ 7za x hoge.7z
+$ 7za x hoge.zip
+$ unzip hoge.zip
+```
 
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
