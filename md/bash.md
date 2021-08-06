@@ -767,6 +767,20 @@ $ 7za x hoge.zip
 $ unzip hoge.zip
 ```
 
+### tarで一部のファイル・ディレクトリを除外
+`--exclude パターン` を追加することで除外ができる。\
+パターンにはワイルドカードが使用できる。
+
+除外は圧縮・解凍両方で指定可能。
+
+```bash
+$ tar --exclude tmp cvzf hoge.tar.gz
+$ tar --exclude test* cvzf hoge.tar.gz
+$ tar --exclude test[12]* cvzf hoge.tar.gz
+$ tar --exclude test* xvf hoge.tar.gz
+```
+
+
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
   - Git Bashでは環境変数に HOME を追加しないといけないかも…
