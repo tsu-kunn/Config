@@ -178,7 +178,8 @@ Vimを使う場合は矩形選択とバッティングするので、default.jso
   ```JSON
   "keybindings": [
       { "command": { "action": "splitPane", "split": "horizontal", "profile": "PowerShell" }, "keys": "alt+shift+P" },
-      { "command": { "action": "splitPane", "split": "horizontal", "profile": "Ubuntu-20.04" }, "keys": "alt+shift+L" }
+      { "command": { "action": "splitPane", "split": "horizontal", "profile": "Ubuntu-20.04" }, "keys": "alt+shift+L" },
+      { "command": { "action": "splitPane", "split": "horizontal", "profile": "Git Bash" }, "keys": "alt+shift+B" }
   ],
   ```
 

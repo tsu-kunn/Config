@@ -65,16 +65,24 @@
                 "split": "horizontal"
             },
             "keys": "alt+shift+L"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "profile": "Git Bash",
+                "split": "horizontal"
+            },
+            "keys": "alt+shift+B"
         }
     ],
     "profiles": 
     {
         "defaults": 
         {
+            "acrylicOpacity": 0.75,
             "colorScheme": "One Half Dark",
             "fontFace": "Myrica M",
             "fontSize": 12,
-            "acrylicOpacity": 0.75,
             "useAcrylic": true
         },
         "list": 
@@ -332,5 +340,6 @@
         }
     ],
     "showTerminalTitleInTitlebar": false,
+    "startOnUserLogin": false,
     "theme": "system"
 }
