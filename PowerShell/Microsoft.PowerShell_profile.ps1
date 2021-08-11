@@ -327,6 +327,19 @@ function memow
 
 <#
 	.SYNOPSIS
+	日報ファイルを開く
+
+	.DESCRIPTION
+	（Bash aliasの対応）
+#>
+function nip
+{
+	$date = (Get-Date).ToString("yyyyMM")
+	memow "日報/$date"
+}
+
+<#
+	.SYNOPSIS
 	バックアップアーカイブを作成
 
 	.DESCRIPTION

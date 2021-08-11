@@ -60,7 +60,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 
 	function grep
 	{
-		$input | /usr/bin/grep --color=auto $args
+		$input | /bin/grep --color=auto $args
 	}
 }
 
@@ -323,6 +323,19 @@ function memow
 	}
 
 	editer $FName
+}
+
+<#
+	.SYNOPSIS
+	日報ファイルを開く
+
+	.DESCRIPTION
+	（Bash aliasの対応）
+#>
+function nip
+{
+	$date = (Get-Date).ToString("yyyyMM")
+	memow "日報/$date"
 }
 
 <#
