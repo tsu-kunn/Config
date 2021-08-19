@@ -383,6 +383,29 @@ $ wslpath "c:\files\work"
 - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
 - `-w` でWSLパスをWindowsパスに変換
 
+### スクリプト例
+wcd.sh
+
+```bash
+#!/bin/bash
+
+if [ -n "$1" ]; then
+    cd $(wslpath "$1")
+fi
+```
+
+.bash_conf
+
+```bash
+alias wcd='. wcd.sh'
+```
+
+使用例(パスはダブルクォーテーションで囲む必要がある)
+
+```bash
+$ wcd "c:\files\work"
+```
+
 ## WSL2環境のバックアップ
 PowerShellで wsl の機能を使て行う。
 
