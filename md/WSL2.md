@@ -158,6 +158,17 @@ $ docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 --nam
 - [Docker Documentation](https://docs.docker.com/)
 - [Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/)
 
+## インストール２
+Docker for Windowsを使ってWSL2にDockerをインストールする。\
+上記のインストールとは違い、Windows側にもDockerがインストールされる。
+
+1. Docker Desktop をダウンロードしてインストールする。
+1. 設定を聞かれた際に、"Use the WSL 2 based engine" にチェックを入れる。
+1. インストール完了後、WSL2のターミナルで `docker --version` を確認する。
+
+### 参考HP
+- [WSL で Docker コンテナーを使ってみる | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/tutorials/wsl-containers)
+
 ## Docker Compose
 ※Proxy環境下の場合は `sudo -E` にする。
 
