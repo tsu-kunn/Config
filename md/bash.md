@@ -638,7 +638,18 @@ $ curl -O "http://example.com/[001-100].jpg"
 
 #### 名前が重複する場合
 ```bash
-curl -o test#1 "http://example.com/[001-100].jpg"
+$ curl -o test#1 "http://example.com/[001-100].jpg"
+```
+
+### プログレスバー
+```bash
+$ curl -# http://example.com
+```
+
+### 標準出力抑制
+```bash
+$ curl -s http://exapmle.com  # エラーメッセージも抑制
+$ curl -Ss http://exapmle.com # エラーメッセージは出力
 ```
 
 ## 参考
