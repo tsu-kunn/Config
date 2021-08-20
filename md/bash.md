@@ -313,6 +313,12 @@ echo ${arry[@]}
 echo ${#a[@]}
 ```
 
+## ブレース展開
+```bash
+$ ls *.{jpg,png,bmp}    # *.jpg, *.png, *.bmpに展開
+$ ls *.LOG{1,2}
+$ echo file{01..10}.txt # ゼロ埋め展開
+```
 
 # シェルスクリプト
 
