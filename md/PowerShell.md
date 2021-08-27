@@ -78,8 +78,8 @@ Set-PSReadLineOption -EditMode Emacs
 
 #### PowerShell
 ```PowerShell
-> New-Item -Value 'リンク名' -Path 'ターゲット名'  -ItemType SymbolicLink
-> New-Item -Value 'フォルダ名' -Path 'ターゲットフォルダ名'  -ItemType SymbolicLink
+> New-Item -Path 'リンク名' -Value 'ターゲット名' -ItemType SymbolicLink
+> New-Item -Path 'フォルダ名' -Value 'ターゲットフォルダ名' -ItemType SymbolicLink
 ```
 
 #### 補足1
