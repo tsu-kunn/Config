@@ -520,6 +520,21 @@ IFS=$'\n'
 IFS=$_IFS
 ```
 
+## 相対パス⇒絶対パス変換
+```bash
+$ echo $(cd "相対パス" && pwd)
+```
+
+## 文字コードや改行コード確認
+```bash
+$ file <file path>
+```
+
+## ランダムなパスワード
+```bash
+$ cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1
+```
+
 
 ## デバッグ
 - `bash -n` でシンタックスチェックを実施
