@@ -206,4 +206,9 @@ GitHubで役に立ったメモを残す。
 1. `git push --delete origin 削除するタグ名` でTagを削除
 1. GitHubの対象リリースがDraftになるので、それを破棄する
 
+# その他
+## Git for Windows のアップデート
+```Bash
+$ git update-git-for-windows
+```
 
