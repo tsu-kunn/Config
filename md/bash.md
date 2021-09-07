@@ -673,6 +673,12 @@ $ curl -s http://exapmle.com  # エラーメッセージも抑制
 $ curl -Ss http://exapmle.com # エラーメッセージは出力
 ```
 
+### 認証
+```bash
+$ curl --basic -u user:pass http://example.com  # BASIC認証
+$ curl --digest -u user:pass http://example.com # Digest認証
+```
+
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
