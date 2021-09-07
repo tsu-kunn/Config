@@ -82,10 +82,19 @@ set-option -g mouse on
 # コピーモードのキー操作をviライクにする
 set-window-option -g mode-keys vi
 
+# status-left の最大の長さを指定する。
+set-option -g status-left-length 20
+
+# ローカルホスト名 カレントウィンドウ名 日時 時刻
+set-option -g status-right '#H #W [%Y-%m-%d(%a) %H:%M]'
+
+# ステータスバーを1秒毎に描画し直す
+set-option -g status-interval 5
+
 ```
 
 # 参考
 - [tmuxの使い方](https://tex2e.github.io/blog/linux/tmux-tutorial)
 - [tmux入門 - とほほのWWW入門](https://www.tohoho-web.com/ex/tmux.html)
-
+- [tmux の status line の設定方法](https://qiita.com/nojima/items/9bc576c922da3604a72b)
 
