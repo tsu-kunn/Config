@@ -820,7 +820,8 @@ $ tar --exclude test* xvf hoge.tar.gz
 
 # Git Bash
 ## tmuxのインストール
-pacmanをインストールし、これを使って tumx をインストールする。
+pacmanをインストールし、これを使って tumx をインストールする。\
+インストール作業は管理者権限で起動した Git Bash を使用する必要がある。
 
 ```bash
 git clone --depth=1 https://github.com/git-for-windows/git-sdk-64 gfw-sdk
@@ -828,6 +829,7 @@ git clone --depth=1 https://github.com/git-for-windows/git-sdk-64 gfw-sdk
 cp gfw-sdk/usr/bin/pacman* /usr/bin/
 cp -a gfw-sdk/etc/pacman.* /etc/
 mkdir -p /var/lib/
+mkdir -p /usr/share/makepkg/
 cp -a gfw-sdk/var/lib/pacman /var/lib/
 cp -a gfw-sdk/usr/share/makepkg/util* /usr/share/makepkg/
 
