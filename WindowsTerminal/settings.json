@@ -1,52 +1,6 @@
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    // Add custom actions and keybindings to this array.
-    // To unbind a key combination from your defaults.json, set the command to "unbound".
-    // To learn more about actions and keybindings, visit https://aka.ms/terminal-keybindings
     "actions": 
-    [
-        // Copy and paste are bound to Ctrl+Shift+C and Ctrl+Shift+V in your defaults.json.
-        // These two lines additionally bind them to Ctrl+C and Ctrl+V.
-        // To learn more about selection, visit https://aka.ms/terminal-selection
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "Ctrl+Shift+C"
-        },
-        {
-            "command": "paste",
-            "keys": "Ctrl+Shift+V"
-        },
-        // Press Ctrl+Shift+F to open the search box
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        // Press Alt+Shift+D to open a new pane.
-        // - "split": "auto" makes this pane open in the direction that provides the most surface area.
-        // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
-        // To learn more about panes, visit https://aka.ms/terminal-panes
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "keys": "alt+shift+d"
-        }
-    ],
-    "alwaysShowTabs": true,
-    "copyFormatting": "none",
-    "copyOnSelect": false,
-    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-    "initialCols": 140,
-    "initialPosition": "740,80",
-    "initialRows": 60,
-    "keybindings": 
     [
         {
             "command": 
@@ -55,7 +9,7 @@
                 "profile": "PowerShell",
                 "split": "horizontal"
             },
-            "keys": "alt+shift+P"
+            "keys": "alt+shift+p"
         },
         {
             "command": 
@@ -64,25 +18,61 @@
                 "profile": "Ubuntu-20.04",
                 "split": "horizontal"
             },
-            "keys": "alt+shift+L"
+            "keys": "alt+shift+l"
         },
         {
-            "command": {
+            "command": 
+            {
                 "action": "splitPane",
                 "profile": "Git Bash",
                 "split": "horizontal"
             },
-            "keys": "alt+shift+B"
+            "keys": "alt+shift+b"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
+            },
+            "keys": "alt+shift+d"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
         }
     ],
+    "alwaysShowTabs": true,
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "initialCols": 140,
+    "initialPosition": "740,8",
+    "initialRows": 64,
     "profiles": 
     {
         "defaults": 
         {
             "acrylicOpacity": 0.75,
             "colorScheme": "One Half Dark",
-            "fontFace": "Myrica M",
-            "fontSize": 12,
+            "font": 
+            {
+                "face": "Myrica M",
+                "size": 12
+            },
             "useAcrylic": true
         },
         "list": 
@@ -340,6 +330,6 @@
         }
     ],
     "showTerminalTitleInTitlebar": false,
-    "startOnUserLogin": false,
+    "startOnUserLogin": true,
     "theme": "system"
 }
