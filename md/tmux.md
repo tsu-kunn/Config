@@ -73,6 +73,9 @@ set -g default-terminal "screen-256color"
 # ステータスバーの背景色を変更する
 set-option -g status-bg "colour255"
 
+# 枠線を水色にする
+set-option -g pane-border-style fg="colour51"
+
 # マウス操作を有効にする
 setw -g mouse on
 
@@ -91,6 +94,11 @@ set-option -g status-right '#H #W [%Y-%m-%d(%a) %H:%M]'
 # ステータスバーを1秒毎に描画し直す
 set-option -g status-interval 5
 
+# Prefix + - で横に分割
+bind-key - split-window -v
+
+# Prefix + + で縦に分割
+bind-key + split-window -h
 ```
 
 # 参考
