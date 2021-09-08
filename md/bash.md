@@ -818,6 +818,70 @@ $ tar --exclude test[12]* cvzf hoge.tar.gz
 $ tar --exclude test* xvf hoge.tar.gz
 ```
 
+# Git Bash
+## tmuxのインストール
+pacmanをインストールし、これを使って tumx をインストールする。
+
+```bash
+git clone --depth=1 https://github.com/git-for-windows/git-sdk-64 gfw-sdk
+
+cp gfw-sdk/usr/bin/pacman* /usr/bin/
+cp -a gfw-sdk/etc/pacman.* /etc/
+mkdir -p /var/lib/
+cp -a gfw-sdk/var/lib/pacman /var/lib/
+cp -a gfw-sdk/usr/share/makepkg/util* /usr/share/makepkg/
+
+pacman --database --check
+
+curl -L https://raw.githubusercontent.com/git-for-windows/build-extra/master/git-for-windows-keyring/git-for-windows.gpg \
+| pacman-key --add - \
+&& pacman-key --lsign-key 1A9F3986
+
+pacman -S tmux
+```
+
+### 参考HP
+[Windows で git bash + tmux な環境づくり](https://qiita.com/lemonjp/items/b39f042c1f282b8856d0)
+
+
+## winpty の設定
+対話モードを使うコマンドは `winpty` を付けないと正常に動作しないものがある。\
+MinTTYの既知の不具合 or 仕様らしい。\
+昔のバージョンでは `node` や `npm` は winpty が必要だったけど、 ver.2.32辺りからなしで動作する。\
+　⇒逆に winpty がついていると正常に動作しない
+
+`.bashrc` などで alias に登録しておくと楽です。\
+　⇒ipython, php, php5, psql, python3 なども必要に応じて追加する
+
+```bash
+# Git Bash only
+alias python='winpty python'
+alias docker='winpty docker'
+```
+
+# 入力補完の強化
+最近のディストリビューションでは標準で入っていると思うが、コマンドオプションの入力補完が欲しい場合は下記を実行する。
+
+## インストール
+```bash
+$ sudo apt install bash-completion
+```
+
+## .bashrcの設定
+```bash
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+```
+
+
 
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
