@@ -842,6 +842,21 @@ curl -L https://raw.githubusercontent.com/git-for-windows/build-extra/master/git
 pacman -S tmux
 ```
 
+## pacmanの基本的な使い方
+|コマンド|動作|
+|:--|:--|
+|pacman -Syy|リポジトリの同期|
+|pacman -Syu|パッケージのアップグレード|
+|pacman -S <パッケージ名>|パッケージのインストール|
+|pacman -Ss <パッケージ名>|パッケージの検索|
+|pacman -Qs <パッケージ名>|インストールしたパッケージの検索|
+|pacman -Ql|インストールされたパッケージの表示|
+|pacman -R <パッケージ名>|パッケージの削除|
+|pacman -Rs <パッケージ名>|依存するパッケージを含んだ削除|
+|pacman -Sc|キャッシュのクリーンアップ|
+|pacman -Scc|キャッシュの削除|
+
+
 ### 参考HP
 [Windows で git bash + tmux な環境づくり](https://qiita.com/lemonjp/items/b39f042c1f282b8856d0)
 
