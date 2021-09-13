@@ -911,6 +911,8 @@ fi
   - `bash --version`
 - `Ctrl + D` でシェルを終了しない
   - `set -o ignoreeof`
+- コマンドプロンプトのコマンドを実行する
+  - `cmd //c <command>` とスラッシュが2つ必要(1つだと新規プロセスになる)
 - WSL2
   - Windows->Linux 
     - `\\wsl$\Ubuntu-20.04\home\%USERNAME%`
