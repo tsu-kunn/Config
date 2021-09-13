@@ -240,7 +240,7 @@ $ git log --author="検索文字列"
 
 ### 日付で検索
 ```bash
-$ git log --since 日付(hhhh/mm/dd)
+$ git log --since 日付(yyyy/mm/dd)
 $ git log --since 開始の日付 --until 終了の日付
 ```
 
