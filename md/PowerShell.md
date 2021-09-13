@@ -414,13 +414,19 @@ end {
 |コマンドレット|alias|動作|
 |:--|:--|:--|
 |Get-ChildItem|dir|ファイルとディレクトリの表示|
-|Select-String|sls|対象から指定もの時列を検索|
+|Select-String|sls|対象から指定の文字列を検索|
 |Out-String -Stream|oss|オブジェクトをテキストとして表示|
 |Get-Content|type|ファイルの中身を表示|
 |Show-Markdown|-|Markdownテキストの表示|
 |ConvertFrom-Markdown|-|Markdownからオブジェクトに変換|
 |Where-Object|?|プロパティ値に基づいてコレクションからオブジェクトを選択|
 |ForEach-Object|%|入力オブジェクトのコレクション内の各アイテムに対して操作を実行|
+|Write-Output|-|オブジェクトをパイプラインに出力|
+|Write-Host|-|コンソールに文字を表示|
+|Clear-Host|-|コンソール表示の消去|
+|New-Item|ni|ファイルやディレクトリを作成|
+|Invoke-Item|-|ファイルを実行|
+
 
 ## コマンド例
 ### 16進ダンプ
