@@ -227,3 +227,32 @@ for your current branch, you must specify a branch on the command line.
 $ git branch --set-upstream-to=origin/ブランチ名
 ```
 
+## ログ検索
+### コミットメッセージから検索
+```bash
+$ git log --greap="検索文字列"
+```
+
+### コミットした名前とメールアドレスから検索
+```bash
+$ git log --author="検索文字列"
+```
+
+### 日付で検索
+```bash
+$ git log --since 日付(hhhh/mm/dd)
+$ git log --since 開始の日付 --until 終了の日付
+```
+
+### ファイル名で検索
+```bash
+$ git log "ファイル名"
+$ git log "ファイル名1" "ファイル名2"   # ファイル1と2を変更したコミットを表示
+```
+
+### ハッシュ値で検索
+```bash
+$ git log ハッシュ値 -1 # 指定したハッシュ値のコミットから1件分表示
+```
+
+
