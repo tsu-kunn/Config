@@ -255,4 +255,21 @@ $ git log "ファイル名1" "ファイル名2"   # ファイル1と2を変更�
 $ git log ハッシュ値 -1 # 指定したハッシュ値のコミットから1件分表示
 ```
 
+## 変更の取り消し
+### ファイル単位
+```bash
+$ git checkout ファイル名
+```
 
+### コミット単位
+```bash
+$ git reset --soft HEAD # 変更部分は残す
+$ git reest --hard HEAD # 全て戻す
+$ git checkout .        # 同上
+```
+
+### addの取り消し
+```bash
+$ git reset HEAD .
+$ git reset HEAD ファイル名
+```
