@@ -206,9 +206,24 @@ GitHubで役に立ったメモを残す。
 1. `git push --delete origin 削除するタグ名` でTagを削除
 1. GitHubの対象リリースがDraftになるので、それを破棄する
 
+
 # その他
 ## Git for Windows のアップデート
 ```Bash
 $ git update-git-for-windows
+```
+
+## ローカルブランチとリモートブランチの対応付け
+```bash
+$ git pull origin
+You asked to pull from the remote 'origin', but did not specify
+a branch. Because this is not the default configured remote
+for your current branch, you must specify a branch on the command line.
+```
+
+このエラーが出た場合は下記の操作を行う。
+
+```bash
+$ git branch --set-upstream-to=origin/ブランチ名
 ```
 
