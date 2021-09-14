@@ -6,7 +6,8 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
 - BashConfig
   - BashやVim、Gitなどの設定ファイル置き場。
   - WindowsのGit Bash、ChromebookのLinux環境、AndroidのTermuxで動作することを確認済み
-    - 使用しているコマンドがないため、一部の関数がTermuxで動作しない
+    - ~~使用しているコマンドがないため、一部の関数がTermuxで動作しない~~
+    - [Termux用のnkfを作成](https://github.com/tsu-kunn/nkf/releases/tag/v2_1_5_Termux) したので全て動作する。
 - Code
   - VisualStudio Code(VSCode)の設定ファイル。
   - Settings Syncでうまく同期できなかった時用のバックアップ。
