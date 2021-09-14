@@ -279,13 +279,14 @@ noremap! <C-N> <Down>
 noremap! <C-A> <Home>
 noremap! <C-E> <End>
 noremap! <C-K> <Esc><Right>Da
+noremap! <C-L> <Esc>zza
 
-" 挿入モードでUndo/Redoを行えるようにする(不都合があるためコメントアウト)
+" 挿入モードでUndo/Redoを行えるようにする(Linux環境で不都合があるのでコメントアウト)
 "inoremap <C-Z> <Esc>ua
 "inoremap <C-Y> <Esc><C-r>a
 
-" 挿入モードでCtrl+sを行えるようにする
-inoremap <C-S> <Esc>:w<CR>a
+" 挿入モードでCtrl+sを行えるようにする(Linux環境で不都合があるのでコメントアウト)
+"inoremap <C-S> <Esc>:w<CR>a
 
 " vimgrep 前:<F4>, 次:<F3>
 nnoremap <F4> :cNext<CR>
