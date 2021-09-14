@@ -25,6 +25,10 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
 - xyzzy
   - VSCodeが1.5になるまで20年以上愛用したエディターの個人設定ファイル。 
 
+## その他
+- [Windows用コマンドツール](https://drive.google.com/file/d/1hOZdNA-IgRVNrovc1QxtD4_bAVy8V_yj/view?usp=sharing)
+  - 7za, jq, nkf, makeなど
+
 ## ライセンス（License）
 自己責任でご自由にお使いください。
 （Feel free to use it at your own risk.）
