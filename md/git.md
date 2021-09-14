@@ -273,3 +273,12 @@ $ git checkout .        # 同上
 $ git reset HEAD .
 $ git reset HEAD ファイル名
 ```
+
+## ローカルブランチのプッシュ
+エラーメッセージに書かれている通りでよい。
+
+```bash
+$ git push -u origin <ブランチ名>
+```
+
+
