@@ -429,6 +429,13 @@ end {
 
 
 ## コマンド例
+### 新規ファイル作成
+```PowerShell
+> New-Item -path ./hoge/temp/hoge.md -ItemType file -Force
+```
+
+※`-Force` を付けることでディレクトリを自動作成できる。
+
 ### 16進ダンプ
 ```PowerShell
 > Format-Hex <ファイル名> | more
@@ -495,9 +502,51 @@ end {
 > New-Guid
 ```
 
+### 圧縮
+#### Zip
+```PowerShell
+> compress-Archive -Path <File or Directory> -DestinationPath hoge.zip -Force
+```
 
-## Web
+### tar
+```PowerShell
+> tar cvzf hoge.tar.gz [file/directory]
+> tar cvjf hoge.tar.bz2 [file/directory]
+```
+
+### 7zip
+別途 `7za.exe` が必要。
+
+```PowerShell
+> 7za a hoge.7z [file/directory]
+> 7za a -tzip hoge.zip [file/directory]
+```
+
+### 解凍
+#### Zip
+```PowerShell
+> Expand-Archive -Path hoge.zip -DestinationPath ./tmp
+```
+
+### tar
+```PowerShell
+> tar xvf hoge.tar.gz
+> tar xvf hoge.tar.bz2
+> tar xvg hoge.tar.gz -C ~/tmp
+```
+
+### 7zip
+```PowerShell
+> 7za x hoge.7z
+> 7za x hoge.zip
+> 7za x hoge.7z -otmp
+```
+
+
+# Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
 - [PowerShell ドキュメント](https://docs.microsoft.com/ja-jp/powershell/)
 - [PowerShell Core入門 - 基本コマンドの使い方｜連載一覧｜](https://news.mynavi.jp/itsearch/series/devsoft/powershell_core_-.html)
 - [Windows にまつわる e.t.c.](https://www.vwnet.jp/Windows/etc.asp#PowerShell)
+
+
