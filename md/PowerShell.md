@@ -352,7 +352,7 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
     - 変数の値が $null なら以降を実行しない。
     - 例）`${f}?.OpenText()?.ReadToEnd()`
 
-### JSONファイル読み書き
+### JSONファイル編集
 ```PowerShell
 # JSON読み込み
 $JsonData = Get-Content -Path .\json_test.json
@@ -368,6 +368,12 @@ Write-Host $ObjectData.user_info[0]
 Write-Output $ObjectData[0].name
 Write-Output $ObjectData[0].age
 Write-Output $ObjectData[2].user_info.user_name
+
+# JSONの追加
+$ObjectData[2] | Add-Member -NotePropertyName "name" -NotePropertyValue "Miku"
+$ObjectData[2] | Add-Member -NotePropertyMembers @{test_info=@{test_id="0000"; test_name="Test Name"}}
+$ObjectData[2] | Add-Member -NotePropertyName "color list" -NotePropertyValue @("red", "green", "blue")
+$ObjectData += @(@{user_info=@{user_id="DEF456"; user_name="Miyuki"}})
 
 # JSON保存
 $JsonData = $ObjectData | ConvertTo-Json
