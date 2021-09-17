@@ -589,6 +589,24 @@ $ a=$(echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] 
 $ b=$(cat json_test.json | jq '.[].user_info')
 ```
 
+### 値の編集
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.memo|="Miku!Miku!!"' # 追加
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '.name|="Miku"'        # 変更
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq 'del(.name)'           # 削除
+```
+
+### 要素の追加
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '. |= .+ {"Profile": {"name": "Miku", "age": 18}}'
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '. |= .+ {"fruit": ["apple", "strawberry", "pear"]}'
+```
+
+### 配列の追加
+```bash
+$ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq '."color list" += ["apple", "strawberry", "pear"]'
+```
+
 ### 保存
 ```bash
 $ echo '{ "name": "Taro", "age": 20, "color list": ["red", "green", "blue"] }' | jq . > jq_test.json
