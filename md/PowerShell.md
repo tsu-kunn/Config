@@ -384,6 +384,37 @@ Set-Content -path json_test_output.json -Value $JsonData
 `ConvertTo-Json` と　`ConvertFrom-Json` でネストが深いと変換されないことがある。\
 その場合はオプションの `-Depth` でネストの深さを設定する。(default:2)
 
+### XMLファイル編集
+```PowerShell
+# XMLファイル読み込み
+[xml]$XmlData = Get-Content ".\test_xml.xml"
+
+# ノードへアクセス
+Write-Output $XmlData.HEADER.LIST.STRING
+Write-Output $XmlData.HEADER.BODY.ID
+Write-Output $XmlData.HEADER.BODY.NAME
+
+# ノード作成
+$xmlNode = $XmlData.CreateNode("element", "pages", "")
+
+# ノードデータ設定
+$xmlNode.InnerText = "add text"
+
+# ノード追加
+$XmlData.DocumentElement.AppendChild($xmlNode) > $null
+
+# XMLファイル保存
+$XmlData.Save("$pwd\test_xml_output.xml")
+
+# 追加を確認
+Write-Output $xmlData.HEADER.pages
+```
+
+#### 補足
+`ConvertTo-Xml` はあるけど `ConvertFrom-Xml` はないので.NETの機能を使う必要がある。\
+JSONファイルをXMLファイル出力とかはできるんだけどね。
+
+
 ### パイプライン入力
 #### 自動変数で受け取る
 - `$input` オブジェクトから読み取る
