@@ -4,7 +4,7 @@
 #
 
 # add-type
-Add-type -AssemblyName System.Web
+#Add-type -AssemblyName System.Web
 
 # ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
 if ([Environment]::OSVersion.Platform -eq "Win32NT") {
@@ -268,19 +268,41 @@ function Copy-DateAndTime($opt = "None")
 	ランダムなパスワード作成
 
 	.DESCRIPTION
-	.NetFrameworkのAPIを使ってランダムなパスワードを生成します。
+	ランダムなパスワードを生成します。
 	引数で長さを指定できます。
-	(Windows PowerShell専用)
 
 	.PARAMETER len
-	パスワードの長さ。
-	
-	.PARAMETER opt
-	パスワードに含める英数字以外の文字数。(default:2)
+	パスワードの長さ(default:15)。
 #>
-function New-Password($len, $opt = 2)
+function New-Password($len = 15)
 {
-	[System.Web.Security.Membership]::GeneratePassword($len, $opt)
+	# https://www.reddit.com/r/PowerShell/comments/al2v1z/generate_good_password/
+
+	$uppers = "ABCDEFGHJKLMNPQRSTUVWXYZ".ToCharArray()
+	$lowers = "abcdefghijkmnopqrstuvwxyz".ToCharArray()
+	$digits = "23456789".ToCharArray()
+	$symbols = "_-+=@$%".ToCharArray()
+
+	$chars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789_-+=@$%".ToCharArray()
+
+	do {
+		$pwdChars = "".ToCharArray()
+		$goodPassword = $false
+		$hasDigit = $false
+		$hasSymbol = $false
+		$pwdChars += (Get-Random -InputObject $uppers -Count 1)
+		for ($i = 1; $i -lt $len; $i++) {
+			$char = Get-Random -InputObject $chars -Count 1
+			if ($digits -contains $char) { $hasDigit = $true }
+			if ($symbols -contains $char) { $hasSymbol = $true }
+			$pwdChars += $char
+		}
+		$pwdChars += (Get-Random -InputObject $lowers -Count 1)
+		$password = $pwdChars -join ""
+		$goodPassword = $hasDigit -and $hasSymbol
+	} until ($goodPassword)
+
+	Write-Output $password
 }
 
 <#
