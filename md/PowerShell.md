@@ -456,13 +456,20 @@ end {
 |Get-Content|type|ファイルの中身を表示|
 |Show-Markdown|-|Markdownテキストの表示|
 |ConvertFrom-Markdown|-|Markdownからオブジェクトに変換|
-|Where-Object|?|プロパティ値に基づいてコレクションからオブジェクトを選択|
-|ForEach-Object|%|入力オブジェクトのコレクション内の各アイテムに対して操作を実行|
-|Write-Output|-|オブジェクトをパイプラインに出力|
+|Write-Output|echo|オブジェクトをパイプラインに出力|
 |Write-Host|-|コンソールに文字を表示|
-|Clear-Host|-|コンソール表示の消去|
+|Clear-Host|clear|コンソール表示の消去|
 |New-Item|ni|ファイルやディレクトリを作成|
-|Invoke-Item|-|ファイルを実行|
+|Invoke-Item|ii|ファイルを実行|
+
+## パイプラインで使用するコマンドレット
+|コマンドレット|alias|動作|
+|:--|:--|:--|
+|Select-Object|select|特定のオブジェクトを選択|
+|Where-Object|?|特定の条件を満たすデータを取得|
+|Group-Object|group|同じプロパティをグループ化|
+|ForEach-Object|%|入力オブジェクトの各アイテムに対して操作を実行|
+
 
 
 ## コマンド例
