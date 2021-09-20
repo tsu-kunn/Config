@@ -586,6 +586,15 @@ end {
 > 7za x hoge.7z -otmp
 ```
 
+### 日付のフォーマット指定
+```PowerShell
+> (Get-Date).ToString("yyyy/MM/dd")
+```
+
+`Get-Date` にカッコを付けないとエラーになる。
+括弧が必要な理由は、コマンドレットが完了してから返されるオブジェクトのメソッドにアクセスする必要があるから。
+`Get-Location` など同様の対応が必要なコマンドレットがある。
+
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
