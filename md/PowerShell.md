@@ -462,6 +462,22 @@ if (-Not $args) {
 }
 ```
 
+### スクリプトからスクリプトの呼び出し
+```PowerShell
+Start-Process -FilePath "pwsh" -ArgumentList "-Command <スクリプト名> <引数>", -NoNewWindow -Wait
+```
+
+または
+
+```PowerShell
+. <スクリプト名>
+```
+
+### スクリプトから外部プログラムの呼び出し
+```PowerShell
+Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoNewWindow -Wait
+```
+
 
 ## 覚えるべきコマンドレット
 |コマンドレット|alias|動作|
