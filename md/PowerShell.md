@@ -538,6 +538,31 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 
 ※`ls | sls` だと一覧に含まれるファイルの中まで検索してしまうので、`oss` でテキストにして渡す。
 
+条件に一致するものを抽出だけならはこちらのほうが良いかも。
+
+```PowerShell
+> Get-ChildItem | ? {$_ -match ".md"}
+```
+
+### printfに近い動作
+```PowerShell
+> "{0:D5}" -f 123
+00123
+```
+
+繰り返し
+```PowerShell
+> "abc" * 3
+```
+
+### head/tailに近い動作
+```PowerShell
+> 1..10 | Select-Object -First 3
+1
+2
+3
+```
+
 ### Select-String のよく使うオプション
 |オプション|動作|
 |:--|:--|
