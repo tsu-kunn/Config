@@ -104,6 +104,14 @@ or
 > Enable-ExperimentalFeature -Name PSTempDrive
 ```
 
+※ver.7.1.4 for Windwos ではこの機能がなくなっている\
+代わりに以下のパスを使うと代替できる。
+
+```PowerShell
+> "Hello World!" > $Env:TMP/hello.txt
+> "Hello World!" > $Env:TEMP/hello.txt
+```
+
 ### プロンプトの変更
 `function prompt` を作成する。\
 最後に `return` を書かないと "PS>" が自動で表示される。
