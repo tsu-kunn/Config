@@ -916,6 +916,32 @@ if ! shopt -oq posix; then
 fi
 ```
 
+## Git Bashでインストール
+1. [リリースページ](https://github.com/scop/bash-completion/releases) からソースコードをダウンロード
+1. ソースコードの展開\
+    `bash-completion-2.11.tar.xz` をダウンロードした場合。
+    ```bash
+    $ xz -dv bash-completion-2.11.tar.xz
+    $ tar xvf bash-completion-2.11.tar
+    ```
+1. make でインストール\
+    Git for Windows環境の場合は、管理者権限で実行したGit Bashで `make install` を実行する必要あり。
+    ``` bash
+    $ cd bash-completion-2.11
+    $ ./configure
+    $ make
+    $ make install
+    ```
+1. `.bashrc` に追加
+    ```bash
+    # bash-completion
+    if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+      . /usr/local/share/bash-completion/bash_completion
+    fi
+    ```
+
+### 参考HP
+- [Git Bash for Windows で bash-completion を使う](https://zenn.dev/sprout2000/articles/e80168e97fc306)
 
 
 # メモ
