@@ -6,6 +6,9 @@
 # add-type
 #Add-type -AssemblyName System.Web
 
+# use posh-git
+Import-Module posh-git
+
 # ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
 if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# path

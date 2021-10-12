@@ -112,6 +112,25 @@ or
 > "Hello World!" > $Env:TEMP/hello.txt
 ```
 
+### Gitの補完
+PowerShell Galleryから `posh-git` をインストールする。
+
+```PowerShell
+> Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
+```
+
+`$PROFILE` に以下のコマンドを追記する。
+
+```PowerShell
+Import-Module posh-git
+```
+
+プロンプト部分にGitの情報を表示することもできる。\
+詳しくは Git status summary information の項目を参照。
+
+#### HP
+- [dahlbyk/posh-git](https://github.com/dahlbyk/posh-git/)
+
 ### プロンプトの変更
 `function prompt` を作成する。\
 最後に `return` を書かないと "PS>" が自動で表示される。
