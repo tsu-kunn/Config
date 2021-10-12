@@ -112,6 +112,9 @@ or
 > "Hello World!" > $Env:TEMP/hello.txt
 ```
 
+※Linuxでは Tmp も Temp も定義なし。
+
+
 ### Gitの補完
 PowerShell Galleryから `posh-git` をインストールする。
 
