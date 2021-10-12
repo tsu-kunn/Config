@@ -114,7 +114,6 @@ or
 
 ※Linuxでは Tmp も Temp も定義なし。
 
-
 ### Gitの補完
 PowerShell Galleryから `posh-git` をインストールする。
 
@@ -129,7 +128,7 @@ Import-Module posh-git
 ```
 
 プロンプト部分にGitの情報を表示することもできる。\
-詳しくは Git status summary information の項目を参照。
+詳しくは [Git status summary information](https://github.com/dahlbyk/posh-git/#git-status-summary-information) の項目を参照。
 
 #### HP
 - [dahlbyk/posh-git](https://github.com/dahlbyk/posh-git/)
