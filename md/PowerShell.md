@@ -114,24 +114,12 @@ or
 
 ※Linuxでは Tmp も Temp も定義なし。
 
-### Gitの補完
-PowerShell Galleryから `posh-git` をインストールする。
+### -Path と -LiteralPath の違い
+- Path\
+  ワイルドカードを受け付ける。
+- LiteralPath\
+  ワイルドカードを受け付けない。（全てを文字列とする）
 
-```PowerShell
-> Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
-```
-
-`$PROFILE` に以下のコマンドを追記する。
-
-```PowerShell
-Import-Module posh-git
-```
-
-プロンプト部分にGitの情報を表示することもできる。\
-詳しくは [Git status summary information](https://github.com/dahlbyk/posh-git/#git-status-summary-information) の項目を参照。
-
-#### HP
-- [dahlbyk/posh-git](https://github.com/dahlbyk/posh-git/)
 
 ### プロンプトの変更
 `function prompt` を作成する。\
@@ -287,6 +275,32 @@ function prompt
   ```PowerShell
   > Update-Module
   ```
+
+### Gitの補完
+PowerShell Galleryから `posh-git` をインストールする。
+
+```PowerShell
+> Install-Module posh-git -Scope CurrentUser -AllowPrerelease -Force
+```
+
+`$PROFILE` に以下のコマンドを追記する。
+
+```PowerShell
+Import-Module posh-git
+```
+
+`$PROFILE` の再読み込み。（Gitの補完有効）
+
+```PowerShell
+> . $PROFILE
+```
+
+プロンプト部分にGitの情報を表示することもできる。\
+詳しくは [Git status summary information](https://github.com/dahlbyk/posh-git/#git-status-summary-information) の項目を参照。
+
+#### HP
+- [dahlbyk/posh-git](https://github.com/dahlbyk/posh-git/)
+
 
 ## スクリプト
 
@@ -590,6 +604,12 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 1
 2
 3
+> 1..10 | Select-Object -Last 3
+8
+9
+10
+> Get-Content .\README.md -First 10
+> Get-Content .\README.md -Tail 10
 ```
 
 ### Select-String のよく使うオプション
@@ -692,6 +712,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 
 #### 参考
 - [Windows標準コマンド (PowerShell) を使ってsedっぽいことを実現する](https://tech-mmmm.blogspot.com/2020/06/windowssed.html)
+
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
