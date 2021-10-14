@@ -713,6 +713,14 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 #### 参考
 - [Windows標準コマンド (PowerShell) を使ってsedっぽいことを実現する](https://tech-mmmm.blogspot.com/2020/06/windowssed.html)
 
+### プログレスバーありのコピー
+```PowerShell
+> Start-BitsTransfer -Source <コピー元> -Destination <コピー先>
+```
+
+※ファイルのみ対応で、ディレクトリコピーはできないっぽい。\
+※コピー元はワイルドカードを使用できるが、コピー先にはワイルドカードは使用できない。
+
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
