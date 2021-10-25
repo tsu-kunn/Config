@@ -76,7 +76,8 @@
             "useAcrylic": true,
 
             // 右下に背景画像追加
-            "backgroundImage": "%USERPROFILE%\\Pictures\\W_05s.png",
+//            "backgroundImage": "%USERPROFILE%\\Pictures\\W_05s.png",
+            "backgroundImage": "%USERPROFILE%\\Pictures\\kaltsit_02s.png",
             "backgroundImageStretchMode": "none",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.3
