@@ -612,6 +612,12 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-Content .\README.md -Tail 10
 ```
 
+### Bashのpwdと同じ出力
+```PowerShell
+> Get-Location | % {$_.Path}
+```
+
+
 ### Select-String のよく使うオプション
 |オプション|動作|
 |:--|:--|
