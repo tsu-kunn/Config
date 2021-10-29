@@ -836,6 +836,20 @@ $ tar --exclude test[12]* cvzf hoge.tar.gz
 $ tar --exclude test* xvf hoge.tar.gz
 ```
 
+## ls結果の加工
+### ファイルのみ出力
+`-F` オプションでディレクトリ名の最後に"/"が表示されるようになるので、一致するものを除外する。
+
+```bash
+$ ls -F | grep -v /
+```
+
+### ディレクトリのみ出力
+```bash
+$ ls -d */
+```
+
+
 # Git Bash
 ## tmuxのインストール
 pacmanをインストールし、これを使って tumx をインストールする。\
