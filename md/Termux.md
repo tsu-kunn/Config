@@ -69,15 +69,15 @@ Windows の Git Bashでも使えたりします。
 
 ### Node.js
 ```bash
-$ apt install -y nodejs yarn
+$ apt install -y nodejs-lts yarn
 ```
 
 yarn は必要に応じて追加。自分は npm 派なので追加してません。\
 code-server を追加するなら入れましょう。
 
-※2021/05/29\
-node のバージョンは v14.15.4\
-npm と npx のバージョンは 6.14.10
+※2021/11/01\
+パッケージを nodejs から nodejs-lts に変更。\
+node のバージョンは v16.13.0
 
 ### nkf
 パケージにはないので Git Hub からソースコードを取得し、 clang でコンパイルする。\
