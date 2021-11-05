@@ -931,6 +931,14 @@ fi
 ```
 
 ## Git Bashでインストール
+### pacman
+1. パッケージのインストール
+    ```bash
+    $ pacman -S bash-completion
+    ```
+1. `.bashrc` に追加（手動4を実施）
+
+### 手動
 1. [リリースページ](https://github.com/scop/bash-completion/releases) からソースコードをダウンロード
 1. ソースコードの展開\
     `bash-completion-2.11.tar.xz` をダウンロードした場合。
