@@ -849,6 +849,35 @@ $ ls -F | grep -v /
 $ ls -d */
 ```
 
+## ヒアドキュメント
+複数行のテキスト出力を行う方法。
+
+```bash
+$ cat << EOF
+test1
+test2
+EOF
+```
+
+### ファイルに出力する
+
+```bash
+$ cat << EOF > test.txt
+test1
+test2
+EOF
+```
+
+### 変数展開をやめる
+
+```bash
+$ cat << 'EOF' >> test.txt
+test1
+test2
+$HOME
+EOF
+```
+
 
 # Git Bash
 ## tmuxのインストール
