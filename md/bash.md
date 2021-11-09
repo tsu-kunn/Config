@@ -134,10 +134,10 @@ Bash 4.0以上であれば `PROMPT_DIRTRIM` を使って w/W のディレクト�
 hoge@hoge-PC:.../projects/GitHub/appClock $
 ```
 
-## Proxy
+# Proxy
 Proxyを設定する必要がある場合は下記のように設定する。
 
-### bashrc
+## bashrc
 ```bash
 export http_proxy=http://proxy.example.com:8080
 export https_proxy=http://proxy.example.com:8080
@@ -145,7 +145,7 @@ export HTTP_PROXY=http://proxy.example.com:8080
 export HTTPS_PROXY=http://proxy.example.com:8080
 ```
 
-### .wgetrc
+## .wgetrc
 wget でうまくPorxy設定がいかない場合は `.wgetrc` を作成して以下を記載する。
 
 ```bash
@@ -155,7 +155,7 @@ https_proxy=http://proxy.example.com:8080
 check_certificate = off
 ```
 
-### apt
+## apt
 sudo を付けるとrootの設定を参照するため別途設定する。\
 または `sudo -E` として、ユーザー設定を維持して実行でも可。
 
@@ -165,7 +165,7 @@ Acquire::http::Proxy "http://proxy.example.com:8080";
 Acquire::https::Proxy "http://proxy.example.com:8080";
 ```
 
-## リダイレクト
+# リダイレクト
 ```bash
 $ <command> > log.txt
 $ <command> > log.txt 2> error.txt # 標準出力とエラー出力を分ける
@@ -173,7 +173,7 @@ $ <command> > log.txt 2>&1         # 標準出力とエラー出力をまとめ�
 $ <command> > /dev/null            # 標準出力を破棄
 ```
 
-## 計算
+# 計算
 `$((...))` で囲うと計算になる。
 
 例)
@@ -182,7 +182,7 @@ $ echo $((5 + 10))
 15
 ```
 
-### 変数で計算
+## 変数で計算
 exprコマンドを使用する。
 
 例)
@@ -195,8 +195,8 @@ $ echo $(($a + $b))
 15
 ```
 
-## 変数
-### 設定
+# 変数
+## 設定
 = の間にスペースを入れない。\
 スペースを入れた場合は引数と判断される。
 
@@ -205,7 +205,7 @@ HOGE=10
 HOGE="Hello"
 ```
 
-### 値を表示
+## 値を表示
 ```bash
 echo $HOGE
 echo "$HOGE"
@@ -220,63 +220,63 @@ echo '$HOGE'
 $HOGE
 ```
 
-### 値に追加
+## 値に追加
 ```bash
 echo ${HOGE}3
 echo ${HOGE}" World"
 ```
 
-### 結合表示
+## 結合表示
 ```bash
 echo ${HOGE0}${HOGE1}
 ```
 
-### 部分文字列
-#### オフセット
+## 部分文字列
+### オフセット
 ```bash
 echo ${HOGE:0:2}
 echo ${HOGE:2:4}
 ```
 
-#### 最後からオフセット
+### 最後からオフセット
 ```bash
 echo ${HOGE:0:-2}
 ```
 
-#### 右端から最短パターン一致までを除外
+### 右端から最短パターン一致までを除外
 ```bash
 HOGE=abc.def.ghi
 echo ${HOGE%.*}
 # => abc.def
 ```
 
-#### 右端から最長パターン一致までを除外
+### 右端から最長パターン一致までを除外
 ```bash
 HOGE=abc.def.ghi
 echo ${HOGE%%.*}
 # => abc
 ```
 
-#### 左端から最短パターン一致まで除外
+### 左端から最短パターン一致まで除外
 ```bash
 HOGE=abc.def.ghi
 echo ${HOGE#*.}
 # => def.ghi
 ```
 
-#### 左端から最長パターン一致まで除外
+### 左端から最長パターン一致まで除外
 ```bash
 HOGE=abc.def.ghi
 echo ${HOGE##*.}
 # => ghi
 ```
 
-### ローカル変数
+## ローカル変数
 ```bash
 local tmp="HOGE"
 ```
 
-## 変数展開
+# 変数展開
 |記述|動作|
 |:--|:--|
 |${param:-word}|${param}が NULL の場合 word に置き換える|
@@ -285,17 +285,17 @@ local tmp="HOGE"
 |${param:+word}|${param}が NULL 以外の場合 word に置き換える|
 |${#param}|${param}の文字列数に置き換える|
 
-### 参考HP
+## 参考HP
 - [シェルの変数展開](https://qiita.com/bsdhack/items/597eb7daee4a8b3276ba)
 
-## 特殊変数
+# 特殊変数
 - $0: シュルスクリプト名
 - $*: "$1 $2 $3 ... ${10} ${11} ..." という1つの引数として受け取る
 - $@: "$1" "$2" "$3" ... と複数の引数として受け取る
 - $#: 引数の数
 - $?: 直前に実行したコマンドの終了ステータス(0:true 0以外:false)
 
-### 補足
+## 補足
 引数を受け取る際は "$0", "$1" "$@" というように、"..." で囲むのが安全。\
 引数に * など制御文字が入っていた場合や、空白を含む名前の場合は展開されてしまい、\
 意図しない動作になる恐れがあります。
@@ -306,7 +306,7 @@ FNAME=$(basename "$1")"_${DATA}.tar.gz"
 tar cvzf "$FNAME" "$@"
 ```
 
-## 配列
+# 配列
 ```bash
 arry=(1 2 3 4)
 
@@ -321,7 +321,7 @@ echo ${arry[@]}
 echo ${#a[@]}
 ```
 
-## ブレース展開
+# ブレース展開
 ```bash
 $ ls *.{jpg,png,bmp}    # *.jpg, *.png, *.bmpに展開
 $ ls *.LOG{1,2}
