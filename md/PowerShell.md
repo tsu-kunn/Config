@@ -5,15 +5,15 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 ## スクリプト置き場
 [Config/PowerShell](https://github.com/tsu-kunn/Config/tree/master/PowerShell)
 
-## メモ
-### スクリプトの実行を有効にする
+# メモ
+## スクリプトの実行を有効にする
 管理者権限でPSを実行し、以下のコマンドレットを実行する必要がある。
 
 ```PowerShell
 > Set-ExecutionPolicy RemoteSigned -Force
 ```
 
-### プロファイルの場所
+## プロファイルの場所
 `$profile` に配置される。\
 自動で作成はされないので、手動で作成する必要がある。
 
@@ -21,12 +21,12 @@ Windows PowerShell と PowerShell を使用する際のメモ。
 > new-item -path $profile -itemtype file -force
 ```
 
-### PowerShellのバージョン確認
+## PowerShellのバージョン確認
 ```PowerShell
 > $PSVersionTable
 ```
 
-### OSの確認
+## OSの確認
 - Windows PowerShellも対象
   ```PowerShell
   if ([Environment]::OSVersion.Platform -eq "Win32NT") {...}
@@ -40,14 +40,14 @@ OSは `Win32NT`, `MacOSX`, `Unix` がある。\
 ※Linux = Unix
 
 
-### Gitなどで日本語が文字化けする
+## Gitなどで日本語が文字化けする
 以下のコマンドを実行する。
 
 ```PowerShell
 > Set-Item env:LANG -Value ja_JP.UTF-8
 ```
 
-### Bash風の設定
+## Bash風の設定
 ```PowerShell
 # bash風のtab補完
 Set-PSReadLineKeyHandler -Key Tab -Function Complete
@@ -58,7 +58,7 @@ Set-PSReadLineOption -EditMode Emacs
 
 `-EditMode` には `Windows`, `Emacs`, `Vi` が設定できる。（default: Windows)
 
-#### 番外: コマンドプロンプトのVim
+### 番外: コマンドプロンプトのVim
 - [Vim — KaoriYa](https://www.kaoriya.net/software/vim/)
 
 または環境変数に以下のパスを通す。
@@ -67,25 +67,25 @@ Set-PSReadLineOption -EditMode Emacs
 > $env:Path += ";C:\Program Files\Git\usr\bin"
 ```
 
-### シンボリックリンク
+## シンボリックリンク
 管理者権限で起動する必要あり。
 
-#### コマンドプロンプト
+### コマンドプロンプト
 ```
 > mklink リンク名 ターゲット名
 > mklink /D フォルダ名 ターゲットフォルダ名
 ```
 
-#### PowerShell
+### PowerShell
 ```PowerShell
 > New-Item -Path 'リンク名' -Value 'ターゲット名' -ItemType SymbolicLink
 > New-Item -Path 'フォルダ名' -Value 'ターゲットフォルダ名' -ItemType SymbolicLink
 ```
 
-#### 補足1
+### 補足1
 `ItemType` には `Junction`, `HardLink` も設定することができる。
 
-#### 補足2
+### 補足2
 コマンドプロンプトでmklinkを実行する。\
 引数は `"..."` で囲む必要がある。
 
@@ -95,7 +95,7 @@ or
 > win_sudo cmd "/c mklink /d c:\files\work\projects\Memo c:\files\work\Memo"
 ```
 
-### 一時ディレクトリ
+## 一時ディレクトリ
 `Temp:`
 
 有効になっていない場合は以下のコマンドを実行する。
@@ -114,14 +114,14 @@ or
 
 ※Linuxでは Tmp も Temp も定義なし。
 
-### -Path と -LiteralPath の違い
+## -Path と -LiteralPath の違い
 - Path\
   ワイルドカードを受け付ける。
 - LiteralPath\
   ワイルドカードを受け付けない。（全てを文字列とする）
 
 
-### プロンプトの変更
+## プロンプトの変更
 `function prompt` を作成する。\
 最後に `return` を書かないと "PS>" が自動で表示される。
 
@@ -182,7 +182,7 @@ function prompt
 }
 ```
 
-### 比較演算子
+## 比較演算子
 |比較演算子|動作|
 |:--|:--|
 |-eq|=|
@@ -204,7 +204,7 @@ function prompt
 |-is|オブジェクトの双方の型が等しい|
 |-isnot|オブジェクトの双方の型が等しくない|
 
-### 算術演算子
+## 算術演算子
 |算術演算子|動作|
 |:--|:--|
 |+|加算・結合|
@@ -219,7 +219,7 @@ function prompt
 |-shl|左へビットシフト|
 |-shr|右へビットシフト|
 
-### リダイレクト
+## リダイレクト
 |演算子|動作|
 |:--|:--|
 |>|ファイルへ書き込み|
@@ -237,7 +237,7 @@ function prompt
 |6|インフォメーションストリーム|
 |*|すべてのストリーム|
 
-### 正規表現
+## 正規表現
 |表現|動作|
 |:--|:--|
 |.|任意の1文字|
@@ -260,7 +260,7 @@ function prompt
 |{n,}|n回以上繰り返し|
 |{n,m}|n回以上m回以下繰り返し|
 
-### PowerShellGet
+## PowerShellGet
 - バージョンの確認
   ```PowerShell
   > Get-Command -Module PowerShellGet
@@ -276,7 +276,7 @@ function prompt
   > Update-Module
   ```
 
-### Gitの補完
+## Gitの補完
 PowerShell Galleryから `posh-git` をインストールする。
 
 ```PowerShell
@@ -298,23 +298,24 @@ Import-Module posh-git
 プロンプト部分にGitの情報を表示することもできる。\
 詳しくは [Git status summary information](https://github.com/dahlbyk/posh-git/#git-status-summary-information) の項目を参照。
 
-#### HP
+### HP
 - [dahlbyk/posh-git](https://github.com/dahlbyk/posh-git/)
 
 
-## スクリプト
+# スクリプト
 
-### 関数名
+## 関数名
 関数名は「動詞 - 名詞」の組み合わせが推奨されている。(VSCodeのPowerShell拡張で指摘される)\
 組み合わせは [PowerShell コマンドに承認されている動詞](https://docs.microsoft.com/ja-jp/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7.1) を参照。
 
-### Windows/macOS/Linuxで動作させる
+## Windows/macOS/Linuxで動作させる
 スクリプトファイルの先頭に以下を記載する。\
+
 ```PowerShell
 #!/usr/bin/env pwsh
 ```
 
-### バッチファイルから管理者権限を変更して実行
+## バッチファイルから管理者権限を変更して実行
 権限を一時的に変更しているので戻す操作不要。\
 PowerShellの権限を変更していない環境で有効。
 
@@ -322,10 +323,10 @@ PowerShellの権限を変更していない環境で有効。
 powershell -sta -ExecutionPolicy Unrestricted -File %0\..\[スクリプト名].ps1
 ```
 
-### 終了コード
+## 終了コード
 exit の終了コードは `$LASTEXITCODE` に保存される。
 
-### ダブルクォーテーション内での配列型変数の展開
+## ダブルクォーテーション内での配列型変数の展開
 - NG
   ```
   > $FName = "`"$a[0]_${Date}.zip`""
@@ -340,7 +341,7 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
 
 ※Sub-Expression Operator といって、$()内部を先に評価してから式の評価を行うようになる。
 
-### 自動変数
+## 自動変数
 - `$^`
   - 前回実行した1番目の文字列
 - `$$`
@@ -355,13 +356,13 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
 - $True
 - $False
 
-### 出力を破棄
+## 出力を破棄
 パイプに `out-null` を指定する。
 
 例) mkdir tmp | out-null
 
 
-### ファイル名などの取得
+## ファイル名などの取得
 - .NET関数を利用:
   - ファイル名（拡張子あり）:  `[System.IO.Path]::GetFileName()` 
   - ファイル名（拡張子なし）:  `[System.IO.Path]::GetFileNameWithoutExtension()` 
@@ -375,7 +376,7 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
 
 ※.NET関数は指定の名前がない場合は "" を返すが、Get-Itemではエラーとなる。
 
-### パイプラインチェイン(7.0以上)
+## パイプラインチェイン(7.0以上)
 - コマンド1 && コマンド2
   - コマンド1が正常終了するとコマンド2が実行される。
 - コマンド1 || コマンド2
@@ -383,7 +384,7 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
 
 ※if文と $?(直前の式の結果) の組み合わせの代替処理
 
-### Null演算子
+## Null演算子
 - Null合体演算子
   - 変数 ?? 値
     - 変数の値が $null なら値を使用する。
@@ -395,7 +396,7 @@ exit の終了コードは `$LASTEXITCODE` に保存される。
     - 変数の値が $null なら以降を実行しない。
     - 例）`${f}?.OpenText()?.ReadToEnd()`
 
-### JSONファイル編集
+## JSONファイル編集
 ```PowerShell
 # JSON読み込み
 $JsonData = Get-Content -Path .\json_test.json
@@ -423,11 +424,11 @@ $JsonData = $ObjectData | ConvertTo-Json
 Set-Content -path json_test_output.json -Value $JsonData
 ```
 
-#### 補足
+### 補足
 `ConvertTo-Json` と　`ConvertFrom-Json` でネストが深いと変換されないことがある。\
 その場合はオプションの `-Depth` でネストの深さを設定する。(default:2)
 
-### XMLファイル編集
+## XMLファイル編集
 ```PowerShell
 # XMLファイル読み込み
 [xml]$XmlData = Get-Content ".\test_xml.xml"
@@ -458,15 +459,15 @@ Write-Output $xmlData.HEADER.pages
 JSONファイルをXMLファイル出力とかはできるんだけどね。
 
 
-### パイプライン入力
-#### 自動変数で受け取る
+## パイプライン入力
+### 自動変数で受け取る
 - `$input` オブジェクトから読み取る
   - `$input.Name` といった感じでプロパティを指定して使う
 - `$PSItem` オブジェクトから読み取る
   - `process {...}` ブロック内で使用可能
   - 引数で値を渡した場合は値がない
 
-#### 変数で受け取る
+### 変数で受け取る
 パラメーターの `ValueFromPipeline` 属性を有効にする。\
 引数とパイプライン両方で値を受け取ることが可能になる。（配列もOK）
 
@@ -474,7 +475,7 @@ JSONファイルをXMLファイル出力とかはできるんだけどね。
 param ([Parameter(ValueFromPipeline=$true)]$str)
 ```
 
-#### begin/process/end ブロック
+### begin/process/end ブロック
 `$input` 以外でパイプライン入力を受け取る場合は `process` ブロックが必要。\
 `begin`, `end` は省略可能。
 
@@ -490,7 +491,7 @@ end {
 }
 ```
 
-#### $inputで受け取る
+### $inputで受け取る
 `$input` には単数ではなく複数渡される場合があるのでそれに対応する必要がある。
 
 ```PowerShell
@@ -505,7 +506,7 @@ if (-Not $args) {
 }
 ```
 
-### スクリプトからスクリプトの呼び出し
+## スクリプトからスクリプトの呼び出し
 ```PowerShell
 Start-Process -FilePath "pwsh" -ArgumentList "-Command <スクリプト名> <引数>", -NoNewWindow -Wait
 ```
@@ -516,13 +517,13 @@ Start-Process -FilePath "pwsh" -ArgumentList "-Command <スクリプト名> <引
 . <スクリプト名>
 ```
 
-### スクリプトから外部プログラムの呼び出し
+## スクリプトから外部プログラムの呼び出し
 ```PowerShell
 Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoNewWindow -Wait
 ```
 
 
-## 覚えるべきコマンドレット
+# 覚えるべきコマンドレット
 |コマンドレット|alias|動作|
 |:--|:--|:--|
 |Get-ChildItem|dir|ファイルとディレクトリの表示|
@@ -537,7 +538,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 |New-Item|ni|ファイルやディレクトリを作成|
 |Invoke-Item|ii|ファイルを実行|
 
-## パイプラインで使用するコマンドレット
+# パイプラインで使用するコマンドレット
 |コマンドレット|alias|動作|
 |:--|:--|:--|
 |Select-Object|select|特定のオブジェクトを選択|
@@ -547,20 +548,20 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 
 
 
-## コマンド例
-### 新規ファイル作成
+# コマンド例
+## 新規ファイル作成
 ```PowerShell
 > New-Item -path ./hoge/temp/hoge.md -ItemType file -Force
 ```
 
 ※`-Force` を付けることでディレクトリを自動作成できる。
 
-### 16進ダンプ
+## 16進ダンプ
 ```PowerShell
 > Format-Hex <ファイル名> | more
 ```
 
-### ファイルとディレクトリの数とサイズ取得
+## ファイルとディレクトリの数とサイズ取得
 ```PowerShell
 # 隠しファイル非対象
 > Get-ChildItem -Recurse | Measure-Object Length -Maximum -Minimum -Average -Sum
@@ -569,12 +570,12 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-ChildItem -Recurse -Force | Measure-Object Length -Maximum -Minimum -Average -Sum
 ```
 
-### JSONCをWindows PowerShellで読み込む場合の対応
+## JSONCをWindows PowerShellで読み込む場合の対応
 ```PowerShell
 > $x = Get-Content -Path .\settings.json | Where-Object{ $_ -notmatch "^\s*//.*$" } | ConvertFrom-Json
 ```
 
-### grepに近い動作
+## grepに近い動作
 ```PowerShell
 > ls | oss | sls <条件or正規表現>
 ```
@@ -587,7 +588,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-ChildItem | ? {$_ -match ".md"}
 ```
 
-### printfに近い動作
+## printfに近い動作
 ```PowerShell
 > "{0:D5}" -f 123
 00123
@@ -598,7 +599,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > "abc" * 3
 ```
 
-### head/tailに近い動作
+## head/tailに近い動作
 ```PowerShell
 > 1..10 | Select-Object -First 3
 1
@@ -612,13 +613,13 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-Content .\README.md -Tail 10
 ```
 
-### Bashのpwdと同じ出力
+## Bashのpwdと同じ出力
 ```PowerShell
 > Get-Location | % {$_.Path}
 ```
 
 
-### Select-String のよく使うオプション
+## Select-String のよく使うオプション
 |オプション|動作|
 |:--|:--|
 |-SimpleMatch|正規表現を使用せずに検索|
@@ -626,8 +627,8 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 |-Contex 行数|一致した前後を行数分表示|
 |-CaseSensitive|大文字と小文字を区別|
 
-### 進数変換
-#### 10進数から変換
+## 進数変換
+### 10進数から変換
 ```PowerShell
 # 2進数
 > [Convert]::ToString(<値>, 2)
@@ -635,7 +636,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > [Convert]::ToString(<値>, 16)
 ```
 
-#### 2, 16進数から変換
+### 2, 16進数から変換
 ```PowerShell
 # 2進数
 > [Convert]::ToInt32(<2進数>, 2)
@@ -643,7 +644,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > [Convert]::ToInt32(<16進数>, 16)
 ```
 
-### 時間・日数計算
+## 時間・日数計算
 ```PowerShell
 # 8時間前
 > (Get-Date).AddHours(-8)
@@ -653,24 +654,24 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > ([DateTime]"2021/07/28").AddDays(-60)
 ```
 
-### GUID
+## GUID
 ```PowerShell
 > New-Guid
 ```
 
-### 圧縮
-#### Zip
+## 圧縮
+### Zip
 ```PowerShell
 > compress-Archive -Path <File or Directory> -DestinationPath hoge.zip -Force
 ```
 
-### tar
+## tar
 ```PowerShell
 > tar cvzf hoge.tar.gz [file/directory]
 > tar cvjf hoge.tar.bz2 [file/directory]
 ```
 
-### 7zip
+## 7zip
 別途 `7za.exe` が必要。
 
 ```PowerShell
@@ -678,27 +679,27 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > 7za a -tzip hoge.zip [file/directory]
 ```
 
-### 解凍
-#### Zip
+## 解凍
+### Zip
 ```PowerShell
 > Expand-Archive -Path hoge.zip -DestinationPath ./tmp
 ```
 
-### tar
+## tar
 ```PowerShell
 > tar xvf hoge.tar.gz
 > tar xvf hoge.tar.bz2
 > tar xvg hoge.tar.gz -C ~/tmp
 ```
 
-### 7zip
+## 7zip
 ```PowerShell
 > 7za x hoge.7z
 > 7za x hoge.zip
 > 7za x hoge.7z -otmp
 ```
 
-### 日付のフォーマット指定
+## 日付のフォーマット指定
 ```PowerShell
 > (Get-Date).ToString("yyyy/MM/dd")
 ```
@@ -707,7 +708,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 括弧が必要な理由は、コマンドレットが完了してから返されるオブジェクトのメソッドにアクセスする必要があるから。\
 `Get-Location` など同様の対応が必要なコマンドレットがある。
 
-### 文字列処理パターン
+## 文字列処理パターン
 |文字列処理|コマンド|
 |:--|:--|
 |置換|gc <入力ファイル> \| % { $_ -creplace "<検索文字列>", "<置換文字列>" }|
@@ -716,10 +717,10 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 |改行を削除|gc <入力ファイル> -Raw \| % { $_ -replace "`r`n", "" }|
 |先頭に文字列追加|gc <入力ファイル> \| % { "<追加文字列>" + $_ }|
 
-#### 参考
+### 参考
 - [Windows標準コマンド (PowerShell) を使ってsedっぽいことを実現する](https://tech-mmmm.blogspot.com/2020/06/windowssed.html)
 
-### プログレスバーありのコピー
+## プログレスバーありのコピー
 ```PowerShell
 > Start-BitsTransfer -Source <コピー元> -Destination <コピー先>
 ```
@@ -727,8 +728,8 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 ※ファイルのみ対応で、ディレクトリコピーはできないっぽい。\
 ※コピー元はワイルドカードを使用できるが、コピー先にはワイルドカードは使用できない。
 
-### SSH
-#### 秘密鍵の作成
+## SSH
+### 秘密鍵の作成
 ```PowerShell
 > ssh-keygen -t rsa -f <秘密鍵名>
 ```
@@ -736,7 +737,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 `-f` を省略した場合は `id_rsa` になる。\
 既存のものがあると上書きわれるので注意。
 
-#### 秘密鍵指定
+### 秘密鍵指定
 ```PowerShell
 > ssh -i <秘密鍵のファイルパス> <ユーザー名>@<ドメイン名> -p <ポート番号>
 ```
