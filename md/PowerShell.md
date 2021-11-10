@@ -727,6 +727,23 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 ※ファイルのみ対応で、ディレクトリコピーはできないっぽい。\
 ※コピー元はワイルドカードを使用できるが、コピー先にはワイルドカードは使用できない。
 
+### SSH
+#### 秘密鍵の作成
+```PowerShell
+> ssh-keygen -t rsa -f <秘密鍵名>
+```
+
+`-f` を省略した場合は `id_rsa` になる。\
+既存のものがあると上書きわれるので注意。
+
+#### 秘密鍵指定
+```PowerShell
+> ssh -i <秘密鍵のファイルパス> <ユーザー名>@<ドメイン名> -p <ポート番号>
+```
+
+- `-i` を省略した場合は `id_rsa` が使われる。
+- `-p` を省略した場合は `22番ポート` が使われる。
+
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
