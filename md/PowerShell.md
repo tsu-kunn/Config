@@ -679,6 +679,14 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > 7za a -tzip hoge.zip [file/directory]
 ```
 
+## lha32
+別途 `lha32.exe` と `unlha32.dll` が必要。
+
+```PowerShell
+> lha32 a hoge.lzh [file]
+> lha32 a hoge.lzh -d [directory]
+```
+
 ## 解凍
 ### Zip
 ```PowerShell
@@ -697,6 +705,11 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > 7za x hoge.7z
 > 7za x hoge.zip
 > 7za x hoge.7z -otmp
+```
+
+## lha32
+```PowerShell
+> lha32 x hoge.lzh
 ```
 
 ## 日付のフォーマット指定
