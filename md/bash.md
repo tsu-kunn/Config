@@ -837,6 +837,7 @@ $ 7za a hoge.7z [file/directory]
 $ 7za a -tzip hoge.zip [file/directory]
 $ zip -r hoge.zip [file/directory]
 $ zip -r -p [password] hoge.zip [file/directory]
+$ lha a hoge.lzh [file/directory]
 ```
 
 ### 解凍
@@ -846,6 +847,7 @@ $ tar xvf hoge.tar.bz2
 $ 7za x hoge.7z
 $ 7za x hoge.zip
 $ unzip hoge.zip
+$ lha x hoge.lzh
 ```
 
 ### tarで一部のファイル・ディレクトリを除外
