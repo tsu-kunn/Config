@@ -76,6 +76,11 @@ Set-PSReadLineOption -EditMode Emacs
 # ビープ音をオフ
 Set-PSReadlineOption -BellStyle None
 
+# 引数の色を変更する
+Set-PSReadLineOption -Colors @{
+    "Parameter" = [ConsoleColor]::DarkBlue
+    #"Operator" = [ConsoleColor]::Gray
+}
 
 # function
 
