@@ -182,6 +182,38 @@ function prompt
 }
 ```
 
+## コマンドやパラメーターの色変更
+色は「プロンプトの変更」に書かれたものと同じ。
+
+```PowerShell
+Set-PSReadLineOption -Colors @{
+    "Parameter" = [ConsoleColor]::DarkBlue
+    #"Operator" = [ConsoleColor]::Gray
+}
+```
+
+`-Colors` には以下のパラメーターを設定可能。
+
+|キー|説明|
+|:--|:--|
+|ContinuationPrompt|プロンプトの続きの色|
+|Emphasis|強調表示の色（履歴のマッチングなど）|
+|Error|エラーの色|
+|Selection|選択範囲の色|
+|Default|フォルトの色|
+|Comment|コメントの色|
+|Keyword|キーワードの色|
+|String|文字列の色|
+|Operator|演算子の色|
+|Variable|変数の色|
+|Command|コマンドの色|
+|Parameter|パラメーター（引数）の色|
+|Type|タイプの色|
+|Number|数字の色|
+|Member|メンバー名の色|
+|InlinePrediction|予測提案の色|
+
+
 ## 比較演算子
 |比較演算子|動作|
 |:--|:--|
