@@ -686,6 +686,32 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > ([DateTime]"2021/07/28").AddDays(-60)
 ```
 
+## ファイル検索
+### 1年以上更新されていないファイル検索
+```PowerShell
+> Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.LastWriteTime -lt (Get-Date).AddYears(-1)}
+```
+
+#### ファイルサイズ順にソート
+```PowerShell
+> Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.LastAccessTime-lt (Get-Date).AddYears(-5)} | Sort-Object length
+```
+
+### ファイル名で検索
+```PowerShell
+> Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.Name -like 'hoge*'}
+```
+
+### 拡張子で検索
+```PowerShell
+> Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.Extention -eq '.txt'}
+```
+
+### 検索結果をCSVに出力
+```PowerShell
+> Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.LastAccessTime-lt (Get-Date).AddYears(0)} | Sort-Object length|Export-Csv -Path "list.csv" -Encoding Default -NoTypeInformation
+```
+
 ## GUID
 ```PowerShell
 > New-Guid
