@@ -723,13 +723,13 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > compress-Archive -Path <File or Directory> -DestinationPath hoge.zip -Force
 ```
 
-## tar
+### tar
 ```PowerShell
 > tar cvzf hoge.tar.gz [file/directory]
 > tar cvjf hoge.tar.bz2 [file/directory]
 ```
 
-## 7zip
+### 7zip
 別途 `7za.exe` が必要。
 
 ```PowerShell
@@ -737,7 +737,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > 7za a -tzip hoge.zip [file/directory]
 ```
 
-## lha32
+### lha32
 別途 `lha32.exe` と `unlha32.dll` が必要。
 
 ```PowerShell
@@ -751,21 +751,21 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Expand-Archive -Path hoge.zip -DestinationPath ./tmp
 ```
 
-## tar
+### tar
 ```PowerShell
 > tar xvf hoge.tar.gz
 > tar xvf hoge.tar.bz2
 > tar xvg hoge.tar.gz -C ~/tmp
 ```
 
-## 7zip
+### 7zip
 ```PowerShell
 > 7za x hoge.7z
 > 7za x hoge.zip
 > 7za x hoge.7z -otmp
 ```
 
-## lha32
+### lha32
 ```PowerShell
 > lha32 x hoge.lzh
 ```
@@ -815,6 +815,12 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 
 - `-i` を省略した場合は `id_rsa` が使われる。
 - `-p` を省略した場合は `22番ポート` が使われる。
+
+## サウンド再生
+```PowerShell
+> $player = New-Object Media.SoundPlayer "C:\Windows\Media\tada.wav"
+> $player.Play()
+```
 
 
 # Web
