@@ -67,6 +67,14 @@ Set-PSReadLineOption -EditMode Emacs
 > $env:Path += ";C:\Program Files\Git\usr\bin"
 ```
 
+## 推測入力機能（実験段階）
+PowerShell `7.2以降` で使用可能。\
+入力履歴を利用して入力予測が表示される。
+
+```PowerShell
+> Set-PSReadLineOption -PredictionSource History
+```
+
 ## シンボリックリンク
 管理者権限で起動する必要あり。
 
