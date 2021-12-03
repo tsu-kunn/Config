@@ -20,6 +20,9 @@ alias editor='vim'
 # \w full path \W current path
 export PS1='\[\e[00;32m\]\u@\H\[\e[00;34m\]:\w \[\e[00m\]\$ '
 
+# stop undefine
+stty stop undef
+
 # ls color
 eval $(dircolors -b ~/.dircolors)
 
