@@ -933,7 +933,7 @@ EOF
 $ git update-git-for-windows
 ```
 
-## tmuxのインストール
+## pacmanのインストール＆tmuxのインストール
 pacmanをインストールし、これを使って tumx をインストールする。\
 インストール作業は管理者権限で起動した Git Bash を使用する必要がある。
 
