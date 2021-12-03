@@ -942,6 +942,10 @@ git clone --depth=1 https://github.com/git-for-windows/git-sdk-64 gfw-sdk
 
 cp gfw-sdk/usr/bin/pacman* /usr/bin/
 cp -a gfw-sdk/etc/pacman.* /etc/
+
+# 今後に備えて不足分のDLLをコピーしておく
+cp -n gfw-sdk/usr/bin/*.dll /usr/bin
+
 mkdir -p /var/lib/
 mkdir -p /usr/share/makepkg/
 cp -a gfw-sdk/var/lib/pacman /var/lib/
@@ -955,6 +959,7 @@ curl -L https://raw.githubusercontent.com/git-for-windows/build-extra/master/git
 
 pacman -S tmux
 ```
+
 
 ## pacmanの基本的な使い方
 |コマンド|動作|
@@ -1059,6 +1064,8 @@ fi
   - `bash --version`
 - `Ctrl + D` でシェルを終了しない
   - `set -o ignoreeof`
+- `Ctrl + S` でシェルを停止しない
+  - `stty stop undef`
 - コマンドプロンプトのコマンドを実行する
   - `cmd //c <command>` とスラッシュが2つ必要(1つだと新規プロセスになる)
 - WSL2
@@ -1072,6 +1079,9 @@ fi
     ```
       - `-u` (defalt:省略可) でWindwosパスをWSLパスに変換
       - `-w` でWSLパスをWindowsパスに変換
+- 覚えておくと便利な `cp` コマンドのオプション
+  - `-n` 同名のファイルは上書きしない
+  - `-p` 属性情報（タイムスタンプや権限など）をそのままにしてコピー
 
 
 
