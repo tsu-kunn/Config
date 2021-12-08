@@ -246,6 +246,54 @@ $ cd ~/
 $ rm -rf ~/tmp
 ```
 
+## SSHでTermuxへアクセス
+
+### OpenSSHのインストール
+```bash
+$ apt install -y openssh
+```
+
+### 公開・秘密鍵の作成
+接続するPCの方で鍵を作成。
+
+```bash
+$ ssh-keygen -t rsa -f <秘密鍵名>
+```
+
+#### 公開鍵の登録
+接続するPCからTermuxに公開鍵をコピー。\
+外部ストレージに接続でいるようにして、USB接続経由などでTermuxにコピーする。
+
+```bash
+$ cat 秘密鍵名.pub >> ~/.ssh/authorized_keys
+$ chmod 600 ~/.ssh/authorized_keys
+```
+
+### サーバー起動・停止
+#### 起動
+```bash
+$ sshd
+```
+
+#### 停止
+```bash
+$ pkill sshd
+```
+
+### TermuxにSSH接続
+IPアドレスの確認。
+
+```bash
+$ ip -4 addr
+```
+
+SSH接続。
+
+```bash
+$ ssh -p 8022 -i 秘密鍵のパス IPアドレス
+```
+
+
 ## 参考URL
 - [スマフォで始めるWebアプリ開発](https://zenn.dev/endo_hizumi/articles/887826624e04806ed9a2)
 - [Termuxの意外と知らない日本語入力方法、特殊キータブの項目を増やす小技](https://qiita.com/gnuhead/items/3734a9dbf1146b59f12d)
