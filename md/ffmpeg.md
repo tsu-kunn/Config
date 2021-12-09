@@ -1,0 +1,191 @@
+# ffmpegのメモ
+
+## 入手先
+### Windows
+[公式サイト](http://www.ffmpeg.org/) の Download から入手。
+
+### Linux
+パッケージ管理から取得可能。
+
+## よく使うオプション
+### 共通
+|オプション|動作|
+|:--|:--|
+|-i|入力ファイルの指定（m3u8のURLに対応）|
+|-f|変換フォーマットの指定|
+|-c copy|映像と音声をコピーする|
+|-t|切り取る時間(秒)|
+|-fs|出力サイズの制限|
+|-ss|時間指定のオフセット|
+|-ssof|最後からのオフセット|
+|-y|上書き保存|
+
+### 映像
+|オプション|動作|
+|:--|:--|
+|-r|フレームレートの指定|
+|-b|ビットレートの指定|
+|-s|解像度の指定|
+|-aspect|アスペクト比の指定|
+|-vcodec|コーデックの指定（-codec:v のalias）|
+|-vf|エフェクトの内容を指定|
+|-vn|ビデオ出力無効|
+
+### 音声
+|オプション|動作|
+|:--|:--|
+|-acodec|コーデックの指定（-codec:a のalias）|
+|-b:a|ビットレートを指定|
+|-ac|チャンネル数を指定|
+|-vol|音量を指定|
+|-ar|サンプリングレートを指定|
+|-an|音声出力無効|
+
+
+## 変換
+### 基本
+```bash
+$ ffmpeg -i <input file> <output file>
+```
+
+### サイズ指定
+```bash
+$ ffmpeg -i input.mp4 -s 1280x720 output.mp4
+```
+
+### 連番画像出力
+10フレーム分を出力。\
+フレーム指定省略ですべてのフレーム出力。
+
+```bash
+$ ffmpeg -i input.mp4 -frames:v 10 output/frame%03d.jpg
+```
+
+途中からの場合は先頭位置を指定する。
+
+```bash
+$ ffmpeg -i input.mp4 -ss 60 -frames:v 10 output/frame%03d.jpg
+```
+
+### 連番から動画に変換
+```bash
+$ ffmpeg -i ./output/frame%03d.jpg -vcodec libx264 -qscale:v 0 output.mp4
+```
+
+### 無変換
+```bash
+$ ffmpeg -i input.mp4 -codec copy output.mp4
+```
+
+時間指定やフレーム指定と併用して部分出力などをするときに使う。
+
+```bash
+$ ffmpeg -i input.mp4 -codec copy -ss 00:00:10.0 -t 10 output.mp4
+```
+
+### 動画と音声の抽出
+```bash
+# 動画から映像のみを出力
+$ ffmpeg -i input.mp4 -vcodec copy -an output_nosound.mp4
+
+# 動画から音声のみを出力
+$ ffmpeg -i input.mp4 -acodec copy -vn output_sound.aac
+```
+
+### 無音の追加
+```bash
+# 頭に10秒の無音追加
+$ ffmpeg -i input.mp4 -vf tpad=start_duration=10:color=black -af "adelay=10s:all=1" output.mp4
+
+# お尻に10秒の無音追加
+$ ffmpeg -i input.mp4 -vf tpad=stop_duration=10:color=black -af "apad=pad_dur=11" output.mp4
+```
+
+### H.264
+#### 基本
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx264 output.mp4
+```
+
+#### ビットレート指定
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx264 -b:v 6000k output.mp4
+```
+
+#### 品質固定
+小さいほど高画質。\
+`crf` のデフォルトは 23 で、18～28 が推奨されている。
+
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx264 -crf <18～28> output.mp4
+```
+
+#### プリセット
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx264 -preset <preset> -tune <tune> output.mp4
+```
+
+- preset
+  - ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow, placebo
+  - 左ほど変換速度が速く、右ほど時間がかかるがファイルサイズが小さくなる
+- tune
+  - 指定の省略可能
+  - film: 実写向け 
+  - animation: アニメ向け
+  - grain: 古い動画向け
+  - stillimage: スライドなど動きのない動画向け
+
+### H.265
+#### 基本
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 output.mp4
+```
+
+#### ビットレート指定
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 -b:v 6000k output.mp4
+```
+
+#### 品質固定
+小さいほど高画質。\
+`crf` のデフォルトは 28 で、H.264のデフォルト値 23 と同党の画質となる。
+
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 -crf <0～51> output.mp4
+```
+
+#### プリセット
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 -preset <preset> -tune <tune> output.mp4
+```
+
+- preset
+  - ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow, placebo
+  - 左ほど変換速度が速く、右ほど時間がかかるがファイルサイズが小さくなる
+- tune
+  - 指定の省略可能
+  - psnr: ???(2つの入力ビデオ間の平均、最大、および最小のPSNR（ピーク信号対雑音比）を取得)
+  - ssim: ???(2つの入力ビデオ間のSSIM（Structural SImilarity Metric）を取得)
+  - animation: アニメ向け
+  - grain: 古い動画向け
+
+
+### 音声変換
+```bash
+# MP3
+$ ffmpeg -i input.mp4 -acodec libmp3lame -b:a <128～320K> -vn output.mp3
+
+# AAC
+$ ffmpeg -i input.mp4 -acodec libfdk_aac -b:a <128～320K> -nv output.aac
+```
+
+Windowsバイナリには `libfdk_aac` がないので以下を指定する。\
+コーデック的には音質が少し落ちるらしい。
+
+```bash
+$ ffmpeg -i input.mp4 -acodec aac -strict -2 -b:a <128～320K> -nv output.aac
+```
+
+## 参考HP
+- [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
+- [ffmpegの使い方](https://tech.ckme.co.jp/ffmpeg.shtml)
