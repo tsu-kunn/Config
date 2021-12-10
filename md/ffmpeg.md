@@ -101,6 +101,27 @@ $ ffmpeg -i input.mp4 -vf tpad=start_duration=10:color=black -af "adelay=10s:all
 $ ffmpeg -i input.mp4 -vf tpad=stop_duration=10:color=black -af "apad=pad_dur=11" output.mp4
 ```
 
+### 2passエンコード
+```bash
+$ ffmpeg -i input.avi -b:v 2000k -pass 1 -an output.mp4
+$ ffmpeg -i input.avi -b:v 2000k -pass 2 -y output.mp4
+```
+
+### video quantizer scale (VBR)
+#### min
+デフォルトは`2`だが、小さすぎるので`10以上`が望ましい。
+
+```bash
+$ ffmpeg -i imput.mp4 -qmin <-1～69> output.mp4
+```
+
+#### max
+デフォルトは`31`。
+
+```bash
+$ ffmpeg -i imput.mp4 -qmax <-1～1024> output.mp4
+```
+
 ### H.264
 #### 基本
 ```bash
@@ -186,6 +207,21 @@ Windowsバイナリには `libfdk_aac` がないので以下を指定する。\
 $ ffmpeg -i input.mp4 -acodec aac -strict -2 -b:a <128～320K> -nv output.aac
 ```
 
+## 対応確認
+### エンコーダー
+```bash
+$ ffmpeg -encoders
+$ ffmpeg -encoders | grep 264
+```
+
+### デコーダー
+```
+$ ffmpeg -decoders
+$ ffmpeg -decoders | grep 264
+```
+
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
 - [ffmpegの使い方](https://tech.ckme.co.jp/ffmpeg.shtml)
+- [最新ffmpeg/高度なオプション - MobileHackerz Knowledgebase Wiki](http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%2F%B9%E2%C5%D9%A4%CA%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3)
+
