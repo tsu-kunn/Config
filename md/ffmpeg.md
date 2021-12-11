@@ -48,9 +48,32 @@
 $ ffmpeg -i <input file> <output file>
 ```
 
+### フレームレート指定
+```bash
+$ ffmpeg -i input.mp4 -r 30 output.mp4
+```
+
 ### サイズ指定
 ```bash
 $ ffmpeg -i input.mp4 -s 1280x720 output.mp4
+```
+
+#### ビットレート指定
+```bash
+$ ffmpeg -i input.mp4 -b:v 6000k output.mp4
+```
+
+ビットレートの上限設定。\
+上限を設定する場合はバッファの設定が必要。
+
+```bash
+$ ffmpeg -i input.mp4 -b:v 2000k -maxrate 2500k -bufsize 2000k output.mp4
+```
+
+ビットレートの上下限を設定。
+
+```bash
+$ ffmpeg -i input.mp4 -b:v 2000k -minrate 1800k -maxrate 2200k -bufsize 2000k output.mp4
 ```
 
 ### 連番画像出力
@@ -128,11 +151,6 @@ $ ffmpeg -i imput.mp4 -qmax <-1～1024> output.mp4
 $ ffmpeg -i input.mp4 -codec:v libx264 output.mp4
 ```
 
-#### ビットレート指定
-```bash
-$ ffmpeg -i input.mp4 -codec:v libx264 -b:v 6000k output.mp4
-```
-
 #### 品質固定
 小さいほど高画質。\
 `crf` のデフォルトは 23 で、18～28 が推奨されている。
@@ -160,11 +178,6 @@ $ ffmpeg -i input.mp4 -codec:v libx264 -preset <preset> -tune <tune> output.mp4
 #### 基本
 ```bash
 $ ffmpeg -i input.mp4 -codec:v libx265 output.mp4
-```
-
-#### ビットレート指定
-```bash
-$ ffmpeg -i input.mp4 -codec:v libx265 -b:v 6000k output.mp4
 ```
 
 #### 品質固定
