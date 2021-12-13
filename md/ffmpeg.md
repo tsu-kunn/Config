@@ -76,6 +76,30 @@ $ ffmpeg -i input.mp4 -b:v 2000k -maxrate 2500k -bufsize 2000k output.mp4
 $ ffmpeg -i input.mp4 -b:v 2000k -minrate 1800k -maxrate 2200k -bufsize 2000k output.mp4
 ```
 
+### アスペクト比指定
+```bash
+$ ffmpeg -i input.mp4 -aspect 16:9 output.mp4
+```
+
+アスペクト比だけ変換。
+
+```bash
+$ ffmpeg -i input.mp4 -c copy -aspect 16:9 output.mp4
+```
+
+### 回転
+※ ":s:v:0": 最初のビデオストリーム
+
+#### 時計回りに90度
+```bash
+$ ffmepg -i input.mp4 -c copy -metadata:s:v:0 rotate=-90 output.mp4
+```
+
+#### 反時計回りに90度
+```bash
+$ ffmepg -i input.mp4 -c copy -metadata:s:v:0 rotate=90 output.mp4
+```
+
 ### 連番画像出力
 10フレーム分を出力。\
 フレーム指定省略ですべてのフレーム出力。
