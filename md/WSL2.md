@@ -103,6 +103,52 @@ $ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libex
 ### 参考HP
 - [概要WSL で Git を使用する | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/tutorials/wsl-git)
 
+## Node.js
+1. nvm をインストール
+```bash
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+```
+
+1. 現在インストールされている Node.js のバージョン一覧を確認
+```bash
+$ nvm ls
+```
+
+1. Node.js をインストール\
+    最新のバージョン
+    ```bash
+    $ nvm install node
+    ```
+
+    最新の安定板をインストール
+    ```bash
+    $ nvm install --lts
+    ```
+
+    バージョンを指定してインストール
+    ```bash
+    $ nvm install <バージョン>
+
+    # 例
+    $ nvm install v.12.34.5
+    ```
+
+### バージョンの切り替え
+```bash
+$ nvm use <バージョン>
+
+# 例
+$ nvm use v12.34.5
+```
+
+### 指定のバージョンをアンインストール
+```bash
+$ nvm uninstall <バージョン>
+```
+
+### 参考HP
+- [Node.js を Linux 用 Windows サブシステム (WSL2) にインストールする](https://docs.microsoft.com/ja-jp/windows/dev-environment/javascript/nodejs-on-wsl)
+- [nvm-sh/nvm](https://github.com/nvm-sh/nvm)
 
 ## docker
 ### インストール
