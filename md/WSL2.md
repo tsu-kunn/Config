@@ -50,6 +50,37 @@ $ sudo update-locale LANG=ja_JP.UTF-8
 $ sudo apt install manpages-ja manpages-ja-dev
 ```
 
+## インストール（Windows 10 バージョン 2004 以降 (ビルド 19041 以降)
+```PowerShell
+> wsl --install
+```
+
+### インストールするディストリビューションを指定する場合
+```PowerShell
+> wsl --install -d <Distribution Name>
+```
+
+#### Distribution Name の一覧
+```PowerShell
+> wsl --list --online
+```
+
+##### 実行例
+```
+NAME            FRIENDLY NAME
+Ubuntu          Ubuntu
+Debian          Debian GNU/Linux
+kali-linux      Kali Linux Rolling
+openSUSE-42     openSUSE Leap 42
+SLES-12         SUSE Linux Enterprise Server v12
+Ubuntu-16.04    Ubuntu 16.04 LTS
+Ubuntu-18.04    Ubuntu 18.04 LTS
+Ubuntu-20.04    Ubuntu 20.04 LTS
+```
+
+### 参考HP
+- [WSL のインストール](https://docs.microsoft.com/ja-jp/windows/wsl/install)
+
 ## Git
 デフォルトで入ってたと思うけど、ない場合は下記を実行する。
 ```bash
