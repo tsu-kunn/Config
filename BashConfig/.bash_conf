@@ -46,4 +46,5 @@ eval $(dircolors -b ~/.dircolors)
 
 # wsl2 only setting
 alias wcd='. wcd.sh'
+alias l2w='. l2w.sh'
 
