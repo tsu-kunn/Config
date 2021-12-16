@@ -177,5 +177,50 @@ $ sudo make install
 `filesrc location` に指定するファイルは直下にないとダメそう。\
 （絶対パス、相対パスで記載したらファイルが見つからないとエラーになった）
 
+## 動画の保存
+`filesink` で出力先をファイルにできる。
+
+```bash
+$ gst-launch-1.0 videotestsrc ! x265enc ! queue ! h265parse ! mpegtsmux ! filesink location=test.mp4
+```
+
+H.265にエンコードしてMPEG2-TSとして保存。\
+Mediainfoで確認すると以下になる
+
+
+```
+General
+ID                                       : 1 (0x1)
+Complete name                            : test.mp4
+Format                                   : MPEG-TS
+File size                                : 6.76 MiB
+Duration                                 : 34 s 167 ms
+Overall bit rate mode                    : Variable
+Overall bit rate                         : 1 653 kb/s
+FileExtension_Invalid                    : ts m2t m2s m4t m4s tmf ts tp trp ty
+
+Video
+ID                                       : 65 (0x41)
+Menu ID                                  : 1 (0x1)
+Format                                   : HEVC
+Format/Info                              : High Efficiency Video Coding
+Format profile                           : Main@L2.1@Main
+Codec ID                                 : 36
+Duration                                 : 34 s 166 ms
+Bit rate                                 : 1 572 kb/s
+Width                                    : 320 pixels
+Height                                   : 240 pixels
+Display aspect ratio                     : 4:3
+Frame rate                               : 30.000 FPS
+Color space                              : YUV
+Chroma subsampling                       : 4:2:0
+Bit depth                                : 8 bits
+Bits/(Pixel*Frame)                       : 0.682
+Stream size                              : 6.40 MiB (95%)
+```
+
+## 参考HP
+- [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
+- [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 
 
