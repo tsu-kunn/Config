@@ -67,6 +67,7 @@
         "defaults": 
         {
             "acrylicOpacity": 0.75,
+            "antialiasingMode": "cleartype",
             "backgroundImage": "%USERPROFILE%\\Pictures\\kaltsit_02s.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.3,
