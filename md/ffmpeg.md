@@ -48,6 +48,11 @@
 $ ffmpeg -i <input file> <output file>
 ```
 
+### 対応コーデック確認
+```bash
+$ ffmpeg -codecs
+```
+
 ### フレームレート指定
 ```bash
 $ ffmpeg -i input.mp4 -r 30 output.mp4
