@@ -151,6 +151,11 @@
         "-workbench.action.quickOpen"
     ],
 
+    // 特定の文字のみハイライトをOFFにする
+    "editor.unicodeHighlight.allowedCharacters": {
+        "　": true
+    },
+
     // VSCode自動設定
     "C_Cpp.updateChannel": "Insiders",
     "workbench.editorAssociations": {
