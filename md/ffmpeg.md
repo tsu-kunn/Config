@@ -275,6 +275,13 @@ $ ffmpeg -decoders | grep 264
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
 ```
 
+### スレッド指定
+明示的に指定する場合は `-threads` で使用するスレッド数を指定できる。\
+指定がない場合は ffmepg がいい感じに対応してくれる。
+
+```bash
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.webm
+```
 
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
