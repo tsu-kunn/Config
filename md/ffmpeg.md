@@ -53,6 +53,11 @@ $ ffmpeg -i <input file> <output file>
 $ ffmpeg -codecs
 ```
 
+### 対応フォーマット確認
+```bash
+$ ffmpeg -formats
+```
+
 ### フレームレート指定
 ```bash
 $ ffmpeg -i input.mp4 -r 30 output.mp4
@@ -257,10 +262,19 @@ $ ffmpeg -encoders | grep 264
 ```
 
 ### デコーダー
-```
+```bash
 $ ffmpeg -decoders
 $ ffmpeg -decoders | grep 264
 ```
+
+## メモ
+### AV1でエンコード
+10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。
+
+```bash
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
+```
+
 
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
