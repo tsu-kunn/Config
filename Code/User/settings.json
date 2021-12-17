@@ -1,9 +1,7 @@
 // Place your settings in this file to overwrite the default settings
 {
     // Controls the font family.MS Gothic
-//    "editor.fontFamily": "Consolas, MeiryoKe_Gothic",
-    "editor.fontFamily": "Myrica M,Consolas,MeiryoKe_Gothic",
-//    "editor.fontFamily": "Consolas, MeiryoKe_Gothic, 'Courier New', monospace"
+    "editor.fontFamily": "Myrica M,Cascadia Mono,Consolas,MeiryoKe_Gothic",
 
     // Controls the font size.(default:0)
     "editor.fontSize": 15,
@@ -106,7 +104,7 @@
     },
 
     // ターミナルを Git Bash に変更
-    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.defaultProfile.windows": "Ubuntu-20.04 (WSL)",
 
     // ターミナルのフォントサイズ
     "terminal.integrated.fontSize": 14,
