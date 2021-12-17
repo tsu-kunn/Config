@@ -219,8 +219,15 @@ Bits/(Pixel*Frame)                       : 0.682
 Stream size                              : 6.40 MiB (95%)
 ```
 
+## 画像の保存
+※自分ではうまくいっていないので参考のみ。
+
+```bash
+$ gst-launch filesrc location=video.ogv ! decodebin ! pngenc ! multifilesink location=img%d.png
+```
+
 ## 参考HP
 - [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
-
+- [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
 
