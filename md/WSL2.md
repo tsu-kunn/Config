@@ -50,6 +50,37 @@ $ sudo update-locale LANG=ja_JP.UTF-8
 $ sudo apt install manpages-ja manpages-ja-dev
 ```
 
+## インストール（Windows 10 バージョン 2004 以降 (ビルド 19041 以降)
+```PowerShell
+> wsl --install
+```
+
+### インストールするディストリビューションを指定する場合
+```PowerShell
+> wsl --install -d <Distribution Name>
+```
+
+#### Distribution Name の一覧
+```PowerShell
+> wsl --list --online
+```
+
+##### 実行例
+```
+NAME            FRIENDLY NAME
+Ubuntu          Ubuntu
+Debian          Debian GNU/Linux
+kali-linux      Kali Linux Rolling
+openSUSE-42     openSUSE Leap 42
+SLES-12         SUSE Linux Enterprise Server v12
+Ubuntu-16.04    Ubuntu 16.04 LTS
+Ubuntu-18.04    Ubuntu 18.04 LTS
+Ubuntu-20.04    Ubuntu 20.04 LTS
+```
+
+### 参考HP
+- [WSL のインストール](https://docs.microsoft.com/ja-jp/windows/wsl/install)
+
 ## Git
 デフォルトで入ってたと思うけど、ない場合は下記を実行する。
 ```bash
@@ -72,6 +103,52 @@ $ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libex
 ### 参考HP
 - [概要WSL で Git を使用する | Microsoft Docs](https://docs.microsoft.com/ja-jp/windows/wsl/tutorials/wsl-git)
 
+## Node.js
+1. nvm をインストール
+```bash
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+```
+
+1. 現在インストールされている Node.js のバージョン一覧を確認
+```bash
+$ nvm ls
+```
+
+1. Node.js をインストール\
+    最新のバージョン
+    ```bash
+    $ nvm install node
+    ```
+
+    最新の安定板をインストール
+    ```bash
+    $ nvm install --lts
+    ```
+
+    バージョンを指定してインストール
+    ```bash
+    $ nvm install <バージョン>
+
+    # 例
+    $ nvm install v.12.34.5
+    ```
+
+### バージョンの切り替え
+```bash
+$ nvm use <バージョン>
+
+# 例
+$ nvm use v12.34.5
+```
+
+### 指定のバージョンをアンインストール
+```bash
+$ nvm uninstall <バージョン>
+```
+
+### 参考HP
+- [Node.js を Linux 用 Windows サブシステム (WSL2) にインストールする](https://docs.microsoft.com/ja-jp/windows/dev-environment/javascript/nodejs-on-wsl)
+- [nvm-sh/nvm](https://github.com/nvm-sh/nvm)
 
 ## docker
 ### インストール
@@ -395,8 +472,7 @@ $ wslpath "c:\files\work"
 - `-w` でWSLパスをWindowsパスに変換
 
 ### スクリプト例
-wcd.sh
-
+#### wcd.sh
 ```bash
 #!/bin/bash
 
@@ -405,17 +481,37 @@ if [ -n "$1" ]; then
 fi
 ```
 
-.bash_conf
-
+##### .bash_conf
 ```bash
 alias wcd='. wcd.sh'
 ```
 
-使用例(パスはダブルクォーテーションで囲む必要がある)
-
+##### 使用例(パスはダブルクォーテーションで囲む必要がある)
 ```bash
 $ wcd "c:\files\work"
 ```
+
+#### l2w.sh
+```bash
+#!/bin/bash
+
+if [ -n "$1" ]; then
+    wslpath -w "$1"
+fi
+```
+
+##### .bash_conf
+```bash
+alias l2w='. l2w.sh'
+```
+
+##### 使用例
+```bash
+$ cmd.exe /c dir $(l2w "/mnt/c/Files/tool/")
+```
+
+`$()` で囲って展開するようにする必要あり。
+
 
 ## WSL2環境のバックアップ
 PowerShellで wsl の機能を使て行う。

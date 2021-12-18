@@ -39,6 +39,7 @@ setting: `Ctrl + j`
 |prefix }|ペイン順序を後方向に入れ替え|
 |prefix z|ペインを最大化・復帰|
 |prefix space|ペインのレイアウトを変更|
+|prefix Ctrl+カーソルキー|ペインのサイズを変更|
 |prefix x or exit|ペインを終了|
 
 ## コピー操作
