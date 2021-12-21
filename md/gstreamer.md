@@ -219,14 +219,28 @@ Bits/(Pixel*Frame)                       : 0.682
 Stream size                              : 6.40 MiB (95%)
 ```
 
+### H.264の動画をH.265にエンコードして保存
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! x265enc ! filesink location="test.mp4"
+```
+
 ## 画像の保存
 ※自分ではうまくいっていないので参考のみ。
 
 ```bash
-$ gst-launch filesrc location=video.ogv ! decodebin ! pngenc ! multifilesink location=img%d.png
+$ gst-launch-1.0 filesrc location=video.ogv ! decodebin ! pngenc ! multifilesink location=img%d.png
+```
+
+## 再生
+※未確認
+
+```bash
+$ gst-launch-1.0 playbin uri=file://.../hoge.oga
+$ gst-launch-1.0 playbin uri=file://.../hoge.mpg
 ```
 
 ## 参考HP
+- [gst-launch-1.0](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html?gi-language=c#)
 - [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 - [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
