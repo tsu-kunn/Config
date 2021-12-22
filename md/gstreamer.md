@@ -106,6 +106,11 @@ $ GST_DEBUG=3 ./test-launch '( videotestsrc ! x265enc ! queue ! h265parse ! mpeg
 これらの結果からコマンド例のコマンドが導き出された。
 
 ```
+gst-launch-1.0 -v videotestsrc ! x264enc ! avdec_h264 ! videoconvert ! autovideosink
+gst-launch-1.0 -v videotestsrc ! x264enc ! rtph264pay ! udpsink host=127.0.0.1 port=5005 sync=false
+
+gst-launch-1.0 -e videotestsrc ! video/x-raw,format=NV12,width=640,height=480,framerate=30/1 ! x264enc ! queue ! qtmux ! filesink location=test.mp4
+
 gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc ! video/x-h264 ! h264parse ! mux.
 
 ./test-launch '( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )'
