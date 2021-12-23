@@ -225,15 +225,30 @@ Stream size                              : 6.40 MiB (95%)
 ```
 
 ### H.264の動画をH.265にエンコードして保存
+`filesink` 前に `mux` で終わらないと再生できない動画になる。\
+`x264enc` は mux に直でつながるが、`x265enc` は直でつながらないため `h265parse` を経由している。\
+
 ```bash
-$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! avdec_h264 ! x265enc ! filesink location="test.mp4"
+# Format profile: QuickTime
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! qtmux ! filesink location="test.mp4"
+
+# Format profile: Base Media / Version 2
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! mp4mux ! filesink location="test.mp4"
 ```
 
 ## 画像の保存
-※自分ではうまくいっていないので参考のみ。
+デコードした後に `videoconvert` でPNGに変換できる形式にするのがポイント。
 
+### スナップショット
 ```bash
-$ gst-launch-1.0 filesrc location=video.ogv ! decodebin ! pngenc ! multifilesink location=img%d.png
+$ gst-launch-1.0 filesrc location="fire.mp4" ! decodebin ! videoconvert ! pngenc snapshot=true ! filesink location="test.png"
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoconvert ! pngenc snapshot=true ! filesink location="test.png"
+```
+
+### 連番画像
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! decodebin ! videoconvert ! pngenc ! multifilesink location=output/img%d.png
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoconvert ! pngenc ! multifilesink location="output/img%d.png"
 ```
 
 ## 再生
@@ -249,4 +264,6 @@ $ gst-launch-1.0 playbin uri=file://.../hoge.mpg
 - [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 - [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
+- [GStreamer on macOS ではじめる動画処理【video編】](https://dev.classmethod.jp/articles/gstreamer-on-macos-video/)
+
 
