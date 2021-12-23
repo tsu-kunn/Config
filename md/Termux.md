@@ -129,6 +129,15 @@ storage というディレクトリができ、ここから以下のフォルダ
 - pictures
 - shared
 
+## サービスの自動起動
+termux-servicesとrunitを組み合わせることでサービスの自動起動が可能になる。
+
+```bash
+$ apt install termux-services runit
+$ sv-enable　sshd
+$ sv-enable crond
+```
+
 ## code-server のインストール
 
 ### 1. 必要パッケージをインストール
