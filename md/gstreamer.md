@@ -243,6 +243,13 @@ $ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x2
 $ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoscale ! video/x-raw,width=1280,height=720 ! x265enc bitrate=4000 ! h265parse ! mp4mux ! filesink location="test.mp4"
 ```
 
+### フレームレート指定
+`videorate` を指定することでフレームレートを変更できることを確認。
+
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoscale ! video/x-raw,width=1280,height=720 ! videorate ! video/x-raw,framerate=15/1 ! x265enc bitrate=3000 ! h265parse ! mp4mux ! filesink location="test.mp4"
+```
+
 ## 画像の保存
 デコードした後に `videoconvert` でPNGに変換できる形式にするのがポイント。
 
