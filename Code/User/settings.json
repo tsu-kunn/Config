@@ -107,7 +107,7 @@
     "terminal.integrated.defaultProfile.windows": "Ubuntu-20.04 (WSL)",
 
     // ターミナルのフォントサイズ
-    "terminal.integrated.fontSize": 14,
+    "terminal.integrated.fontSize": 15,
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
