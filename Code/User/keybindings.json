@@ -25,6 +25,7 @@
         "key": "ctrl+k 0",
         "command": "editor.action.fontZoomReset"
     },
+
     // Editor(カーソル移動をEmacs風にする)
     {
         "key": "ctrl+p",
@@ -81,6 +82,7 @@
         "command": "cursorWordStartLeft",
         "when": "editorTextFocus"
     },
+    
     // Editor(競合したキーはCtrlをAltに置き換える(一部はCtrl+Alt))
     {
         "key": "alt+p",
@@ -130,6 +132,7 @@
         "command": "editor.action.addSelectionToNextFindMatch",
         "when": "editorFocus"
     },
+
     // Editor Layout
     {
         "key": "alt+x 0",
@@ -143,16 +146,17 @@
         "key": "alt+x 5",
         "command": "workbench.action.splitEditorRight"
     },
+
     // Terminal
     {
         "key": "ctrl+tab",
         "command": "workbench.action.terminal.focusNext",
-        "when": "terminalFocus"
+        "when": "terminalFocus" 
     },
     {
         "key": "ctrl+shift+tab",
         "command": "workbench.action.terminal.focusPrevious",
-        "when": "terminalFocus"
+        "when": "terminalFocus" 
     },
     // {
     //     "key": "ctrl+oem_3",
@@ -189,5 +193,9 @@
         "key": "ctrl+v",
         "command": "-workbench.action.terminal.paste",
         "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+shift+q",
+        "command": "workbench.action.toggleMaximizedPanel"
     }
 ]
