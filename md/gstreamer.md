@@ -80,6 +80,11 @@ libav:  avmux_psp: libav PSP MP4 (MPEG-4 Part 14) muxer
 
 
 ## コマンド例
+### 動作確認
+```bash
+$ gst-launch-1.0 videotestsrc ! autovideosink
+```
+
 ### MPEG2-TS(RTP over RTSP)
 ```bash
 $ ./test-launch '( filesrc location=fire.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! mpegtsmux ! rtpmp2tpay  name=pay0 pt=33 )'
@@ -106,6 +111,11 @@ $ GST_DEBUG=3 ./test-launch '( videotestsrc ! x265enc ! queue ! h265parse ! mpeg
 これらの結果からコマンド例のコマンドが導き出された。
 
 ```
+gst-launch-1.0 -v videotestsrc ! x264enc ! avdec_h264 ! videoconvert ! autovideosink
+gst-launch-1.0 -v videotestsrc ! x264enc ! rtph264pay ! udpsink host=127.0.0.1 port=5005 sync=false
+
+gst-launch-1.0 -e videotestsrc ! video/x-raw,format=NV12,width=640,height=480,framerate=30/1 ! x264enc ! queue ! qtmux ! filesink location=test.mp4
+
 gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc ! video/x-h264 ! h264parse ! mux.
 
 ./test-launch '( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )'
@@ -219,15 +229,60 @@ Bits/(Pixel*Frame)                       : 0.682
 Stream size                              : 6.40 MiB (95%)
 ```
 
-## 画像の保存
-※自分ではうまくいっていないので参考のみ。
+### H.264の動画をH.265にエンコードして保存
+`filesink` 前に `mux` で終わらないと再生できない動画になる。\
+`x264enc` は mux に直でつながるが、`x265enc` は直でつながらないため `h265parse` を経由している。\
 
 ```bash
-$ gst-launch filesrc location=video.ogv ! decodebin ! pngenc ! multifilesink location=img%d.png
+# Format profile: QuickTime
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! qtmux ! filesink location="test.mp4"
+
+# Format profile: Base Media / Version 2
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! mp4mux ! filesink location="test.mp4"
+```
+
+### リサイズとビットレート指定
+`videoscale` を指定することでリサイズできることを確認。
+
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoscale ! video/x-raw,width=1280,height=720 ! x265enc bitrate=4000 ! h265parse ! mp4mux ! filesink location="test.mp4"
+```
+
+### フレームレート指定
+`videorate` を指定することでフレームレートを変更できることを確認。
+
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoscale ! video/x-raw,width=1280,height=720 ! videorate ! video/x-raw,framerate=15/1 ! x265enc bitrate=3000 ! h265parse ! mp4mux ! filesink location="test.mp4"
+```
+
+## 画像の保存
+デコードした後に `videoconvert` でPNGに変換できる形式にするのがポイント。
+
+### スナップショット
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! decodebin ! videoconvert ! pngenc snapshot=true ! filesink location="test.png"
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoconvert ! pngenc snapshot=true ! filesink location="test.png"
+```
+
+### 連番画像
+```bash
+$ gst-launch-1.0 filesrc location="fire.mp4" ! decodebin ! videoconvert ! pngenc ! multifilesink location=output/img%d.png
+$ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! videoconvert ! pngenc ! multifilesink location="output/img%d.png"
+```
+
+## 再生
+※未確認
+
+```bash
+$ gst-launch-1.0 playbin uri=file://.../hoge.oga
+$ gst-launch-1.0 playbin uri=file://.../hoge.mpg
 ```
 
 ## 参考HP
+- [gst-launch-1.0](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html?gi-language=c#)
 - [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 - [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
+- [GStreamer on macOS ではじめる動画処理【video編】](https://dev.classmethod.jp/articles/gstreamer-on-macos-video/)
+
 
