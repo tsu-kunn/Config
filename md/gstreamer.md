@@ -80,6 +80,11 @@ libav:  avmux_psp: libav PSP MP4 (MPEG-4 Part 14) muxer
 
 
 ## コマンド例
+### 動作確認
+```bash
+$ gst-launch-1.0 videotestsrc ! autovideosink
+```
+
 ### MPEG2-TS(RTP over RTSP)
 ```bash
 $ ./test-launch '( filesrc location=fire.mp4 ! qtdemux name=demux demux.video_0 ! queue ! h264parse ! mpegtsmux ! rtpmp2tpay  name=pay0 pt=33 )'
