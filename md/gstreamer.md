@@ -307,10 +307,10 @@ gst-launch-1.0 -e videotestsrc ! video/x-raw,format=NV12,width=640,height=480,fr
 ```
 
 ### ファイル
-※ 未完成（"Redistribute latency..." で止まってしまう…）
+※ 未完成（音声しか再生されない動画ができる）
 
 ```bash
-$ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! h264parse ! avdec_h264 ! x265enc ! h265parse ! mux.
+$ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! queue ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! mux.
 ```
 
 ### 動画無変換（音声のみ変換）
@@ -323,7 +323,13 @@ $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=d
 
 ## 作業中
 ```
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! x265enc ! h265parse ! mux. demux. ! queue ! aacparse ! mux. qtmux name=mux ! filesink location=test.mp4
+gst-launch-1.0 filesrc location="Arcnights.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! queue ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! mux.
+
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! qtmux name=mux demux. ! queue ! aacparse ! queue ! mux. mux. ! filesink location=test.mp4
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! qtmux ! filesink location="test.mp4"
+
 
 gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! videoconvert ! x264enc ! queue ! mux. demux. ! queue ! aacparse ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location=test.mp4
 
