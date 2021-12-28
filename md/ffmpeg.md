@@ -255,6 +255,12 @@ $ ffmpeg -i input.mp4 -acodec aac -strict -2 -b:a <128～320K> -nv output.aac
 ```
 
 ## 対応確認
+### コーデック
+```bash
+$ ffmpeg -codecs
+$ ffmpeg -codecs | grep 264
+```
+
 ### エンコーダー
 ```bash
 $ ffmpeg -encoders
