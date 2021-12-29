@@ -285,15 +285,15 @@ $ ffmpeg -decoders | grep 264
 
 ## メモ
 ### AV1でエンコード
-10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
-スレッド指定してもCPU負荷が増えないのでライブラリの問題？
+10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。
+`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる)
 
 ```bash
 # 映像のみ
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
 
 # 映像+音声
-$ ffmpeg -i input.mp4 -threads 8 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -codec:a libopus -b:a 128k output.webm
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 8 -codec:a libopus -b:a 128k output.webm
 ```
 
 ### スレッド指定
@@ -302,6 +302,12 @@ $ ffmpeg -i input.mp4 -threads 8 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate
 
 ```bash
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.webm
+```
+
+### エンコーダー・デコーダーのオプション確認
+```bash
+$ ffmpeg -h encoder=libaom-av1
+$ ffmpeg -h decoder=h264
 ```
 
 ## 参考HP
