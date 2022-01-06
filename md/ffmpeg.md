@@ -208,7 +208,7 @@ $ ffmpeg -i input.mp4 -codec:v libx264 -preset <preset> -tune <tune> output.mp4
   - grain: 古い動画向け
   - stillimage: スライドなど動きのない動画向け
 
-### H.265
+### H.265(HEVC)
 #### 基本
 ```bash
 $ ffmpeg -i input.mp4 -codec:v libx265 output.mp4
@@ -237,14 +237,24 @@ $ ffmpeg -i input.mp4 -codec:v libx265 -preset <preset> -tune <tune> output.mp4
   - animation: アニメ向け
   - grain: 古い動画向け
 
+#### 変換例
+##### 映像変換、音声変換なし
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -tune animation -b:v 1000k -maxrate 1000k -bufsize 2000k -codec:a copy output.mp4
+```
+
+##### 映像・音声変換
+```bash
+$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -tune animation -b:v 1000k -maxrate 1000k -bufsize 2000k -codec:a libmp3lame -b:a 128k -q:a 3 output.mp4
+```
 
 ### 音声変換
 ```bash
-# MP3
-$ ffmpeg -i input.mp4 -acodec libmp3lame -b:a <128～320K> -vn output.mp3
+# MP3(固定ビットレート(-b:a), 可変ビットレート(-q:a 0～9))
+$ ffmpeg -i input.mp4 -acodec libmp3lame -b:a <128～320K> output.mp3
 
 # AAC
-$ ffmpeg -i input.mp4 -acodec libfdk_aac -b:a <128～320K> -nv output.aac
+$ ffmpeg -i input.mp4 -acodec libfdk_aac -b:a <128～320K> output.aac
 ```
 
 Windowsバイナリには `libfdk_aac` がないので以下を指定する。\
@@ -255,6 +265,12 @@ $ ffmpeg -i input.mp4 -acodec aac -strict -2 -b:a <128～320K> -nv output.aac
 ```
 
 ## 対応確認
+### コーデック
+```bash
+$ ffmpeg -codecs
+$ ffmpeg -codecs | grep 264
+```
+
 ### エンコーダー
 ```bash
 $ ffmpeg -encoders
@@ -269,10 +285,15 @@ $ ffmpeg -decoders | grep 264
 
 ## メモ
 ### AV1でエンコード
-10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。
+10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
+スレッド指定してもCPU負荷が増えないのでライブラリの問題？
 
 ```bash
+# 映像のみ
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
+
+# 映像+音声
+$ ffmpeg -i input.mp4 -threads 8 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -codec:a libopus -b:a 128k output.webm
 ```
 
 ### スレッド指定

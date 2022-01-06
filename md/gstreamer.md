@@ -278,9 +278,79 @@ $ gst-launch-1.0 playbin uri=file://.../hoge.oga
 $ gst-launch-1.0 playbin uri=file://.../hoge.mpg
 ```
 
+## 音声の変換
+### AAC
+```bash
+$ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! avenc_aac ! qtmux ! filesink location="output.m4a"
+```
+#### ビットレート指定
+```bash
+$ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! avenc_aac bitrate=64000 ! qtmux ! filesink location="output.m4a"
+```
+
+### MP3
+#### 可変レート（default）
+```bash
+$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=128 quality=3 ! avmux_mp3 
+! filesink location="output.mp3"
+```
+
+#### 固定レート
+```bash
+$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 cbr=true target=1 ! avmux_mp3 ! filesink location="output.mp3"
+```
+
+## 動画+音声の変換
+### テストデータ
+```bash
+gst-launch-1.0 -e videotestsrc ! video/x-raw,format=NV12,width=640,height=480,framerate=30/1 ! x264enc ! queue ! muxer. audiotestsrc wave=sine freq=1000 ! audio/x-raw,format=F32LE,layout=interleaved,rate=48000,channels=2 ! avenc_aac ! queue ! muxer. qtmux name="muxer" ! filesink location=sample.mp4
+```
+
+### ファイル
+※ 未完成（音声しか再生されない動画ができる）
+
+```bash
+$ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! queue ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! mux.
+```
+
+### 動画無変換（音声のみ変換）
+`...parse ! mux.`  とすることで変換処理をスルーされ、入力のリソースが適用される。 \
+音声も同様のことを行えば、ビデオ変換・音声そのままができる。
+
+```bash
+$ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! h264parse ! mux.
+```
+
+## 作業中
+```
+gst-launch-1.0 filesrc location="Arcnights.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! queue ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! mux.
+
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! qtmux name=mux demux. ! queue ! aacparse ! queue ! mux. mux. ! filesink location=test.mp4
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! qtmux ! filesink location="test.mp4"
+
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! videoconvert ! x264enc ! queue ! mux. demux. ! queue ! aacparse ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location=test.mp4
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! videoconvert ! x264enc bitrate=1000000 ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse demux. ! queue ! aacparse ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location=test.mp4
+
+gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! x265enc ! h265parse ! mux. qtmux name=mux ! filesink location=test.mp4 demux. ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux.
+
+
+gst-launch-1.0 \
+filesrc location=daitosho_PV.mpg  ! progressreport ! mpegpsdemux name=demuxer demuxer. ! queue ! \
+mpegaudioparse ! mad ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=196000 ! mux. \
+mp4mux  name=mux ! filesink location=hoge.mp4 demuxer. ! queue ! \
+mpegvideoparse ! omxmpeg2videodec ! videoconvert ! \
+omxh264enc target-bitrate=6000000 control-rate=variable ! video/x-h264,stream-format=byte-stream,profile=high ! \
+h264parse ! mux.
+
+gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=192000 ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc target-bitrate=3000000 control-rate=variable ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse ! mux.
+```
+
 ## 参考HP
 - [gst-launch-1.0](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html?gi-language=c#)
-- [Command line tools](https://gstreamer.freedesktop.org/documentation/tools/index.html?gi-language=c#)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 - [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
 - [GStreamer on macOS ではじめる動画処理【video編】](https://dev.classmethod.jp/articles/gstreamer-on-macos-video/)
