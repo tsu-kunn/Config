@@ -283,10 +283,28 @@ $ ffmpeg -decoders
 $ ffmpeg -decoders | grep 264
 ```
 
+## アップコンバート
+### スケーリング
+リサイズの際にスケーリングアルゴリズムを使用してアップコンバート。\
+アルゴリズムについては[指定できるフラグ](https://ffmpeg.org/ffmpeg-scaler.html#sws_005fflags)を参照。
+
+
+```bash
+$ ffmpeg -i input.mp4 -vf scale=1920:1080:flags=lanczos+accurate_rnd -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
+```
+
+### 当倍率フィルター
+[映像を拡大するフィルター](https://nico-lab.net/magnification_with_ffmpeg/) で2, 3, 4倍する。\
+Ubuntu 20.04 のffmpegでは、EPXはフィルターなしで動作せず、HQXは動作することを確認。
+
+```bash
+$ ffmpeg -i input.mp4 -vf hqx=n=2 -pix_fmt yuv420p -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
+```
+
 ## メモ
 ### AV1でエンコード
-10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。
-`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる)
+10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
+`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる:Max8)
 
 ```bash
 # 映像のみ
