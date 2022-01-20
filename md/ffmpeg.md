@@ -283,17 +283,35 @@ $ ffmpeg -decoders
 $ ffmpeg -decoders | grep 264
 ```
 
+## アップコンバート
+### スケーリング
+リサイズの際にスケーリングアルゴリズムを使用してアップコンバート。\
+アルゴリズムについては[指定できるフラグ](https://ffmpeg.org/ffmpeg-scaler.html#sws_005fflags)を参照。
+
+
+```bash
+$ ffmpeg -i input.mp4 -vf scale=1920:1080:flags=lanczos+accurate_rnd -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
+```
+
+### 当倍率フィルター
+[映像を拡大するフィルター](https://nico-lab.net/magnification_with_ffmpeg/) で2, 3, 4倍する。\
+Ubuntu 20.04 のffmpegでは、EPXはフィルターなしで動作せず、HQXは動作することを確認。
+
+```bash
+$ ffmpeg -i input.mp4 -vf hqx=n=2 -pix_fmt yuv420p -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
+```
+
 ## メモ
 ### AV1でエンコード
 10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
-スレッド指定してもCPU負荷が増えないのでライブラリの問題？
+`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる:Max8)
 
 ```bash
 # 映像のみ
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
 
 # 映像+音声
-$ ffmpeg -i input.mp4 -threads 8 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -codec:a libopus -b:a 128k output.webm
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 8 -codec:a libopus -b:a 128k output.webm
 ```
 
 ### スレッド指定
@@ -302,6 +320,12 @@ $ ffmpeg -i input.mp4 -threads 8 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate
 
 ```bash
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.webm
+```
+
+### エンコーダー・デコーダーのオプション確認
+```bash
+$ ffmpeg -h encoder=libaom-av1
+$ ffmpeg -h decoder=h264
 ```
 
 ## 参考HP
