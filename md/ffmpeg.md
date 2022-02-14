@@ -304,14 +304,14 @@ $ ffmpeg -i input.mp4 -vf hqx=n=2 -pix_fmt yuv420p -codec:v libx265 -crf 20 -tun
 ## メモ
 ### AV1でエンコード
 10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
-`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる:Max8)
+`-cpu-used` 指定してすれば多少は改善する。(0が品質優先、8が速度優先、1がデフォルト)
 
 ```bash
 # 映像のみ
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
 
 # 映像+音声
-$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 8 -codec:a libopus -b:a 128k output.webm
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 3 -codec:a libopus -b:a 128k output.webm
 ```
 
 ### スレッド指定
@@ -327,6 +327,15 @@ $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.w
 $ ffmpeg -h encoder=libaom-av1
 $ ffmpeg -h decoder=h264
 ```
+
+### Windows版
+[公式ページ](https://ffmpeg.org/)の `Download` から取得可能。\
+　⇒"Download > Windows Icon > Windows buids from gyan.dev > release builds > ffmpeg-release-full.7z"
+
+フル版はNVIDIA/AMD/IntelのGPUエンコード・デコードに対応。\
+WSL2のffmpegでエンコードするより、Windows版のffmpegでエンコードする方が圧倒的に処理時間が短くなる。 \
+　⇒フルHD,1分のH.264動画をAV1に変換した場合、WSL2では約90分、Windows版では約5分で完了した。（オプションは同じ）
+
 
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
