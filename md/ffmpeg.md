@@ -301,6 +301,24 @@ Ubuntu 20.04 のffmpegでは、EPXはフィルターなしで動作せず、HQX�
 $ ffmpeg -i input.mp4 -vf hqx=n=2 -pix_fmt yuv420p -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
 ```
 
+## フィルター
+### ノイズ除去
+```bash
+$ ffmpeg -i input.mp4 -vf pp=ac -c:v libx264 output.mp4
+```
+
+### インターレース解除
+```bash
+$ fmpeg -i input.mp4 -vf bwdif=0:-1:1 -c:v libx264 output.mp4
+```
+
+### 複数指定
+カンマで区切ると複数のフィルターが設定可能。
+
+```bash
+$ ffmpeg -i input.mp4 -vf pp=ac,bwdif=0:-1:1,scale=1920:1080:flags=lanczos+accurate_rnd -c:v libx264 output.mp4
+```
+
 ## メモ
 ### AV1でエンコード
 10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
