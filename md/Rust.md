@@ -39,7 +39,7 @@ rustc 1.58.1 (db9d1b20b 2022-01-20)
 $ apt install rust
 ```
 
-## 参考
+### 参考
 - [はじめに](https://www.rust-lang.org/ja/learn/get-started)
 
 
@@ -68,6 +68,22 @@ $ rustc main.rc
 |プロジェクトのドキュメントのビルド|cargo doc|
 
 ※コンパイルするが実行ファイルは作らない
+
+## デバッグ
+### rust-gdb
+`gdb` でも基本的なデバッグは可能だが、値の参照などで期待した値が得られない場合がある。\
+Rust標準で提供されている `rust-gdb` を使えば、上記のような問題は発生しない。
+
+```bash
+$ rust-gdb main
+```
+
+※Windows10で試したら下記のエラーが出て、デバッグが気なかった。\
+　軽く調べた感じ解決策がなさそうなので、WindowsではVSCodeを使ったデバッグが望ましい。（MSもそういってる）
+
+`error: the 'rust-gdb.exe' binary, normally provided by the 'rustc' component, is not applicable to the 'stable-x86_64-pc-windows-msvc' toolchain`
+
+### VSCode
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
