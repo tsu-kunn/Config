@@ -301,17 +301,35 @@ Ubuntu 20.04 のffmpegでは、EPXはフィルターなしで動作せず、HQX�
 $ ffmpeg -i input.mp4 -vf hqx=n=2 -pix_fmt yuv420p -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
 ```
 
+## フィルター
+### ノイズ除去
+```bash
+$ ffmpeg -i input.mp4 -vf pp=ac -c:v libx264 output.mp4
+```
+
+### インターレース解除
+```bash
+$ fmpeg -i input.mp4 -vf bwdif=0:-1:1 -c:v libx264 output.mp4
+```
+
+### 複数指定
+カンマで区切ると複数のフィルターが設定可能。
+
+```bash
+$ ffmpeg -i input.mp4 -vf pp=ac,bwdif=0:-1:1,scale=1920:1080:flags=lanczos+accurate_rnd -c:v libx264 output.mp4
+```
+
 ## メモ
 ### AV1でエンコード
 10世代Core i5(6コア12スレッド)でものすごい時間がかるぐらいエンコードが遅い。\
-`-cpu-used` 指定してすれば多少は改善する。(5以上指定しても微々たる変化になる:Max8)
+`-cpu-used` 指定してすれば多少は改善する。(0が品質優先、8が速度優先、1がデフォルト)
 
 ```bash
 # 映像のみ
 $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -strict -2 output.webm
 
 # 映像+音声
-$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 8 -codec:a libopus -b:a 128k output.webm
+$ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 20 -b:v 1000k -maxrate 1000k -bufsize 3000k -strict -2 -cpu-used 3 -codec:a libopus -b:a 128k output.webm
 ```
 
 ### スレッド指定
@@ -328,8 +346,18 @@ $ ffmpeg -h encoder=libaom-av1
 $ ffmpeg -h decoder=h264
 ```
 
+### Windows版
+[公式ページ](https://ffmpeg.org/)の `Download` から取得可能。\
+　⇒"Download > Windows Icon > Windows buids from gyan.dev > release builds > ffmpeg-release-full.7z"
+
+フル版はNVIDIA/AMD/IntelのGPUエンコード・デコードに対応。\
+WSL2のffmpegでエンコードするより、Windows版のffmpegでエンコードする方が圧倒的に処理時間が短くなる。 \
+　⇒フルHD,1分のH.264動画をAV1に変換した場合、WSL2では約90分、Windows版では約5分で完了した。（オプションは同じ）
+
+
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
 - [ffmpegの使い方](https://tech.ckme.co.jp/ffmpeg.shtml)
 - [最新ffmpeg/高度なオプション - MobileHackerz Knowledgebase Wiki](http://mobilehackerz.jp/archive/wiki/index.php?%BA%C7%BF%B7ffmpeg%2F%B9%E2%C5%D9%A4%CA%A5%AA%A5%D7%A5%B7%A5%E7%A5%F3)
+- [Re:ゼロから始めるFFmpeg](https://nyanshiba.hatenablog.com/entry/2018/02/03/071256)
 

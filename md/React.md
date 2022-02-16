@@ -81,6 +81,21 @@ index.js の末尾の関数を `unregister` から `register` に書き換える
 serviceWorkerRegistration.register(); 
 ```
 
+## TypeSrciptのインストール
+React Appを作成する際に `service-worker.js` と同時には作成できない。\
+（テンプレートの指定で複数はできないっぽい感じ）
+
+### PWAアプリにしない場合
+```bash
+npx create-react-app my-app --template typescript
+```
+
+### PWAアプリにする場合
+React App projectの中で以下を実行する。
+
+```bash
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+```
 
 ## Electron のインストール
 React App で作成されたディレクトリ内で下記を実行。（例では my-app ディレクトリ）
