@@ -36,8 +36,15 @@ rustc 1.58.1 (db9d1b20b 2022-01-20)
 
 ### Termux
 ```bash
-$ apt install rust
+$ apt install rust gdb
 ```
+
+`gdb` は `rust-gdb` を使う際に必要になる。
+
+### VSCode
+Rust向け拡張機能。
+
+- [Rust for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
 
 ### 参考
 - [はじめに](https://www.rust-lang.org/ja/learn/get-started)
@@ -84,6 +91,120 @@ $ rust-gdb main
 `error: the 'rust-gdb.exe' binary, normally provided by the 'rustc' component, is not applicable to the 'stable-x86_64-pc-windows-msvc' toolchain`
 
 ### VSCode
+以下の手順でデバッグ設定ファイルを作成する。
+
+1. [CodeLLDB](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) 拡張機能をインストール。
+1. VSCodeの左サイドメニューからデバッグ実行を選択し、`launch.jsonファイルを作成します。` をクリックする。
+1. コマンドパレットが開くので、`LLDB` を選択する。
+1. ダイアログが表示されるので `Yes` を選択する。（Cargo.tomlに基づいて作成）
+1. ブレークポイント設定後、`F5` でデバッガー実行開始。
+
+※CodeLLDBをインストールして `F5` でも `launch.json` が作成されデバッグできた。
+
+主に以下の機能が提供される。（まだまだあるかも）
+- ブレークポイント
+- 逐次実行
+- ウォッチ式定義
+- コールスタック
+
+## ドキュメント参照
+### ローカル
+使用しているトレイとクレートなどのメソッドや関数を調べることができます。
+
+```bash
+$ cargo doc --open
+```
+
+### ネット
+- [Docs.rs](https://docs.rs/)
+
+## 基本データ型
+|型|種類|
+|:--|:--|
+|整数|i8, u8, i16, u16, i32, u32, i64, u64, isize, usize|
+|浮動小数点|f32, f64|
+|ブーリアン|bool|
+|文字|char|
+|タプル|(256, abc, true)|
+|配列|[1, 2, 3, 4]|
+
+## 文字列
+### 文字列リテラル
+```
+let s: &str = "文字列";
+```
+
+C/C++の `const char *` みたいなもの。
+
+### 文字列クラス
+```
+let msg: string = String::new();
+```
+
+C/C++の `std::string` みたいなもの。
+
+### 文字列の結合
+#### リテラル
+```
+concat!("abc", "def");
+```
+
+#### リテラル以外
+```
+format!("{}{}", "abc", "def");
+```
+
+### 文字列操作
+#### 文字数
+```
+"abc".chars().count();
+```
+
+#### 文字列の結合
+```
+["Hello", "World"].connect(" ");
+```
+
+単純結合。
+```
+["Hello", "World"].concat();
+```
+
+#### 文字列の分割
+```
+"a.b.c".split(".");
+"a..b..c".split_str("."):
+```
+
+### 文字列の置換
+```
+"abcdef".replace("cd", "CD");
+```
+
+### 部分文字列の検索
+```
+"abcdef".starts_with("cd");
+```
+
+### 部分文字列の取得
+```
+"abcdef".slice_chars(1, 2);
+```
+
+### trim
+```
+"xaxxbxxcxd".trim_matches("x");
+```
+
+### 参考
+- [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
+
+## メモ
+- コメント以外で日本語があるとコンパイルに失敗する場合がある
+- `_` はワイルドカードで、オブジェクトを無視するときに使用する
+- if文は式なので値を返すことができる
+  - `let number = if flag { 5 } else { 6 };` flagに応じて5か6がnumberに設定される
+
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
