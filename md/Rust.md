@@ -118,6 +118,27 @@ $ cargo doc --open
 ### ネット
 - [Docs.rs](https://docs.rs/)
 
+## 命名規則
+| Item | Convention |
+| ---- | ---------- |
+| Crates | `snake_case` (but prefer single word) |
+| Modules | `snake_case` |
+| Types | `UpperCamelCase` |
+| Traits | `UpperCamelCase` |
+| Enum variants | `UpperCamelCase` |
+| Functions | `snake_case` |
+| Methods | `snake_case` |
+| General constructors | `new` or `with_more_details` |
+| Conversion constructors | `from_some_other_type` |
+| Local variables | `snake_case` |
+| Static variables | `SCREAMING_SNAKE_CASE` |
+| Constant variables | `SCREAMING_SNAKE_CASE` |
+| Type parameters | concise `UpperCamelCase`, usually single uppercase letter: `T` |
+| Lifetimes | short, lowercase: `'a` |
+
+### 参考
+- [rfcs/text/0430-finalizing-naming-conventions.md](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md)
+
 ## 基本データ型
 |型|種類|
 |:--|:--|
@@ -198,6 +219,49 @@ format!("{}{}", "abc", "def");
 
 ### 参考
 - [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
+
+## ファイル分割
+ファイル構成。
+
+```
+.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+     ├── guessing.rs
+     ├── lib.rs
+     └── main.rs
+```
+
+`main.rs` から `guessing.rs` に分割する場合。\
+`lib.rs` を作成し、ここに公開する情報をまとめていく。
+
+### lib.rs
+`lib.rs` を作成し、以下を記載する。
+
+``` rust
+pub mod guessing;
+```
+
+`pub mod` に指定する `guessing` はファイル名。（guessingの中の mod ではないので注意）\
+モジュール名の最初は必ずファイル名になるっぽい。（`ファイル名::最初のmod名::次のmod名` になる）
+
+### main.rs
+行頭に `extern crate クレート名;` を記載する。（これなくても動作するっぽい、要調査）\
+クレート名はモジュール化する場合はスネークケース(snake_case)にしないと警告が出るので注意。\
+`Cargo.toml` の `[package]` の `name` に書かれている名前と一致している必要がある。\
+（`cargo new project_name` で作成している場合は気にする必要なし）
+
+※クレート名が `rust_test` の場合。
+``` rust
+extern crate rust_test;
+```
+
+公開したモジュールを使いたいので `use` を使ってスコープに持ち込む。
+
+``` rust
+use rust_test::guessing;
+```
 
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
