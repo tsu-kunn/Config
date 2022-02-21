@@ -11,6 +11,8 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
 - Code
   - VisualStudio Code(VSCode)の設定ファイル。
   - Settings Syncでうまく同期できなかった時用のバックアップ。
+- Makefile
+  - Makefileのサンプル。
 - md
   - Markdown形式で書かれたメモファイル置き場。
 - Office
