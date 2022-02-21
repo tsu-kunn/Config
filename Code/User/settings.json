@@ -103,11 +103,11 @@
         }
     },
 
-    // ターミナルを Git Bash に変更
-    "terminal.integrated.defaultProfile.windows": "Ubuntu-20.04 (WSL)",
+    // デフォルトターミナルの設定
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
 
     // ターミナルのフォントサイズ
-    "terminal.integrated.fontSize": 15,
+    "terminal.integrated.fontSize": 16,
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
@@ -159,7 +159,8 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter.notebook.ipynb"
     },
-    "gauge.recommendedSettings.options": "Apply & Reload"
+    "gauge.recommendedSettings.options": "Apply & Reload",
+    "workbench.startupEditor": "none"
 }
 
 // MEMO:
