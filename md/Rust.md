@@ -149,6 +149,19 @@ $ cargo doc --open
 |タプル|(256, abc, true)|
 |配列|[1, 2, 3, 4]|
 
+### Copyトレイト
+整数、浮動小数点、ブーリアン、文字の型の場合、Copyトレイトが実行され、所有権が維持される。\
+タプルの場合は、上記の型の場合はCopyトレイトが実行されるが、Stringなど他の型が含まれていると実行されないので注意が必要。
+
+タプル例）
+```rust
+// Copyトレイト可能
+let a: (i32, f32) = (256, 123.456);
+
+// Copyトレイト不可
+let b: (i32, String) = (64, "hoge");
+```
+
 ## 文字列
 ### 文字列リテラル
 ```
@@ -217,6 +230,19 @@ format!("{}{}", "abc", "def");
 "xaxxbxxcxd".trim_matches("x");
 ```
 
+### スライス
+`[開始位置..終了位置]` でStringの一部を取得する。
+
+```rust
+let s = String::from("Hello world");
+let h = &s[0..5];
+let w = &s[6..11];
+```
+
+- `[..5]` で開始位置(0)省略
+- `[6..]` で終了位置(s.len())省略
+- `[..]` で文字列全体
+
 ### 参考
 - [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
 
@@ -263,11 +289,68 @@ extern crate rust_test;
 use rust_test::guessing;
 ```
 
+## 所有権
+Rustはメモリ管理機能がない代わりに所有権というものがある。\
+関数の引数にしたりすると所有権が移り、元の変数が使えなくなる。\
+（特定の型だとCopyトレイトが実行されるので、所有権が移らない場合がある）
+
+その為、呼び出し元でも継続利用する場合は参照渡しを使用する。\
+ただし、特定のスコープで、ある特定のデータに対しては、 一つしか可変な参照を持てない。
+
+### 例）
+```Rust
+fn main() {
+    another_function(x, y); // 関数の x に移るが、i32なのでCopyとなる
+    println!("x = {}", x);  // Copyなので、ここでも使える
+
+    let s = String::from("String Test 1");
+    print_function1(s);      // ここで所有権が関数の s に移る
+    // println!("Test1: {}", s);   // 所有権が移っているので使用できない
+
+    let s = String::from("String Test 2");
+    print_function2(&s);        // 参照になったので所有権が残る
+    println!("Test2: {}", s);   // 所有権が残っているので、ここでも使用でいる
+
+    let mut s = String::from("String Test 3");
+    print_function3(&mut s);    // 変更可能な参照
+    println!("Test3: {}", s);   // 変更可能な参照なので、文字列が変わっている
+}
+
+fn another_function(x: i32, y: i32) {
+    println!("The value of x is: {}", x);
+    println!("The value of y is: {}", y);
+}
+
+fn print_function1(s: String) {
+    println!("{}", s);
+}
+
+fn print_function2(s: &String) {
+    println!("{}", s);
+}
+
+fn print_function3(s: &mut String) {
+    println!("{}", s);
+    s.push_str(", custom!!");
+}
+```
+
+## 関数ポインタ的なもの
+```rust
+fn add(x: i32, y: i32) -> i32 {
+    x + y
+}
+
+fn main() {
+    let x: fn(i32,i32) -> i32 = add;
+}
+```
+
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
 - `_` はワイルドカードで、オブジェクトを無視するときに使用する
 - if文は式なので値を返すことができる
-  - `let number = if flag { 5 } else { 6 };` flagに応じて5か6がnumberに設定される
+  - `let number = if flag { 5 } else { 6 };` flagに応じて5か6がnumberに設定される(三項演算子的な処理)
 
 
 ## 参考HP
