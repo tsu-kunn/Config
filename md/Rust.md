@@ -164,14 +164,14 @@ let b: (i32, String) = (64, "hoge");
 
 ## 文字列
 ### 文字列リテラル
-```
+```rust
 let s: &str = "文字列";
 ```
 
 C/C++の `const char *` みたいなもの。
 
 ### 文字列クラス
-```
+```rust
 let msg: string = String::new();
 ```
 
@@ -179,54 +179,69 @@ C/C++の `std::string` みたいなもの。
 
 ### 文字列の結合
 #### リテラル
-```
+```rust
 concat!("abc", "def");
 ```
 
 #### リテラル以外
-```
+```rust
 format!("{}{}", "abc", "def");
 ```
 
 ### 文字列操作
 #### 文字数
-```
+```rust
 "abc".chars().count();
 ```
 
 #### 文字列の結合
-```
+```rust
 ["Hello", "World"].connect(" ");
 ```
 
 単純結合。
-```
+```rust
 ["Hello", "World"].concat();
 ```
 
 #### 文字列の分割
-```
+```rust
 "a.b.c".split(".");
 "a..b..c".split_str("."):
 ```
 
 ### 文字列の置換
-```
+```rust
 "abcdef".replace("cd", "CD");
 ```
 
 ### 部分文字列の検索
-```
+```rust
 "abcdef".starts_with("cd");
 ```
 
 ### 部分文字列の取得
-```
-"abcdef".slice_chars(1, 2);
+```rust
+let s: String = String::from("🍣🍵🎮📱");
+println!("{}", s.chars().nth(1).unwrap());
 ```
 
-### trim
+イテレーターから `nth()` でn番目の文字列を取り出す。\
+Option型を返すので、`unwrap()` などを使う必要がある。
+
+```rust
+let s: String = String::from("🍣🍵🎮📱");
+let begin = s.char_indices().nth(1).unwrap().0;
+let end = s.char_indices().nth(3).unwrap().0;
+let s = &s[begin..end];
+println!("{}", s);
 ```
+
+スライスを使って `🍵🎮` を取り出す。\
+戻り値は `&str` なので注意。
+
+### trim
+```rust
 "xaxxbxxcxd".trim_matches("x");
 ```
 
@@ -245,6 +260,7 @@ let w = &s[6..11];
 
 ### 参考
 - [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
+- [Rustで文字列の先頭文字や部分文字列を取得する](https://qiita.com/HelloRusk/items/7fb68395984958987a54)
 
 ## ファイル分割
 ファイル構成。
@@ -349,9 +365,25 @@ fn main() {
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
 - `_` はワイルドカードで、オブジェクトを無視するときに使用する
+  ```rust
+  let guess: u32 = match guess.trim().parse() {
+      Ok(num) => num,
+      Err(_) => return,
+  };
+  ```
 - if文は式なので値を返すことができる
   - `let number = if flag { 5 } else { 6 };` flagに応じて5か6がnumberに設定される(三項演算子的な処理)
-
+- `&v` は参照、 `*v` は参照外し（実データにアクセス）
+- バックトレース(要Git Bash、PowerShellでは動作しない)
+  - `RUST_BACKTRACE=1 cargo run`
+- ? 演算子は Result を返す関数でしか使用でいない
+  ```rust
+  fn read_file() -> Result<String, io::Error> {
+      let mut s = String::new();
+      File::open("sample.txt")?.read_to_string(&mut s)?;
+      Ok(s)
+  }
+  ```
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
