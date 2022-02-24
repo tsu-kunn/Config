@@ -540,7 +540,9 @@ fun hoge<'a>(x: &'a str, y: &'a str) -> &'a str {
   }
   ```
 - `トレイト` ≒ `インターフェイス` な感じ
-
+- テストコード
+  - 関数の前に `#[test]` を記載、テスト実行は `cargo test`
+  - `assert_eq!(式, 結果)` or `assert_ne!(式, 結果)` を使うのもよい
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
