@@ -9,6 +9,11 @@
 $ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 ```
 
+#### その他
+リンカやデバッガーはCのものを使うので、別途 `gcc` や `gdb` をインストールしておく必要がある。\
+Cargoというパッケージ管理があるので、`make` は特に必要ない。
+
+
 ### Windows
 [Rustのインストーラー](https://www.rust-lang.org/ja/tools/install) をダウンロードして実行する。
 
@@ -85,7 +90,7 @@ Rust標準で提供されている `rust-gdb` を使えば、上記のような�
 $ rust-gdb main
 ```
 
-※Windows10で試したら下記のエラーが出て、デバッグが気なかった。\
+※Windows10で試したら下記のエラーが出て、デバッグができなかった。\
 　軽く調べた感じ解決策がなさそうなので、WindowsではVSCodeを使ったデバッグが望ましい。（MSもそういってる）
 
 `error: the 'rust-gdb.exe' binary, normally provided by the 'rustc' component, is not applicable to the 'stable-x86_64-pc-windows-msvc' toolchain`
