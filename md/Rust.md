@@ -362,6 +362,156 @@ fn main() {
 }
 ```
 
+## ジェネリック型
+### 関数
+```rust
+fn test_func<T>(x: <T>) -> T {
+    ...
+}
+```
+
+### 構造体
+```rust
+struct Point<T> {
+    x: T,
+    y: T,
+}
+```
+
+### enum
+```rust
+enum hoge<T, E> {
+    Hoge(T),
+    Err(E),
+}
+```
+
+### メソッド
+```rust
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+```
+
+#### 特定の型だけメソッド実装
+`Point<f32>` の場合だけメソッドを実装。
+
+```rust
+impl Point<f32> {
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+```
+
+## トレイト
+### 基本
+```rust
+pub trait Summary {
+    // 実装必須
+    fn summarize_author(&self) -> String;
+
+    // デフォルト実装
+    fn summarize(&self) -> String {
+        // "（もっと読む）"
+        String::from("(Read more...)")
+    }
+}
+```
+
+#### 実装
+```rust
+pub struct NewsArticle {
+    pub headline: String,
+    pub location: String,
+    pub author: String,
+    pub content: String,
+}
+
+impl Summary for NewsArticle {
+    fn summarize_author(&self) -> String {
+        format!("{}, by {} ({})", self.headline, self.author, self.location)
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+    pub reply: bool,
+    pub retweet: bool,
+}
+
+impl Summary for Tweet {
+    fn summarize_author(&self) -> String {
+        format!("@{}", self.username)
+    }
+
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
+    }
+}
+```
+
+### 引数としてのトレイト
+```rust
+pub fn notify(item: &impl Summary) {
+    println!("Breaking news! {}", item.summarize());
+}
+
+// 実装に書かれた実装
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let a = NewsArticle {...};
+    let b = Tweet{...};
+    let c = Point{...};
+    notify(&a);
+    notify(&b);
+    notify(&c); // Summaryトレイトを実装していないのでエラーになる
+}
+```
+
+### whereを使ったトレイト境界
+```rust
+fn some_function<T: Display + Clone, U: Clone + Debug>(t: &T, u: &U) -> i32 {
+    ...
+}
+```
+
+これを `where` を使って記述すると以下になる。
+
+```rust
+fn some_function<T, U>(t: &T, u: &U) -> i32
+    where T: Display + Clone,
+          U: Clone + Debug
+{
+    ...
+}
+```
+
+## ライフタイム注釈記法
+ライフタイムの注釈は `' + 注釈名` を記載する。\
+通常すべて小文字で、ジェネリック型の様に短い `'a` を使用する。
+
+```rust
+&i32        // ただの参照
+&'a i32     // 明示的なライフタイム付きの参照
+&'a mut i32 // 明示的なライフタイム付きの可変参照
+```
+
+### 使用例
+```rust
+fun hoge<'a>(x: &'a str, y: &'a str) -> &'a str {
+    ...
+}
+```
+
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
 - `_` はワイルドカードで、オブジェクトを無視するときに使用する
@@ -384,6 +534,8 @@ fn main() {
       Ok(s)
   }
   ```
+- `トレイト` ≒ `インターフェイス` な感じ
+
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
