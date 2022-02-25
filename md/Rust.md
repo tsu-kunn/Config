@@ -76,7 +76,7 @@ $ rustc main.rc
 |プロジェクトのリリースビルド|cargo build --release|
 |プロジェクトの確認※|cargo check|
 |プロジェクトの実行|cargo run|
-|プロジェクトのテスト|cargo test|
+|プロジェクトの自動テスト|cargo test|
 |プロジェクトのドキュメントのビルド|cargo doc|
 
 ※コンパイルするが実行ファイルは作らない
@@ -517,6 +517,75 @@ fun hoge<'a>(x: &'a str, y: &'a str) -> &'a str {
 }
 ```
 
+## テストコード
+### assert!を使う
+- 関数の前に `#[test]` を記載、テスト実行は `cargo test`
+  ```rust
+  #[test]
+  fn exploration() {
+      assert_eq!(2 + 2, 4);
+  }
+  ```
+- エラー判定は `assert!(式, format形式の文字列(option))` を使う
+- `assert_eq!(式, 結果)` or `assert_ne!(式, 結果)` を使うのもよい
+- 自作のenumや構造体に使う場合は `#[derive(PartialEq, Debug)]` を記載しておく必要あり
+
+### Result<T, E>を使う
+`Err()` を返した場合にテスト失敗と判定することができる。
+
+```rust
+#[test]
+fn result_test() -> Result<(), String> {
+    if 2 + 2 == 5 {
+        Ok(())
+    } else {
+        Err(String::from("two plus two does not equal four"))
+    }
+}
+```
+
+### パニックの確認
+- `#[test]` の後に `#[should_panic]` を記載する
+  - `#[should_panic]` は `#[should_panic(expected = "message")]` とエラーの際のメッセージを追加できる
+
+### テスト実行の制御
+#### スレッド数を指定
+テストは並列実行されるが、ファイルの読み書きなど並列したくないテストの場合に設定。
+
+```bash
+$ cargo test -- --test-threads=1
+```
+
+#### 標準出力の抑制
+`println' などの標準出力を抑制する。
+
+```bash
+$ cargo test -- --nocapture
+```
+
+#### 単独テスト
+テストしたいテスト（関数）名を指定する。
+
+```bash
+$ cargo test exploration
+```
+
+※テスト（関数）名の一部を指定すると、その値に合致するテストが全て実行される
+
+### 結合テスト
+`tests` というディレクトリを作成し、この中に結合テストのファイルを追加する。\
+このテストファイルは `cargo test` を実行した場合のみコンパイルされる。
+
+```
+クレート
++- src
++- tests
+ + test_files0
+ + test_files1
+ +  ...
+```
+
+
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
 - `_` はワイルドカードで、オブジェクトを無視するときに使用する
@@ -540,9 +609,11 @@ fun hoge<'a>(x: &'a str, y: &'a str) -> &'a str {
   }
   ```
 - `トレイト` ≒ `インターフェイス` な感じ
-- テストコード
-  - 関数の前に `#[test]` を記載、テスト実行は `cargo test`
-  - `assert_eq!(式, 結果)` or `assert_ne!(式, 結果)` を使うのもよい
+- コマンドライン引数
+  ```rust
+  use std::env;
+  let args: Vec<String> = env::args().collect();
+  ```
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
