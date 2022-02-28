@@ -609,6 +609,11 @@ $ cargo test exploration
   }
   ```
 - `トレイト` ≒ `インターフェイス` な感じ
+  - ヒープ上にトレイトへのポインタを返す場合は `dyn` キーワードが必須になった
+    ```
+    trait Animal {}
+    Box<dyn Animal>;
+    ```
 - コマンドライン引数
   ```rust
   use std::env;
