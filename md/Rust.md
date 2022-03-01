@@ -585,6 +585,119 @@ $ cargo test exploration
  +  ...
 ```
 
+## クロージャ
+無記名関数で、他ではlamdaとか呼ばれているもの。\
+基本形は `let 関数 = |引数1, 引数2, ...| -> 戻り値 { 返却する値 };` となる。
+
+```rust
+let func = |x: i32| -> i32 {
+    x * 2
+};
+```
+
+クロージャは型推論を備えているので、上記は通常以下のように記載する。
+
+```rust
+let func = |x| {
+    x * 2
+};
+```
+
+型推論により最初に呼び出した引数の型が選ばれるため、型が違う引数はエラーになる。
+
+```rust
+let a = func(10);   // i32と推論
+let b = func(1.0);  // i32と推論されているのでエラーになる
+```
+
+### 環境のキャプチャ
+クロージャは自分の定義されたスコープの変数を使用することができる。\
+変数の値は保存され、その後に値が変わっても影響を受けない。
+
+```rust
+fn main() {
+    let mut x = 4;
+    let f = |z| z == x; // x が不変で借用される
+    let y = 4;
+    //x = 3;            // クロージャで借用されているので変更できない
+    assert!(f(y));      // 借用した x の値と比較
+}
+```
+
+#### 環境のキャプチャの方法
+|トレイト|動作|
+|:--|:--|
+|FnOnce|キャプチャした変数の所有権を奪い自身にムーブする。所有権を奪っているので1回しか呼べない。|
+|FnMut|可変で値を借用する。|
+|Fn|値を不変で借用する。(default)|
+
+#### 強制的に所有権を奪う
+`move` を付けることで、強制的に所有権を奪うことができる。
+
+```rust
+let f = move |z| z == x;
+```
+
+### メモ化(memoization)または、 遅延評価(lazy evaluation)
+`value` が呼ばれた際にクロージャが実行される。\
+値はキャッシュされるため、以後キャッシュの値を返すだけとなる。（クロージャは実行されない）
+
+```rust
+use std::thread;
+use std::time::Duration;
+use std::collections::HashMap;
+
+struct Cacher<T>
+    where T: Fn(u32) -> u32
+{
+    calculation: T,
+    value: HashMap<u32, u32>,
+}
+
+impl<T> Cacher<T>
+    where T: Fn(u32) -> u32
+{
+    fn new(calculation: T) -> Cacher<T> {
+        Cacher {
+            calculation,
+            value: HashMap::new(),
+        }
+    }
+
+    fn value(&mut self, arg: u32) -> u32 {
+        match self.value.get(&arg) {
+            Some(v) => *v,
+            None => {
+                let v = (self.calculation)(arg);
+                self.value.insert(v, v);
+                v
+            },
+        }
+    }
+}
+
+fn main() {
+    let mut expensive_result = Cacher::new(|num| {
+        println!("calulating slowly...");
+        thread::sleep(Duration::from_secs(2));
+        num
+    });
+
+    println!("closure: {}", expensive_result.value(10));    // クロージャが実行されて値が設定
+    println!("closure: {}", expensive_result.value(10));    // キャッシュを返す（クロージャは実行されない）
+    println!("closure: {}", expensive_result.value(5));     // クロージャが実行されて値が設定
+    println!("closure: {}", expensive_result.value(5));     // キャッシュを返す
+    println!("closure: {}", expensive_result.value(10));    // キャッシュを返す
+}
+```
+
+
+## コマンドラインオプション
+公式トレントにある `getopts` を使用すると楽ができる。\
+基本的な機能が提供されているので、難しい処理をしなければ十分使える。
+
+### 使い方
+[ドキュメント参照](https://docs.rs/getopts/0.2.21/getopts/)。
 
 ## メモ
 - コメント以外で日本語があるとコンパイルに失敗する場合がある
@@ -619,6 +732,8 @@ $ cargo test exploration
   use std::env;
   let args: Vec<String> = env::args().collect();
   ```
+- 標準エラー出力: `eprint` や `eprintln!` を使う（e + 標準出力マクロ名）
+
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
