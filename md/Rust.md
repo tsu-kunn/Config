@@ -691,6 +691,109 @@ fn main() {
 }
 ```
 
+## イテレーター
+全てのイテレータは、標準ライブラリで定義されている `Iterator` というトレイトを実装している。\
+このトレイトを実装する場合は、 `Item型` と `nextメソッド` を実装する必要がある。
+
+next を呼び出すメソッドは、消費アダプタ(consuming adaptors)と呼ばれる。（`sumメソッド` など）
+
+```rust
+#[test]
+fn iterator_sum() {
+    let v1 = vec![1, 2, 3];
+    let v1_iter = v1.iter();
+    let total: i32 = v1_iter.sum();
+    assert_eq!(total, 6);
+    // sumが所有権を奪っているので、v1_iter はもう使えない
+}
+```
+
+### 種類
+|メソッド|動作|
+|:--|:--|
+|iter|不変参照へのイテレータを生成|
+|into_iter|所有権を奪い、所有された値を返すイテレーターを生成|
+|iter_mut|可変参照へのイテレーターを生成|
+
+### 実装例
+1～5を返し、6以上は None を返すイテレータを実装する。
+
+```rust
+struct Counter {
+    count: u32,
+}
+
+impl Counter {
+    fn new() -> Counter {
+        Counter { count: 0 }
+    }
+}
+
+impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count += 1;
+
+        if self.count < 6 {
+            Some(self.count)
+        } else {
+            None
+        }
+    }
+}
+
+#[test]
+fn calling_next_directly() {
+    let mut counter = Counter::new();
+
+    assert_eq!(counter.next(), Some(1));
+    assert_eq!(counter.next(), Some(2));
+    assert_eq!(counter.next(), Some(3));
+    assert_eq!(counter.next(), Some(4));
+    assert_eq!(counter.next(), Some(5));
+    assert_eq!(counter.next(), None);
+}
+```
+
+### イテレータアダプタ(iterator adaptors)
+イテレータを別の種類のイテレータに変えさせるもの。\
+全てのイテレータは怠惰なので、消費アダプタメソッドのどれかを呼び出し、 イテレータアダプタの呼び出しから結果を得なければならない。
+
+これは消費アダプタを呼び出していないので、クロージャが呼ばれることはない。（警告あり）
+
+```rust
+let v1: Vec<i32> = vec![1, 2, 3];
+v1.iter().map(|x| x + 1);
+```
+
+`collectメソッド` で消費アダプタを呼び出し、イテレーターを消費する。
+
+```rust
+let v1: Vec<i32> = vec![1, 2, 3];
+let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();    // collectで消費
+assert_eq!(v2, vec![2, 3, 4]);
+```
+
+### 環境をキャプチャするクロージャの使用
+`filter` イテレータアダプタを使って環境をキャプチャするクロージャの一般的な使用例。
+
+```rust
+fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    // let mut results = Vec::new();
+    // for line in contents.lines() {
+    //     if line.contains(query) {
+    //         results.push(line);
+    //     }
+    // }
+    // results
+
+    // イテレータで実装
+    contents.lines()
+        .filter( |line| line.contains(query) )
+        .collect()
+}
+```
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
