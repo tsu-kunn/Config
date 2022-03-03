@@ -846,6 +846,141 @@ fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 ```
 
+## スマートポインタ
+### 再帰的な型
+```
+list = Cons(1, Cons(2, Cons(3, Nil)))
+```
+
+このような再帰的な構造を作る場合は `Box<T>` を使用する。
+
+```rust
+use List::{Cons, Nil};
+
+#[derive(Debug)]
+enum List {
+    Cons(i32, Box<List>),
+    Nil,
+}
+
+fn main() {
+    // Boxを使って再帰的な型を可能にする
+    let list = Cons(1, 
+        Box::new(Cons(2,
+            Box::new(Cons(3,
+                Box::new(Nil))))));
+
+    println!("list = {:?}", list);
+}
+```
+
+### 参照のような扱い
+Derefトレイトを実装して参照のように扱えるようにする。
+
+```rust
+use std::ops::Deref;
+
+struct MyBox<T>(T);
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
+}
+
+impl<T> Deref for MyBox<T> {
+    // Derefトレイトが使用する関連型を定義
+    type Target = T;
+
+    fn deref(&self) -> &T {
+        &self.0
+    }
+}
+
+fn main() {
+    let x = 5;
+    let y = MyBox::new(x);
+    assert_eq!(x, 5);
+    assert_eq!(*y, 5);
+}
+```
+
+### 暗黙的な参照外し型強制
+```rust
+fn main() {
+    let m = MyBox::new(String::from("Rust"));
+    hello(&m);
+}
+
+fn hello(name: &str) {
+    println!("Hello {}", name);
+}
+```
+
+`hello(&m)` の部分でコンパイラは `Deref` を呼び出して、 `&MyBox<String> → &String → &str` という変換が行われる。\
+（コンパイラがhello関数の定義と一致するものを Deref を呼び出して探す）
+
+## Dropトレイト
+C++などではデストラクタに相当するトレイト？\
+インスタンスが解放される際に呼ばれる。
+
+```rust
+impl<T> Drop for MyBox<T> {
+    fn drop(&mut self) {
+        println!("Dropping MyBox!")
+    }
+}
+```
+
+### 早期呼び出し
+`std::mem::drop` 関数を使用して、早期に強制的にドロップさせたい値を引数で渡す。
+
+```rust
+let x = 5;
+let y = MyBox::new(x);
+assert_eq!(*y, 5);
+std::mem::drop(y);  // 早急にドロップ
+```
+
+## 参照カウント方式
+Rustには `Rc<T>` という型があり、これは、reference counting(参照カウント)の省略形。\
+複数参照をしていて、コンパイル時にはどの部分が最後にデータを使用し終わるか決定できない時に `Rc<T>` 型を使用する。
+
+```rust
+use std::rc::Rc;
+
+#[derive(Debug)]
+enum List2 {
+    Cons(i32, Rc<List2>),
+    Nil,
+}
+
+fn main() {
+    let a = Rc::new(List2::Cons(5, Rc::new(List2::Cons(10, Rc::new(List2::Nil)))));
+    let b = List2::Cons(3, Rc::clone(&a));
+    let c = List2::Cons(4, Rc::clone(&a));
+
+    println!("a = {:?}", a);
+    println!("b = {:?}", b);
+    println!("c = {:?}", c);
+    println!("reference count = {}", Rc::strong_count(&a));
+}
+```
+
+結果
+
+```
+a = Cons(5, Cons(10, Nil))
+b = Cons(3, Cons(5, Cons(10, Nil)))
+c = Cons(4, Cons(5, Cons(10, Nil)))
+reference count = 3
+```
+
+`Box<T>` を使用する代わりに `Rc<T>` を使用する。また `Rc::new` から始まることに注意。\
+`Rc::clone()` はデータのディープコピーではなく、参照カウンタのインクリメントが行わるだけなのでコストは最小。
+
+参照カウンタの数を知りたい場合は `Rc::strong_count()` を使用する。
+
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
 基本的な機能が提供されているので、難しい処理をしなければ十分使える。
