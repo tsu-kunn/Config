@@ -144,6 +144,54 @@ $ cargo doc --open
 ### 参考
 - [rfcs/text/0430-finalizing-naming-conventions.md](https://github.com/rust-lang/rfcs/blob/master/text/0430-finalizing-naming-conventions.md)
 
+## ドキュメント作成
+### 通常
+関数やメソッドの上部に `///` を使用することでドキュメンテーションコメントを使用することができる。\
+Markdown記法をサポート。
+
+`# Examples` 以外にも `Panics` や `Errors` がよく使用されている。
+- Examples
+  - 関数やメソッドの使い方
+  - `cargo test` を実行した際にコード例がテストとして実行される
+- Panics
+  - `panic!` する可能性のある筋書
+- Erros
+  - `Result` を返す場合の起こりうるエラーの種類や条件
+
+```rust
+/// Adds one to the number given.
+///
+/// # Examples
+///
+/// ```
+/// let five = 5;
+///
+/// assert_eq!(6, my_crate::add_one(5));
+/// ```
+pub fn add_one(x: i32) -> i32 {
+    x + 1
+}
+```
+
+### 要素にコメント
+`//!` を使用することでドキュメンテーションを付け加えることができる。\
+主にクレートのルートファイル内部や、モジュール内部に使用する。
+
+```rust
+//! # My Crate
+//!
+//! `my_crate` is a collection of utilities to make performing certain
+//! calculations more convenient.
+```
+
+### 確認
+```bash
+$ cargo doc --open
+```
+
+### 参考
+- [Crates.ioにクレートを公開する](https://doc.rust-jp.rs/book-ja/ch14-02-publishing-to-crates-io.html)
+
 ## 基本データ型
 |型|種類|
 |:--|:--|
@@ -399,6 +447,9 @@ impl<T> Point<T> {
     }
 }
 ```
+
+`impl` の直後に `T` を宣言しないといけないことに注意。\
+（Point<T>にメソッドを実装していることを指定するために、Tを使用することができる）
 
 #### 特定の型だけメソッド実装
 `Point<f32>` の場合だけメソッドを実装。
