@@ -421,6 +421,10 @@ fn print_function3(s: &mut String) {
 }
 ```
 
+## 借用規則
+- いかなる時も(以下の両方ではなく、)1つの可変参照かいくつもの不変参照のどちらかが可能になる
+- 参照は常に有効でなければならない
+
 ## 関数ポインタ的なもの
 ```rust
 fn add(x: i32, y: i32) -> i32 {
@@ -937,7 +941,7 @@ fn hello(name: &str) {
 `hello(&m)` の部分でコンパイラは `Deref` を呼び出して、 `&MyBox<String> → &String → &str` という変換が行われる。\
 （コンパイラがhello関数の定義と一致するものを Deref を呼び出して探す）
 
-## Dropトレイト
+### Dropトレイト
 C++などではデストラクタに相当するトレイト？\
 インスタンスが解放される際に呼ばれる。
 
@@ -949,7 +953,7 @@ impl<T> Drop for MyBox<T> {
 }
 ```
 
-### 早期呼び出し
+#### 早期呼び出し
 `std::mem::drop` 関数を使用して、早期に強制的にドロップさせたい値を引数で渡す。
 
 ```rust
@@ -959,7 +963,7 @@ assert_eq!(*y, 5);
 std::mem::drop(y);  // 早急にドロップ
 ```
 
-## 参照カウント方式
+### 参照カウント方式
 Rustには `Rc<T>` という型があり、これは、reference counting(参照カウント)の省略形。\
 複数参照をしていて、コンパイル時にはどの部分が最後にデータを使用し終わるか決定できない時に `Rc<T>` 型を使用する。
 
@@ -997,6 +1001,107 @@ reference count = 3
 `Rc::clone()` はデータのディープコピーではなく、参照カウンタのインクリメントが行わるだけなのでコストは最小。
 
 参照カウンタの数を知りたい場合は `Rc::strong_count()` を使用する。
+
+### 内部可変性パターン
+RefCell<T>型を使用して、データへの不変参照時でも可変化することができるデザインパターン。\
+データ構造内で `unsafe` コードを使用しているため、マルチスレッドの文脈で使用するとコンパイルエラーとなる。
+（シングルスレッド専用と考えてよい？）
+
+`RC<T>` と組み合わせることで、普段は不変で処理し、必要な場合のみ可変にすることができる。\
+ただし循環参照を生み出せてしまうため、メモリリークの危険がある。
+
+|メソッド|動作|
+|:--|:--|
+|borrow|Ref<T>を返す。（不変参照）|
+|borrow_mut|RefMut<T>。（可変参照）|
+
+借用規則の確認はコンパイル時ではなく、実行時となるため、規則に違反した場合はパニックが発生する。
+
+Messengerトレイトの send は self を不変参照しているので、`RefCell<T>` を使用せずに実装するとエラーとなる。\
+そのため `RefCell<T>` で内部可変性を使用する。
+
+```rust
+pub trait Messenger {
+    fn send(&self, msg: &str);
+}
+```
+省略部分は [こちら](https://doc.rust-jp.rs/book-ja/ch15-05-interior-mutability.html) を参照。
+
+```rust
+struct MockMessenger {
+    // sent_messagesをRefCell<T>に変更して内部可変性を使用する
+    sent_messages: RefCell<Vec<String>>,
+}
+
+impl MockMessenger {
+    fn new() -> MockMessenger {
+        MockMessenger { sent_messages: RefCell::new(vec![]) }
+    }
+}
+
+impl Messenger for MockMessenger {
+    fn send(&self, message: &str) {
+        // RefCell<Vec<String>>の中の値への可変参照を得て文字列を設定する
+        self.sent_messages.borrow_mut().push(String::from(message));
+    }
+}
+
+#[test]
+fn it_sends_an_over_75_percent_warning_message() {
+    let mock_messenger = MockMessenger::new();
+    let mut limit_tracker = LimitTracker::new(&mock_messenger, 100);
+
+    limit_tracker.set_value(80);
+
+    // borrowを呼び出しベクタへの不変参照を得て、ベクタにある要素数を確認
+    assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
+}
+```
+
+#### 循環参照の回避
+循環参照になる部分の `Rc<T>` を `Rc::downgrade` を使用し `Weak<T>` を取得する。
+弱い参照(weak reference)は参照カウント方式だが、`Rc<T>` の `strong_count` が0になると、`weak_count` が残っていても `Rc<T>` が型付けられるため、循環参照にならない。ただし、`Weak<T>` の参照する値がドロップしている可能性があるため、使用する際は `Weak<T>` の `upgrade` メソッドを呼び出す必要がある。
+
+```rust
+use std::rc::{Rc, Weak};
+use std::cell::RefCell;
+
+#[derive(Debug)]
+struct Node {
+    value: i32,
+    parent: RefCell<Weak<Node>>,
+    children: RefCell<Vec<Rc<Node>>>,
+}
+
+fn main() {
+    let leaf = Rc::new(Node {
+        value: 3,
+        parent: RefCell::new(Weak::new()),
+        children: RefCell::new(vec![]),
+    });
+
+    // leafの親 = {:?}
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+
+    let branch = Rc::new(Node {
+        value: 5,
+        parent: RefCell::new(Weak::new()),
+        children: RefCell::new(vec![Rc::clone(&leaf)]),
+    });
+
+    *leaf.parent.borrow_mut() = Rc::downgrade(&branch);
+
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
+}
+```
+
+出力結果。（循環参照をしていないことを確認）
+
+```
+leaf parent = None
+leaf parent = Some(Node { value: 5, parent: RefCell { value: (Weak) }, children: RefCell { value: [Node { value: 3, parent: RefCell { value: (Weak) }, children: RefCell { value: [] } }] } })
+```
+
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
