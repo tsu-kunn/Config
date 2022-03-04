@@ -1102,6 +1102,109 @@ leaf parent = None
 leaf parent = Some(Node { value: 5, parent: RefCell { value: (Weak) }, children: RefCell { value: [Node { value: 3, parent: RefCell { value: (Weak) }, children: RefCell { value: [] } }] } })
 ```
 
+## スレッド
+### thread::spawn関数
+`thread::spawn()` にクロージャを渡して並列化。\
+ハンドルに対して `join` を呼び出すと、ハンドルが表すスレッドが終了するまで現在実行中のスレッドをブロックする。
+
+```rust
+use std::thread;
+
+// スレッド作成
+let = handle = thread::spawn(|| {
+    println!("the spawned thread!");
+});
+
+// スレッド終了待ち
+handle.join().unwrap();
+```
+
+#### moveクロージャの使用
+moveクロージャによる所有権の移動は、あるスレッドから別のスレッドに値の所有権を移すために新しいスレッドを生成する際に有用。
+
+```rust
+let v = vec![1, 2, 3];
+
+// move でクロージャに所有権を移動
+let handle = thread::spawn(move || {
+    println!("Here's a vector: {:?}", v);
+});
+
+//drop(v);  // 所有権がスレッドに移っているのでエラーとなる
+
+handle.join().unwrap();
+```
+
+### メッセージの受け渡しを使用してスレッド間でデータを転送
+`mpsc::channel` 関数はタプルを返し、1つ目の要素は送信側、2つ目の要素は受信側になる。\
+`tx.send` で所有権が送信機に移っているので注意！
+
+```rust
+use std::thread;
+use std::sync::mpsc;
+
+fn main() {
+    // txとrxは転送機と受信機の略称
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("Hi");
+        tx.send(val).unwrap();  // 転送
+    });
+
+    let received = rx.recv().unwrap();  // 受信
+    println!("Got: {}", received);
+}
+```
+
+`rx.recv()` はメインスレッドの実行をブロックし、値がチャンネルに流れてくるまで待機。\
+`rx.try_recv()` はブロックせず、即座に `Result<T, E>` を返す。（メッセージがあればそれを含むOk、なければErr値）
+
+#### 複数の送信機から受信
+`mpsc::Sender::clone` 関数を使用して送信機を複製する。受信機はイテレーターとして扱う。チャンネルが閉じると繰り返しが終わる。
+
+```rust
+use std::thread;
+use std::time::Duration;
+use std::sync::mpsc;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+
+    let tx1 = mpsc::Sender::clone(&tx);
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("hi"),
+            String::from("from"),
+            String::from("the"),
+            String::from("thread"),
+        ];
+
+        for val in vals {
+            tx1.send(val).unwrap();  // tx1 で転送
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("more"),
+            String::from("message"),
+            String::from("for"),
+            String::from("you"),
+        ];
+
+        for val in vals {
+            tx.send(val).unwrap();  // tx で転送
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    for received in rx {    // イテレーターで複数受信
+        println!("Got: {}", received);
+    }
+}
+```
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
