@@ -1206,6 +1206,65 @@ fn main() {
 }
 ```
 
+### Mutex（ミューテックス）
+ミューテックスの対象になる値を `Mutex<T>` で作成する。\
+`lock` メソッドで値のロックを試み、`MutexGuard` というスマートポインタを取得できる。\
+これを使用して、内部の値を変更することとなる。
+
+Mutexは便利だけど、デッドロックを発生させることがあるので、取り扱いには注意が必要。
+
+```rust
+let m = Mutex::new(5);
+{
+    let mut num = m.lock().unwrap();
+    *num = 6;
+}
+println!("m = {:?}", m);
+//m = Mutex { data: 6, poisoned: false, .. }
+```
+
+#### 複数のスレッドで Mutex を使用する場合
+`thread::spawn` に渡すクロージャで所有権が移ってしまうため、上記をそのまま使用することができない。\
+複数参照として `Rc<T>` がありますが、スレッドセーフではないためコンパイルエラーになる。\
+`Rc<T>` のスレッドセーフである `Arc<T>` を使うことで問題を解決できる。
+
+※A=Atomic
+
+```rust
+use std::thread;
+use std::sync::{Mutex, Arc};
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
+}
+```
+
+### Sync と Send トレイト
+- Send
+  - スレッド間の所有権の許可する
+  - Rustのほとんどの型は `Send` を実装しているが、 `Rc<T>` の様に一部例外あり
+- Sync
+  - 複数スレッドからのアクセスを許可する
+  - `Sync` を実装した型は、複数スレッドからアクセスされても安全となる（スレッドセーフ）
+
+基本的に手動で実装する必要はないが、実装する場合は `unsafe` なRustコードを実装する必要がある。
+
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
 基本的な機能が提供されているので、難しい処理をしなければ十分使える。
