@@ -1265,6 +1265,60 @@ fn main() {
 
 基本的に手動で実装する必要はないが、実装する場合は `unsafe` なRustコードを実装する必要がある。
 
+## ダックタイピング
+対象となるトレイトの実装ではなく、同じ型の異なるコードを実装した場合でも、トレイトを実装したオブジェクトから呼び出すことができる。\
+何故なら、同じ型のメソッドを実装しているからである。Rustは動的型付け言語のダックタイピングと似た概念を実装しているからである。
+
+Buttonオブジェクトは Draw型 を実装していないが、drawメソッドを実装しているため、Screenからdrawメソッドを呼び出せる。\
+　⇒値がトレイトオブジェクトが必要としているトレイトを実装していなければ、コンパイルエラーになる
+
+```rust
+pub trait Draw {
+    fn draw(&self);
+}
+
+pub struct Screen {
+    pub components: Vec<Box<dyn Draw>>,
+}
+
+impl Screen {
+    pub fn run(&self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+
+pub struct Button {
+    pub width: u32,
+    pub height: u32,
+    pub label: String,
+}
+
+impl Draw for Button {
+    fn draw(&self) {
+        println!("Draw for Button");
+        println!(" width : {}", self.width);
+        println!(" height: {}", self.height);
+        println!(" label : {}", self.label);
+    }
+}
+
+pub fn gui_test() {
+    let screen = Screen {
+        components: vec![
+            Box::new(Button {
+                width: 50,
+                height: 10,
+                label: String::from("OK"),
+            }),
+        ],
+    };
+    screen.run();
+}
+```
+
+
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
 基本的な機能が提供されているので、難しい処理をしなければ十分使える。
