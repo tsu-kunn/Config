@@ -332,6 +332,259 @@ let w = &s[6..11];
 - [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
 - [Rustで文字列の先頭文字や部分文字列を取得する](https://qiita.com/HelloRusk/items/7fb68395984958987a54)
 
+## if let
+`if let記法` で `if` と `let` をより冗長性の少ない方法で組み合わせ、残りを無視しつつ、一つのパターンにマッチする値を扱うことができる。
+
+`match` で記述した場合。
+
+```rust
+let some_u8_value = Some(0u8);
+match some_u8_value {
+    Some(3) => println!("three"),
+    _ => (),
+}
+```
+
+これを `if let記法` で書いた場合。`else`も使うことができる。
+
+```rust
+if let Some(3) = some_u8_value {
+    println!("three");
+}
+```
+
+## while let
+`if let` と構成が似て、パターンが合致し続ける限りループが実行される。
+
+```rust
+let mut stack = Vec::new();
+
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+// 4回目に None が返り、ループを抜ける
+while let Some(top) = stack.pop() {
+    println!("{}", top);
+}
+```
+
+## パターン記法
+### リテラル
+switch文的な動作。
+
+```rust
+let x = 1;
+
+match x {
+    1 => println!("one"),       // 1
+    2 => println!("two"),       // 2
+    3 => println!("three"),     // 3
+    _ => println!("anything"),  // なんでも
+}
+```
+
+### 名前付き変数
+```rust
+let x = Some(5);
+
+match x {
+    Some(50) => println!("Got 50"),
+    Some(x) => println!("Matched, x = {:?}", x),
+    _ => println!("Default case, x = {:?}", x),     // 上記以外
+}
+```
+
+### 複数パターン
+`|` で or を取ることが可能。
+
+```rust
+let x = 2;
+
+match x {
+    1 | 2 => println!("one or two"),    // 1か2
+    3 => println!("three"),
+    _ => println!("anything"),
+}
+```
+
+`...` で範囲指定も可能。
+
+```rust
+let x = 5;
+
+match x {
+    // 1から5まで
+    1 ... 5 => println!("one through five"),
+    // それ以外
+    _ => println!("something else"),
+}
+```
+
+`char` 型の場合。
+
+```rust
+let x = 'c';
+
+match x {
+    'a' ... 'j' => println!("early ASCII letter"),
+    'k' ... 'z' => println!("late ASCII letter"),
+    _ => println!("something else"),
+}
+```
+
+### 構造体
+#### フィールド名と別名に保存
+構造体の `x`, `y` の値を、変数 `a`, `b` に保存。
+
+``` rust
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x: a, y: b } = p;
+    assert_eq!(0, a);
+    assert_eq!(7, b);
+}
+```
+
+#### フィールド名と同名に保存
+```rust
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x, y } = p;
+    assert_eq!(0, x);
+    assert_eq!(7, y);
+}
+```
+
+#### matchで比較
+```rust
+let p = Point { x: 0, y: 7 };
+
+match p {
+    Point { x, y: 0 } => println!("On the x axis at {}", x),
+    Point { x: 0, y } => println!("On the y axis at {}", y),    // x が 0 なのでこれにマッチ
+    Point { x, y } => println!("On neither axis: ({}, {})", x, y),
+
+    // 残りの部分を省略（無視）、タプルでも同様
+    Point { y, .. } => println!("On the y axis at {}", y),
+    Point { .. } => println!("all skip"),
+}
+```
+
+### enumの分配
+enum内に格納されているデータ定義に従って比較する必要がある。
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit => {
+            println!("The Quit variant has no data to destructure.")
+        },
+        Message::Move { x, y } => {
+            println!("Move in the x direction {} and in the y direction {}", x, y);
+        },
+        Message::Write(text) => println!("Text message: {}", text),
+        Message::ChangeColor(r, g, b) => {
+            println!("Change the color to red {}, green {}, and blue {}", r, g, b);
+        },
+        _ => println!("No match"),
+    }
+}
+```
+
+### 参照の分配
+`&` を指定することで、参照が指している値を保持する変数が得られる。\
+`&` がない場合は、参照を保持する変数が得られる。（今回の場合は期待していない値）
+
+```rust
+let points = vec![
+    Point { x: 0, y: 0 },
+    Point { x: 1, y: 5 },
+    Point { x: 10, y: -3 },
+];
+
+let sum_of_squares: i32 = points
+    .iter()
+    .map(|&Point { x, y }| x * x + y * y)
+    .sum();
+
+println!("sum of squares: {}", sum_of_squares);
+```
+
+※`.map` の `&Point` から `&` を消すと型不一致エラーが発生する。…はずなんだけど、 rustc 1.58.1 (db9d1b20b 2022-01-20) では発生しない。なぜ？（期待動作する）
+
+### 構造体とタプルを分配
+```rust
+let ((feet, inches), Point {x, y}) = ((3, 10), Point { x: 3, y: -10 });
+```
+
+### マッチガード
+`match` アームパターンの後に追加するif条件。パターンとif条件を満たす場合に実行されるようになる。\
+`|` を利用して複数パターンを設定した場合、複数パターンとif条件を満たす場合に実行される。
+
+```rust
+fn main() {
+    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) => println!("Got 50"),
+        Some(n) if n == y => println!("Matched, n = {:?}", n),
+        _ => println!("Default case, x = {:?}", x),
+    }
+
+    println!("at the end: x = {:?}, y = {:?}", x, y);
+}
+```
+
+`if n == y` の `y` は `let y = 10` の `y` になり、シャドーイングされないので注意。
+
+### @束縛（バインディング）
+`@` 演算子により、値を保持する変数を生成すると同時に値がパターンマッチするか調べることができる。\
+`変数名 @ パターン` で `match` アームパターン中に記述する。
+
+```rust
+enum Message {
+    Hello { id: i32 },
+}
+
+let msg = Message::Hello { id: 5 };
+
+match msg {
+    Message::Hello { id: id_variable @ 3...7 } => {
+        println!("Found an id in range: {}", id_variable)
+    },
+    Message::Hello { id: 10...12 } => {
+        println!("Found an id in another range")
+    },
+    Message::Hello { id } => {
+        println!("Found some other id: {}", id)
+    },
+}
+```
+
+
 ## ファイル分割
 ファイル構成。
 
@@ -1335,6 +1588,12 @@ pub fn gui_test() {
       Err(_) => return,
   };
   ```
+  ```rust
+  fn foo(_: i32, y: i32) {
+    println!("This code only uses the y parameter: {}", y);
+  }
+  ```
+- `_` + 変数名で未使用変数の警告を抑制できる
 - if文は式なので値を返すことができる
   - `let number = if flag { 5 } else { 6 };` flagに応じて5か6がnumberに設定される(三項演算子的な処理)
 - `&v` は参照、 `*v` は参照外し（実データにアクセス）
