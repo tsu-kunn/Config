@@ -825,6 +825,46 @@ fn some_function<T, U>(t: &T, u: &U) -> i32
 }
 ```
 
+### 関連型
+関連型は、トレイトのメソッド定義がシグニチャでプレースホルダーの型を使用できるように、トレイトと型のプレースホルダーを結び付けます。\
+関連型は「トレイト」と「関連型がとりえる型」が 1 対 1 になる。
+
+```rust
+impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        // --snip--
+    }
+}
+```
+
+ジェネリックで実装した場合、各実装で型を注釈しなければならなくなる。そのため、counter に対して next メソッドを使用する際に、どのIteratorの実装を使用したいのかの型注釈が必要となる。\
+関連型なら、同じ型に対してトレイトを複数回実装できないので型を注釈する必要がない。\
+　⇒Counter に next を呼び出す度に、 u32値のイテレータが欲しいと指定しなくてもよい
+
+### スーパートレイト
+あるトレイトに別のトレイトの機能を使用させる場合、依存するトレイトも実装されることを信用する必要があり、信用するトレイトは、実装しているトレイトのスーパートレイトです。
+
+outline_print の実装で Display トレイトの機能を使用したい場合、トレイト定義で `OutlinePrint: fmt::Display` と指定することで使用することができる。
+
+```rust
+use std::fmt;
+
+trait OutlinePrint: fmt::Display {
+    fn outline_print(&self) {
+        let output = self.to_string();
+        let len = output.len();
+        println!("{}", "*".repeat(len + 4));
+        println!("*{}*", " ".repeat(len + 2));
+        println!("* {} *", output);
+        println!("*{}*", " ".repeat(len + 2));
+        println!("{}", "*".repeat(len + 4));
+    }
+}
+```
+
+
 ## ライフタイム注釈記法
 ライフタイムの注釈は `' + 注釈名` を記載する。\
 通常すべて小文字で、ジェネリック型の様に短い `'a` を使用する。
@@ -1571,6 +1611,61 @@ pub fn gui_test() {
 }
 ```
 
+## unsafe
+### 生ポインタの参照外し
+`unsafe` の外で参照外しをした場合はコンパイルエラーとなる。
+
+```rust
+let mut num = 5;
+
+let r1 = &num as *const i32;
+let r2 = &mut num as *mut i32;
+unsafe {
+    *r2 = 10;
+    println!("r1={}, r2={}", *r1, *r2);
+}
+```
+
+### unsafeな関数やメソッドの呼び出し
+`unsafe` の外でunsafeな関数やメソッドを呼び出した場合はコンパイルエラーとなる。
+
+```rust
+unsafe fn dangerous() {}
+unsafe {
+    dangerous();
+}
+```
+
+#### 内部の一部でunsafeを使用
+`unsafe` を関数やメソッドの内部の一部で使う場合、その関数やメソッドは `safe` として（通常と同じ様に）呼ぶことができる。
+
+```rust
+fn hoge {
+    ...
+    unsafe {
+        ...
+    }
+}
+
+fn main() {
+    hoge();
+}
+```
+
+### mutable static variable
+`static mut` 変数の読み書きは `unsafe` ブロックの中でしかできない
+
+```rust
+static mut COUNTER: u32 = 0;
+
+fn main() {
+    unsafe {
+        COUNTER += 3;
+        println!("counter: {}", COUNTER);
+    }
+}
+```
+
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
@@ -1619,7 +1714,13 @@ pub fn gui_test() {
   let args: Vec<String> = env::args().collect();
   ```
 - 標準エラー出力: `eprint` や `eprintln!` を使う（e + 標準出力マクロ名）
-
+- フルパス記法
+  - `<Type as Trait>::function(receiver_if_method, next_arg, ...);`
+- `type 型名 = 型` で型のエイリアスを定義が可能
+  - C言語の `typedef` と似た機能
+- `!` は Empty型 と呼ばれ、絶対値を返さない戻値型
+  - `continue` などで暗黙的に使われている
+  - `fn hoge() -> ! {` と明示的に使うことも可能
 
 ## 参考HP
 - [The Rust Programming Language 日本語版](https://doc.rust-jp.rs/book-ja/title-page.html)
