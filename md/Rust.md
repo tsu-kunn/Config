@@ -1666,6 +1666,23 @@ fn main() {
 }
 ```
 
+## 関数ポインタ
+クロージャを使わず、普通の関数を関数の引数に渡すことができる。関数ポインタは、クロージャトレイト3つ全て(Fn、FnMut、FnOnce)を実装するので、常に関数ポインタを引数として、 クロージャを期待する関数に渡すことができます。
+
+```rust
+fn add_one(x: i32) -> i32 {
+    x + 1
+}
+
+fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
+    f(arg) + f(arg)
+}
+
+fn main() {
+    let answer = do_twice(add_one, 5);
+    println!("The answer is: {}", answer);
+}
+```
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
