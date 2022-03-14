@@ -291,8 +291,7 @@ $ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! au
 ### MP3
 #### 可変レート（default）
 ```bash
-$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=128 quality=3 ! avmux_mp3 
-! filesink location="output.mp3"
+$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=128 quality=3 ! avmux_mp3 ! filesink location="output.mp3"
 ```
 
 #### 固定レート
