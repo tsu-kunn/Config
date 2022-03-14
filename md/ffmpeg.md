@@ -2,7 +2,12 @@
 
 ## 入手先
 ### Windows
-[公式サイト](http://www.ffmpeg.org/) の Download から入手。
+[公式サイト](http://www.ffmpeg.org/) の Download から入手。\
+　⇒"Download > Windows Icon > Windows buids from gyan.dev > release builds > ffmpeg-release-full.7z"
+
+フル版はNVIDIA/AMD/IntelのGPUエンコード・デコードに対応。\
+WSL2のffmpegでエンコードするより、Windows版のffmpegでエンコードする方が圧倒的に処理時間が短くなる。 \
+　⇒フルHD,1分のH.264動画をAV1に変換した場合、WSL2では約90分、Windows版では約5分で完了した。（オプションは同じ）
 
 ### Linux
 パッケージ管理から取得可能。
@@ -345,15 +350,6 @@ $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.w
 $ ffmpeg -h encoder=libaom-av1
 $ ffmpeg -h decoder=h264
 ```
-
-### Windows版
-[公式ページ](https://ffmpeg.org/)の `Download` から取得可能。\
-　⇒"Download > Windows Icon > Windows buids from gyan.dev > release builds > ffmpeg-release-full.7z"
-
-フル版はNVIDIA/AMD/IntelのGPUエンコード・デコードに対応。\
-WSL2のffmpegでエンコードするより、Windows版のffmpegでエンコードする方が圧倒的に処理時間が短くなる。 \
-　⇒フルHD,1分のH.264動画をAV1に変換した場合、WSL2では約90分、Windows版では約5分で完了した。（オプションは同じ）
-
 
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
