@@ -126,11 +126,6 @@ gst-launch-1.0 -e mpegtsmux name=mux ! udpsink port=8554 \
 videotestsrc is-live=true ! 'video/x-raw,format=(string)I420,width=320,height=240,framerate=(fraction)30/1' ! x264enc ! mux.
 
 ./test-launch '( videotestsrc ! video/x-raw,width=640,height=360,framerate=30/1 ! x264enc ! mpegtsmux )'
-
-gst-launch-1.0 filesrc location=fire.mp4 ! video/x-h264,width=640,height=360,framerate=30/1 ! h264parse ! mpegtsmux ! udpsink host=192.168.0.150 port=8554
-gst-launch-1.0 filesrc location=fire.mp4 ! h264parse ! mpegtsmux ! udpsink host=192.168.0.150 port=8554
-
-gst-launch-1.0 rtspsrc location="rtsp://192.168.0.231:554/ONVIF/MediaInput?profile=def_profile2" user-id=admin user-pw=_Fdf2304 ! rtph264depay ! h264parse ! mpegtsmux ! udpsink host=192.168.0.150 port=8554
 ```
 
 ## gst-rtsp-serverのインストール
@@ -345,14 +340,6 @@ gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=de
 
 gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! x265enc ! h265parse ! mux. qtmux name=mux ! filesink location=test.mp4 demux. ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux.
 
-
-gst-launch-1.0 \
-filesrc location=daitosho_PV.mpg  ! progressreport ! mpegpsdemux name=demuxer demuxer. ! queue ! \
-mpegaudioparse ! mad ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=196000 ! mux. \
-mp4mux  name=mux ! filesink location=hoge.mp4 demuxer. ! queue ! \
-mpegvideoparse ! omxmpeg2videodec ! videoconvert ! \
-omxh264enc target-bitrate=6000000 control-rate=variable ! video/x-h264,stream-format=byte-stream,profile=high ! \
-h264parse ! mux.
 
 gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=192000 ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc target-bitrate=3000000 control-rate=variable ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse ! mux.
 ```
