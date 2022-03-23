@@ -39,7 +39,6 @@ set statusline+=%m              " modified flag
 set statusline+=%r              " readonly flag
 set statusline+=\ [%{&ff}]      " Fileformat [unix]/[dos] etc...
 set statusline+=[ENC=%{&fileencoding}]  " File encoding
-set statusline+=\ (%{strftime(\"%H:%M\ %d/%m/%Y\",getftime(expand(\"%:p\")))})  " last modified timestamp
 set statusline+=%=              " Rest: right align
 set statusline+=%l,%c%V       " Position in buffer: linenumber, column, virtual column
 set statusline+=\ %P            " Position in buffer: Percentage
