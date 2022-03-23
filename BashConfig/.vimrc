@@ -40,7 +40,7 @@ set statusline+=%r              " readonly flag
 set statusline+=\ [%{&ff}]      " Fileformat [unix]/[dos] etc...
 set statusline+=[ENC=%{&fileencoding}]  " File encoding
 set statusline+=%=              " Rest: right align
-set statusline+=%l,%c%V       " Position in buffer: linenumber, column, virtual column
+set statusline+=%l,%c%V         " Position in buffer: linenumber, column, virtual column
 set statusline+=\ %P            " Position in buffer: Percentage
 
 "ステータスラインを表示（0:非表示 1:2つ以上 2:常時）
