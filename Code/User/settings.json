@@ -1,10 +1,10 @@
 // Place your settings in this file to overwrite the default settings
 {
-    // Controls the font family.MS Gothic
-    "editor.fontFamily": "Myrica M,Cascadia Mono,Consolas,MeiryoKe_Gothic",
-
     // Controls the font size.(default:0)
     "editor.fontSize": 15,
+
+    // Controls the font family.MS Gothic
+    "editor.fontFamily": "Myrica M,Cascadia Mono,Consolas",
 
     // インデントの設定(true: スペース, false: タブ)
     "editor.insertSpaces": true,
@@ -83,6 +83,9 @@
     // 未保存のタブを分かりやすくする
     "workbench.editor.highlightModifiedTabs": true,
 
+    // ターミナルのフォント設定
+    "terminal.integrated.fontFamily": "Cascadia Mono",
+
     // ターミナルのプロファイルを設定
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
@@ -104,10 +107,7 @@
     },
 
     // デフォルトターミナルの設定
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
-
-    // ターミナルのフォントサイズ
-    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
