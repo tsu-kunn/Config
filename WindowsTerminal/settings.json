@@ -54,6 +54,14 @@
         {
             "command": "paste",
             "keys": "ctrl+shift+v"
+        },
+        {
+            "command": "togglePaneZoom",
+            "keys": "ctrl+shift+q"
+        },
+        {
+            "command": "toggleSplitOrientation",
+            "keys": "ctrl+alt+o"
         }
     ],
     "alwaysShowTabs": true,
@@ -70,7 +78,7 @@
             "antialiasingMode": "cleartype",
             "backgroundImage": "%USERPROFILE%\\Pictures\\Indigo_e2s.png",
             "backgroundImageAlignment": "bottomRight",
-            "backgroundImageOpacity": 0.29999999999999999,
+            "backgroundImageOpacity": 0.3,
             "backgroundImageStretchMode": "none",
             "colorScheme": "One Half Dark",
             "font": 
