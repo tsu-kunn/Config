@@ -615,6 +615,15 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > $x = Get-Content -Path .\settings.json | Where-Object{ $_ -notmatch "^\s*//.*$" } | ConvertFrom-Json
 ```
 
+## findに近い動作
+```PowerShell
+> Get-ChildItem -r -Filter "*.md" -Name
+```
+
+ファイルのみの `-File` や、ディレクトリのみの `-Directory` を組み合わせるとより絞りやすくなる。\
+`-name` で結果パスだけにしないと２次利用しにくくなるので注意。
+
+
 ## grepに近い動作
 ```PowerShell
 > ls | oss | sls <条件or正規表現>
