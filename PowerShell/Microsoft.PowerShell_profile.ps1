@@ -36,6 +36,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 		diff.exe -u $args
 		# wsl diff -u $args
 	}
+
 	function grep {
 		# 簡易的な変換のみ実施
 		$args[-1] = $args[-1].Replace('\', '/')
@@ -45,6 +46,9 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 		# $args[-1] = wsl wslpath $args[-1].Replace('\', '\\')
 		# $input | wsl grep --color=auto $args
 	}
+
+	# Git Bashのfindを指定
+	Set-Alias -Name find -Value "C:\Program Files\Git\usr\bin\find.exe"
 } else {
 	# alias
 	Set-Alias -name editer -Value "vim"
