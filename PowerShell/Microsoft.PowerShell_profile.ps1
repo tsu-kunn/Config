@@ -82,6 +82,9 @@ Set-PSReadLineOption -Colors @{
     #"Operator" = [ConsoleColor]::Gray
 }
 
+# 入力予測を有効にする
+Set-PSReadLineOption -PredictionSource History
+
 # function
 
 <#
