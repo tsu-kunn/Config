@@ -245,12 +245,12 @@ $ ffmpeg -i input.mp4 -codec:v libx265 -preset <preset> -tune <tune> output.mp4
 #### 変換例
 ##### 映像変換、音声変換なし
 ```bash
-$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -tune animation -b:v 1000k -maxrate 1000k -bufsize 2000k -codec:a copy output.mp4
+$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -qmin 10 -b:v 1000k -maxrate 1500k -bufsize 3000k -codec:a copy output.mp4
 ```
 
 ##### 映像・音声変換
 ```bash
-$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -tune animation -b:v 1000k -maxrate 1000k -bufsize 2000k -codec:a libmp3lame -b:a 128k -q:a 3 output.mp4
+$ ffmpeg -i input.mp4 -codec:v libx265 -crf 20 -qmin 10 -b:v 1000k -maxrate 1500k -bufsize 3000k -codec:a libmp3lame -b:a 128k -q:a 3 output.mp4
 ```
 
 ### 音声変換
@@ -350,6 +350,34 @@ $ ffmpeg -i input.mp4 -codec:v libaom-av1 -crf 18 -strict -2 -threads 8 output.w
 $ ffmpeg -h encoder=libaom-av1
 $ ffmpeg -h decoder=h264
 ```
+
+### GPUエンコード
+NVIDIA, AMD, IntelはH.264, HEVC(H.265)のハードウェアエンコード機能を提供しており、ffmpegで利用する場合はGPU対応でビルドしてある必要がある。\
+Linuxのパッケージから取得するものは非対応が多い。Windows版のFullは３メーカーとも対応。
+
+色々調べた感じ、エンコード時間は大幅に短縮されるが、デフォルトの設定では画質は低い。\
+それぞれのハードに合わせた設定を探らないとダメっぽい。
+
+#### GPU対応の確認
+- NVIDIA
+  ```bash
+  $ ffmpeg -encoders | grep "_nvenc"
+  ```
+- AMD
+  ```bash
+  $ ffmpeg -encoders | grep "_amf"
+  ```
+- Intel
+  ```bash
+  $ ffmpeg -encoders | grep "_qsv"
+  ```
+
+#### 使用例
+- Intel
+  ```bash
+  $ ffmpeg -i input.mp4 -codec:v hevc_qsv -crf 20 -qmin 12 -vf pp=ac -coder ac -b_strategy 1 -bf 4 -refs 3 -subq 4 -preset slow -b:v 1500k -maxrate 2000k -bufsize 3000k -codec:a copy output.mp4
+  ```
+  CPUの世代で結果が変わるみたい。10世代ではアニメの激しい場面でブロックノイズが目立った。色々オプション付けて若干改善したけど、CPUエンコードよりビットレート高いのに画質は劣る。
 
 ## 参考HP
 - [【初心者向け】FFmpegの使い方を分かりやすく解説！ダウンロードとインストール方法もあり！ | 動画初心者の部屋](https://videobeginners.com/how-to-use-ffmpeg/)
