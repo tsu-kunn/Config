@@ -81,8 +81,14 @@ libav:  avmux_psp: libav PSP MP4 (MPEG-4 Part 14) muxer
 
 ## コマンド例
 ### 動作確認
+#### 動画
 ```bash
 $ gst-launch-1.0 videotestsrc ! autovideosink
+```
+
+#### 音声
+```bash
+$ gst-launch-1.0 audiotestsrc ! autoaudiosink
 ```
 
 ### MPEG2-TS(RTP over RTSP)
@@ -104,28 +110,6 @@ $ gst-launch-1.0 filesrc location=H265_Mov.mp4 ! qtdemux name=demux demux.video_
 ```bash
 $ GST_DEBUG=3 ./test-launch '( videotestsrc ! x264enc ! queue ! h264parse ! mpegtsmux ! rtpmp2tpay  name=pay0 pt=33 )'
 $ GST_DEBUG=3 ./test-launch '( videotestsrc ! x265enc ! queue ! h265parse ! mpegtsmux ! rtpmp2tpay  name=pay0 pt=33 )'
-```
-
-### 試行錯誤
-動作するもの、動作しないものもある。\
-これらの結果からコマンド例のコマンドが導き出された。
-
-```
-gst-launch-1.0 -v videotestsrc ! x264enc ! avdec_h264 ! videoconvert ! autovideosink
-gst-launch-1.0 -v videotestsrc ! x264enc ! rtph264pay ! udpsink host=127.0.0.1 port=5005 sync=false
-
-gst-launch-1.0 -e videotestsrc ! video/x-raw,format=NV12,width=640,height=480,framerate=30/1 ! x264enc ! queue ! qtmux ! filesink location=test.mp4
-
-gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc ! video/x-h264 ! h264parse ! mux.
-
-./test-launch '( videotestsrc ! x264enc ! rtph264pay name=pay0 pt=96 )'
-./test-launch '( filesrc location=fire.mp4 ! qtdemux name=demux demux.video_0 ! queue ! rtph264pay name=pay0 pt=96 )'
-./test-launch '( filesrc location=fire.mp4 ! qtdemux name=demux demux.video_0 ! queue ! rtph264pay name=pay0 pt=96 ! h264parse ! mpegtsmux)'
-
-gst-launch-1.0 -e mpegtsmux name=mux ! udpsink port=8554 \
-videotestsrc is-live=true ! 'video/x-raw,format=(string)I420,width=320,height=240,framerate=(fraction)30/1' ! x264enc ! mux.
-
-./test-launch '( videotestsrc ! video/x-raw,width=640,height=360,framerate=30/1 ! x264enc ! mpegtsmux )'
 ```
 
 ## gst-rtsp-serverのインストール
@@ -266,8 +250,6 @@ $ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! vi
 ```
 
 ## 再生
-※未確認
-
 ```bash
 $ gst-launch-1.0 playbin uri=file://.../hoge.oga
 $ gst-launch-1.0 playbin uri=file://.../hoge.mpg
@@ -342,6 +324,32 @@ gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=de
 
 
 gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=192000 ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc target-bitrate=3000000 control-rate=variable ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse ! mux.
+```
+
+## パイプライン画像の生成
+### 前準備
+画像の生成には `graphviz` が必要なのでインストールしておく。
+
+#### Windows
+[ここ](https://graphviz.org/download/) からインストーラーをダウンロードしてインストールする。
+
+#### Linux
+```bash
+$ sudo apt install graphviz
+```
+
+### dotファイルの作成
+パイプラインを確認したい動画を `GST_DEBUG_DUMP_DOT_DIR` を指定して実行する。
+
+```bash
+$ GST_DEBUG_DUMP_DOT_DIR=<保存先> gst-launch-1.0 playbin uri=file://<ファイルパス>
+```
+
+### dotファイルを画像に変換
+`dot` コマンドで dotファイル を 画像ファイル に変換する。
+
+```bash
+$ dot 0.00.02.531619900-gst-launch.READY_PAUSED.dot -Tpng -o foo.png
 ```
 
 ## 参考HP
