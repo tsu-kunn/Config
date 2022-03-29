@@ -210,7 +210,7 @@ Stream size                              : 6.40 MiB (95%)
 
 ### H.264の動画をH.265にエンコードして保存
 `filesink` 前に `mux` で終わらないと再生できない動画になる。\
-`x264enc` は mux に直でつながるが、`x265enc` は直でつながらないため `h265parse` を経由している。\
+`x264enc` は mux に直でつながるが、`x265enc` は直でつながらないため `h265parse` を経由している。
 
 ```bash
 # Format profile: QuickTime
@@ -218,6 +218,14 @@ $ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x2
 
 # Format profile: Base Media / Version 2
 $ gst-launch-1.0 filesrc location="fire.mp4" ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! mp4mux ! filesink location="test.mp4"
+```
+
+### H.264の動画をAV1にエンコードして保存
+AV1には `parse` がないっぽい。\
+webmは `webmmux` か `matroskademux` を使う。
+
+```bash
+$ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux ! queue ! avdec_h264 ! av1enc target-bitrate=2000 ! webmmux ! filesink location=av1.webm
 ```
 
 ### リサイズとビットレート指定
@@ -272,12 +280,25 @@ $ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! au
 ### MP3
 #### 可変レート（default）
 ```bash
-$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=128 quality=3 ! avmux_mp3 ! filesink location="output.mp3"
+$ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=128 quality=3 ! avmux_mp3 ! filesink location="output.mp3"
 ```
 
 #### 固定レート
 ```bash
-$ gst-launch-1.0 filesrc location="Arcnights.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 cbr=true target=1 ! avmux_mp3 ! filesink location="output.mp3"
+$ gst-launch-1.0 filesrc location="input.mp4" ! qtdemux ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 cbr=true target=1 ! avmux_mp3 ! filesink location="output.mp3"
+```
+
+### OGG
+### 制限付き可変レート(default)
+可変レートにしたい場合は `bitrate-type` を `1` にする。
+
+```bash
+$ gst-launch-1.0 filesrc location="input.mp4" ! decodebin ! audioresample ! audioconvert ! opusenc bitrate=128000 ! oggmux ! filesink location="output.ogg"
+```
+
+### 固定レート
+```bash
+$ gst-launch-1.0 filesrc location="input.mp4" ! decodebin ! audioresample ! audioconvert ! opusenc bitrate=128000 bitrate-type=0 ! oggmux ! filesink location="output.ogg"
 ```
 
 ## 動画+音声の変換
@@ -304,26 +325,6 @@ $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=d
 #### 動画のみ変換（"Redistribute latency..."で止まる…）
 ```bash
 $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! aacparse ! mux.
-```
-
-## 作業中
-```
-gst-launch-1.0 filesrc location="Arcnights.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! queue ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! mux.
-
-
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! queue ! qtmux name=mux demux. ! queue ! aacparse ! queue ! mux. mux. ! filesink location=test.mp4
-
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux ! queue ! avdec_h264 ! x265enc ! h265parse ! qtmux ! filesink location="test.mp4"
-
-
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! videoconvert ! x264enc ! queue ! mux. demux. ! queue ! aacparse ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location=test.mp4
-
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! videoconvert ! x264enc bitrate=1000000 ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse demux. ! queue ! aacparse ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location=test.mp4
-
-gst-launch-1.0 filesrc location=Arcnights.mp4 ! progressreport ! qtdemux name=demux demux. ! queue ! h264parse ! avdec_h264 ! x265enc ! h265parse ! mux. qtmux name=mux ! filesink location=test.mp4 demux. ! queue ! avdec_aac ! audioconvert ! lamemp3enc bitrate=64 quality=3 ! mux.
-
-
-gst-launch-1.0 filesrc location=test.ts ! progressreport ! tsdemux name=demuxer demuxer. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! voaacenc bitrate=192000 ! mux. mp4mux  name=mux ! filesink location=test.mp4 demuxer. ! queue ! mpegvideoparse ! omxmpeg2videodec ! videoconvert ! omxh264enc target-bitrate=3000000 control-rate=variable ! video/x-h264,width=1280,height=720,stream-format=byte-stream,profile=high ! h264parse ! mux.
 ```
 
 ## パイプライン画像の生成
@@ -354,6 +355,7 @@ $ dot 0.00.02.531619900-gst-launch.READY_PAUSED.dot -Tpng -o foo.png
 
 ## 参考HP
 - [gst-launch-1.0](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html?gi-language=c#)
+- [Plugins](https://gstreamer.freedesktop.org/documentation/plugins_doc.html?gi-language=c)
 - [GStreamerのエレメントをつないでパイプラインを組み立てるには](https://www.clear-code.com/blog/2014/7/22.html)
 - [第15章 AVコーデックミドルウェア](https://manual.atmark-techno.com/armadillo-840/armadillo-840_product_manual_ja-1.3.0/ch15.html)
 - [GStreamer on macOS ではじめる動画処理【video編】](https://dev.classmethod.jp/articles/gstreamer-on-macos-video/)
