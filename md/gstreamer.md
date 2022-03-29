@@ -322,7 +322,9 @@ $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=d
 $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! aacparse ! avdec_aac ! audioresample ! audioconvert dithering=0 ! lamemp3enc bitrate=64 quality=3 ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! h264parse ! mux.
 ```
 
-#### 動画のみ変換（"Redistribute latency..."で止まる…）
+#### 動画のみ変換
+※ "Redistribute latency..."で止まる…
+
 ```bash
 $ gst-launch-1.0 filesrc location="sample.mp4" ! progressreport ! qtdemux name=demux demux. ! queue ! avdec_h264 ! x265enc ! h265parse ! mux. qtmux name=mux ! filesink location="test.mp4" demux. ! queue ! aacparse ! mux.
 ```
