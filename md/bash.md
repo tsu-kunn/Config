@@ -838,10 +838,12 @@ $ du -h -d 1
 ### 秘密鍵の作成
 ```bash
 $ ssh-keygen -t rsa -f <秘密鍵名>
+$ chmod 600 <秘密鍵名>
 ```
 
 `-f` を省略した場合は `id_rsa` になる。\
-既存のものがあると上書きわれるので注意。
+既存のものがあると上書きわれるので注意。\
+秘密鍵は `~/.ssh/` に保存する。
 
 ### 秘密鍵指定
 ```bash
@@ -850,6 +852,48 @@ $ ssh -i <秘密鍵のファイルパス> <ユーザー名>@<ドメイン名> -p
 
 - `-i` を省略した場合は `id_rsa` が使われる。
 - `-p` を省略した場合は `22番ポート` が使われる。
+
+この指定を省略したい場合は `.ssh` ディレクトリ内に `config` を作成する。
+
+```
+Host alias名
+  HostName IP address or Domain Name
+  User UsarName
+  IdentityFile ~/.ssh/hoge
+  Port 22
+```
+
+### サーバー側の設定
+#### .ssh と authorized_keys に公開鍵を追加
+```bash
+$ cd ~
+$ chmod 700 .ssh
+$ cd .ssh
+$ cat hoge.pub >> authorized_keys
+$ chmod 600 authorized_keys
+```
+
+`authorized_keys` に追加した後は `hoge.pub` を削除してもよい。
+
+#### sshd設定の変更
+```bash
+$ sudo vi /etc/ssh/sshd_config
+```
+
+以下に設定を変更する。
+
+```
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+```
+
+設定が終わったら `sshd` を再起動する。ディストリビューションによって作法が変わる。
+
+- Debian系
+```bash
+$ sudo systemctl restart sshd
+```
 
 ## 圧縮・解凍
 ### 圧縮
