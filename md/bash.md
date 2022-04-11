@@ -864,9 +864,10 @@ Host alias名
 ```
 
 ### サーバー側の設定
-#### .ssh と authorized_keys に公開鍵を追加
+#### .sshディレクトリ作成と authorized_keys に公開鍵を追加
 ```bash
 $ cd ~
+$ mkdir .ssh
 $ chmod 700 .ssh
 $ cd .ssh
 $ cat hoge.pub >> authorized_keys
@@ -888,10 +889,11 @@ PubkeyAuthentication yes
 PasswordAuthentication no
 ```
 
-設定が終わったら `sshd` を再起動する。ディストリビューションによって作法が変わる。
+設定が終わったら `sshd` を再起動する。
 
-- Debian系
 ```bash
+$ /etc/init.d/sshd restart
+or
 $ sudo systemctl restart sshd
 ```
 
