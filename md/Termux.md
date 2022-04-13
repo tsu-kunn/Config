@@ -277,6 +277,18 @@ $ ssh-keygen -t rsa -f <秘密鍵名>
 $ cat 秘密鍵名.pub >> ~/.ssh/authorized_keys
 $ chmod 600 ~/.ssh/authorized_keys
 ```
+### SSHサーバーの設定
+`$PREFIX/etc/ssh/sshd_config` に配置されている。
+
+以下の設定を追加する。
+
+```
+PrintMotd yes
+PermitEmptyPasswords no
+PermitRootLogin no
+PubkeyAuthentication yes
+PasswordAuthentication no
+```
 
 ### サーバー起動・停止
 #### 起動
@@ -289,6 +301,11 @@ $ sshd
 $ pkill sshd
 ```
 
+#### 再起動
+```bash
+$ pkill sshd; sshd
+```
+
 ### TermuxにSSH接続
 IPアドレスの確認。
 
@@ -299,8 +316,10 @@ $ ip -4 addr
 SSH接続。
 
 ```bash
-$ ssh -p 8022 -i 秘密鍵のパス IPアドレス
+$ ssh -p 8022 -i 秘密鍵のパス ユーザー名@IPアドレス
 ```
+
+Termuxはユーザー名を省略可能らしい。SSHクライアントによってはユーザ名必須だったりするので注意。
 
 
 ## 参考URL
