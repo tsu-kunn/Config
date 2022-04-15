@@ -44,9 +44,6 @@ export HTTPS_PROXY=http://proxy.example.com:8080
 export ELECTRON_GET_USE_PROXY=true
 export GLOBAL_AGENT_HTTPS_PROXY=http://proxy.example.com:8080/
 
-# ls color
-eval $(dircolors -b ~/.dircolors)
-
 # wsl2 only setting
 alias wcd='. wcd.sh'
 alias l2w='. l2w.sh'
