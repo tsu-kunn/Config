@@ -667,6 +667,13 @@ wgetは再帰的取得、1URLに対してどれだけ処理ができるかが特
 |-v|リクエスト時のHeader出力|
 |-u|<ユーザー:パスワード>指定(BASIC認証)|
 |-L|リダイレクト先までアクセス|
+|-#|プログレスバーで進捗表示|
+|-C|ダウンロード再開|
+|-X|HTTPメソッドの指定|
+|-H|リクエストヘッダーの指定|
+|-d|POSTリクエストの送信|
+|-c|cookieの保存|
+|-b|cookieを指定|
 |-anyauth|認証方式自動判別|
 
 ## URLエンコード
@@ -705,6 +712,16 @@ $ curl -Ss http://exapmle.com # エラーメッセージは出力
 ```bash
 $ curl --basic -u user:pass http://example.com  # BASIC認証
 $ curl --digest -u user:pass http://example.com # Digest認証
+```
+
+```bash
+$ curl --anyauth --user user:pass http://example.com
+```
+
+### JSON
+```bash
+$ curl -X POST -H "Content-Type: application/json" -d '{"name":"美幸", "age":"23"}' http://example.com
+$ curl -X POST -H "Content-Type: application/json" -d '@sample.json' http://example.com
 ```
 
 ## 参考
