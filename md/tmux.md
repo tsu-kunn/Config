@@ -24,6 +24,7 @@ setting: `Ctrl + j`
 |prefix p|前のウィンドウに移動|
 |prefix l|以前のウィンドウに移動|
 |prefix [0-9]|ウィンドウの移動|
+|prefix &|ウィンドウの破棄|
 |exit|ウィンドウを終了|
 
 ## ペイン操作
