@@ -227,6 +227,18 @@ for your current branch, you must specify a branch on the command line.
 $ git branch --set-upstream-to=origin/ブランチ名
 ```
 
+## 現在のブランチを同じ名前でリモートにpush
+```bash
+fatal: The current branch chore/logdir has no upstream branch.
+To push the current branch and set the remote as upstream, use
+```
+
+このエラーを出さないように、自動で現在のブランチを同じ名前でリモートに push できるようにする。
+
+```bash
+$ git config --global push.default current
+```
+
 ## ログ検索
 ### コミットメッセージから検索
 ```bash

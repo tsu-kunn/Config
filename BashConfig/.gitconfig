@@ -28,3 +28,5 @@
 	gsa = "log --graph --stat --all"
 [diff]
 	compactionHeuristic = true
+[push]
+	default = current
