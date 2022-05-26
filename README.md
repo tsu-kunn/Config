@@ -8,11 +8,11 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
   - WindowsのGit Bash、ChromebookのLinux環境、AndroidのTermuxで動作することを確認済み
     - ~~使用しているコマンドがないため、一部の関数がTermuxで動作しない~~
     - [Termux用のnkfを作成](https://github.com/tsu-kunn/nkf/releases/tag/v2_1_5_Termux) したので全て動作する。
+- C
+  - C言語のベース環境（やっぱりC言語が一番好き！）
 - Code
   - VisualStudio Code(VSCode)の設定ファイル。
   - Settings Syncでうまく同期できなかった時用のバックアップ。
-- Makefile
-  - Makefileのサンプル。
 - md
   - Markdown形式で書かれたメモファイル置き場。
 - Office
