@@ -46,5 +46,6 @@ CFLAGS     += -O3 $(USER_CFLAG) -DNDEBUG $(USER_DFLAG)
 endif
 
 ASFLAGS     = -c -xassembler-with-cpp
-LDFLAGS     = -Wl,--warn-common,--warn-constructors,--warn-multiple-gp $(LIBS)
+#LDFLAGS     = -Wl,--warn-common,--warn-constructors,--warn-multiple-gp $(LIBS)
+LDFLAGS     = -Wl,--warn-common, $(LIBS)
 

@@ -12,7 +12,8 @@ $(TARGET): $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
 
 .c.o:
-	$(CC) $(CFLAGS) $(TMPFLAGS) $(INCDIR) -Wa,-al=$*.lst -c $< -o $*.o
+#	$(CC) $(CFLAGS) $(TMPFLAGS) $(INCDIR) -Wa,-al=$*.lst -c $< -o $*.o
+	$(CC) $(CFLAGS) $(TMPFLAGS) $(INCDIR) -c $< -o $*.o
 
 clean:
 	@$(RM) $(SRCDIR)/*.o $(SRCDIR)/*.map $(SRCDIR)/*.lst
