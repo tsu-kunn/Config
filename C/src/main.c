@@ -1,5 +1,5 @@
 #include "mto_common.h"
-//#include "mto_dir.h"
+#include "mto_dir.h"
 
 
 /*========================================================
@@ -87,6 +87,18 @@ int main(int argc, char *argv[])
 		_release();
 		return 1;
 	}
+
+    struct DirInfo dir_info = {NULL, {0}};
+
+    if (mto_open_dir(&dir_info, ".")) {
+        char path[_MAX_PATH] = {0};
+
+        while (mto_get_filepath(&dir_info, path, sizeof(path), true)) {
+            printf("%s\n", path);
+        }
+
+        mto_close_dir(&dir_info);
+    }
 
 	// 終了
 	_release();
