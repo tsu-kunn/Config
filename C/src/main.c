@@ -97,6 +97,12 @@ int main(int argc, char *argv[])
             printf("%s\n", path);
         }
 
+        mto_seek_set_dir(&dir_info);
+
+        while (mto_get_dirpath(&dir_info, path, sizeof(path), false)) {
+            printf("%s\n", path);
+        }
+
         mto_close_dir(&dir_info);
     }
 

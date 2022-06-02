@@ -61,9 +61,57 @@ bool mto_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t p
 /*=======================================================================
 【機能】ディレクトリパスの取得
 【引数】pDirInfo: ディレクトリ情報のポインタ 
+        pOutPath: ディレクトリパス保存先
+        pathSize: ディレクトリパス保存先のサイズ
+        bDir    : ディレクトリにパスをつける？
+【戻値】falseで終了 
+ =======================================================================*/
+bool mto_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir)
+{
+    if (pDirInfo == NULL) return false;
+    if (pOutPath == NULL) return false;
+
+    struct dirent *dent;
+    struct stat statBuf;
+
+    while ((dent = readdir(pDirInfo->pDir)) != NULL) {
+        // ルートとカレントディレクトリは処理しない
+        if (strcmp(dent->d_name, ".") == 0) continue;
+        if (strcmp(dent->d_name, "..") == 0) continue;
+
+        if (bDir) {
+            snprintf(pOutPath, pathSize, "%s/%s", pDirInfo->path, dent->d_name);
+        } else {
+            strncpy(pOutPath, dent->d_name, pathSize);
+        }
+
+        stat(pOutPath, &statBuf);
+        if (S_ISREG(statBuf.st_mode)) continue;
+
+        return true;
+    }
+
+    return false;
+}
+
+/*=======================================================================
+【機能】ディレクトリストリームを先頭に移動
+【引数】pDirInfo: ディレクトリ情報のポインタ 
+【戻値】なし
+ =======================================================================*/
+void mto_seek_set_dir(struct DirInfo *pDirInfo)
+{
+    if (pDirInfo == NULL) return;
+
+    seekdir(pDirInfo->pDir, 0);
+}
+
+/*=======================================================================
+【機能】ディレクトリパスの取得
+【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】ディレクトリパスのポインタ
  =======================================================================*/
-const char *mto_get_dirpath(const struct DirInfo *pDirInfo)
+const char *mto_get_dir_info_path(const struct DirInfo *pDirInfo)
 {
     if (pDirInfo == NULL) return NULL;
 
