@@ -86,7 +86,7 @@ bool mto_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pa
         }
 
         stat(pOutPath, &statBuf);
-        if (S_ISREG(statBuf.st_mode)) continue;
+        if (!S_ISDIR(statBuf.st_mode)) continue;
 
         return true;
     }
