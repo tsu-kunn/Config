@@ -22,7 +22,7 @@ struct DirInfo {
         path    : ディレクトリパス(末尾の"/"は不要)
 【戻値】true: オープン成功
  =======================================================================*/
-bool mto_open_dir(struct DirInfo *pDirInfo, const char *path);
+bool mto_dir_open(struct DirInfo *pDirInfo, const char *path);
 
 /*=======================================================================
 【機能】ファイルパスの取得
@@ -32,7 +32,7 @@ bool mto_open_dir(struct DirInfo *pDirInfo, const char *path);
         bDir    : ファイル名にパスをつける？
 【戻値】falseで終了 
  =======================================================================*/
-bool mto_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir);
+bool mto_dir_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir);
 
 /*=======================================================================
 【機能】ディレクトリパスの取得
@@ -42,28 +42,28 @@ bool mto_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t p
         bDir    : ディレクトリにパスをつける？
 【戻値】falseで終了 
  =======================================================================*/
-bool mto_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir);
+bool mto_dir_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir);
 
 /*=======================================================================
 【機能】ディレクトリストリームを先頭に移動
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】なし
  =======================================================================*/
-void mto_seek_set_dir(struct DirInfo *pDirInfo);
+void mto_dir_seek_set(struct DirInfo *pDirInfo);
 
 /*=======================================================================
 【機能】ディレクトリパスの取得
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】ディレクトリパスのポインタ
  =======================================================================*/
-const char *mto_get_dir_info_path(const struct DirInfo *pDirInfo);
+const char *mto_dir_get_dirinfo_path(const struct DirInfo *pDirInfo);
 
 /*=======================================================================
 【機能】ディレクトリクローズ
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】ディレクトリパスのポインタ
  =======================================================================*/
-void mto_close_dir(struct DirInfo *pDirInfo);
+void mto_dir_close(struct DirInfo *pDirInfo);
 
 #endif // LINUX
 #endif

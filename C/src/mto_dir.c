@@ -7,7 +7,7 @@
         path    : ディレクトリパス(末尾の"/"は不要)
 【戻値】true: オープン成功
  =======================================================================*/
-bool mto_open_dir(struct DirInfo *pDirInfo, const char *path)
+bool mto_dir_open(struct DirInfo *pDirInfo, const char *path)
 {
     if (pDirInfo == NULL) return false;
     if (path == NULL) return false;
@@ -30,7 +30,7 @@ bool mto_open_dir(struct DirInfo *pDirInfo, const char *path)
         bDir    : ファイル名にパスをつける？
 【戻値】falseで終了 
  =======================================================================*/
-bool mto_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir)
+bool mto_dir_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir)
 {
     if (pDirInfo == NULL) return false;
     if (pOutPath == NULL) return false;
@@ -66,7 +66,7 @@ bool mto_get_filepath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t p
         bDir    : ディレクトリにパスをつける？
 【戻値】falseで終了 
  =======================================================================*/
-bool mto_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir)
+bool mto_dir_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pathSize, const bool bDir)
 {
     if (pDirInfo == NULL) return false;
     if (pOutPath == NULL) return false;
@@ -99,7 +99,7 @@ bool mto_get_dirpath(struct DirInfo *pDirInfo, char *pOutPath, const uint32_t pa
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】なし
  =======================================================================*/
-void mto_seek_set_dir(struct DirInfo *pDirInfo)
+void mto_dir_seek_set(struct DirInfo *pDirInfo)
 {
     if (pDirInfo == NULL) return;
 
@@ -111,7 +111,7 @@ void mto_seek_set_dir(struct DirInfo *pDirInfo)
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】ディレクトリパスのポインタ
  =======================================================================*/
-const char *mto_get_dir_info_path(const struct DirInfo *pDirInfo)
+const char *mto_dir_get_dirinfo_path(const struct DirInfo *pDirInfo)
 {
     if (pDirInfo == NULL) return NULL;
 
@@ -123,7 +123,7 @@ const char *mto_get_dir_info_path(const struct DirInfo *pDirInfo)
 【引数】pDirInfo: ディレクトリ情報のポインタ 
 【戻値】ディレクトリパスのポインタ
  =======================================================================*/
-void mto_close_dir(struct DirInfo *pDirInfo)
+void mto_dir_close(struct DirInfo *pDirInfo)
 {
     if (pDirInfo != NULL && pDirInfo->pDir != NULL) {
         closedir(pDirInfo->pDir);

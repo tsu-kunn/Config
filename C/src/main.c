@@ -90,20 +90,20 @@ int main(int argc, char *argv[])
 
     struct DirInfo dir_info = {NULL, {0}};
 
-    if (mto_open_dir(&dir_info, ".")) {
+    if (mto_dir_open(&dir_info, ".")) {
         char path[_MAX_PATH] = {0};
 
-        while (mto_get_filepath(&dir_info, path, sizeof(path), true)) {
+        while (mto_dir_get_filepath(&dir_info, path, sizeof(path), true)) {
             printf("%s\n", path);
         }
 
-        mto_seek_set_dir(&dir_info);
+        mto_dir_seek_set(&dir_info);
 
-        while (mto_get_dirpath(&dir_info, path, sizeof(path), false)) {
+        while (mto_dir_get_dirpath(&dir_info, path, sizeof(path), false)) {
             printf("%s\n", path);
         }
 
-        mto_close_dir(&dir_info);
+        mto_dir_close(&dir_info);
     }
 
 	// 終了
