@@ -307,4 +307,12 @@ $ git checkout --theirs ファイル名
 $ git ls-files -u
 ````
 
+### 特定のコミットまでマージ
+`pull` は `fetch` と `marge` のコマンドを実行しているだけなので個別に実行すればよい。
+
+```bash
+$ git fetch origin
+$ git marge ハッシュ値
+```
+
 
