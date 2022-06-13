@@ -9,7 +9,9 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
     - ~~使用しているコマンドがないため、一部の関数がTermuxで動作しない~~
     - [Termux用のnkfを作成](https://github.com/tsu-kunn/nkf/releases/tag/v2_1_5_Termux) したので全て動作する。
 - C
-  - C言語のベース環境（やっぱりC言語が一番好き！）
+  - C言語のベース環境（C11対応）
+- Cpp
+  - C++のベース環境（C++17対応） ※やっぱりC/C++が一番好き!!
 - Code
   - VisualStudio Code(VSCode)の設定ファイル。
   - Settings Syncでうまく同期できなかった時用のバックアップ。
