@@ -3,9 +3,10 @@
  * ツールやテストプログラムに使われることを想定。
  * C/C++対応（インライン非対応Cコンパイラは知らない）
  * C99/C11に対応(2021/03/08)
+ * C++17に対応(2022/06/13)
  * 
  * Fast 2010/08/24
- * Last 2021/03/13 Ver1.3.0                                      (c)Tsuyoshi.A
+ * Last 2022/06/13 Ver1.3.1                                      (c)Tsuyoshi.A
 =============================================================================*/
 #ifndef _MTO_COMMON_H_
 #define _MTO_COMMON_H_
@@ -471,7 +472,7 @@ static MTOINLINE void *MtoFileRead(const char *fname, uint32 *fsize)
 static MTOINLINE sint32 MtoGetFilePath(char *sname, const sint32 size, const char *path)
 {
 	// パスの最後を検索
-	char *pathEnd = strrchr(path, '/'); // Linux
+	const char *pathEnd = strrchr(path, '/'); // Linux
 
 	if (pathEnd == NULL) {
 		pathEnd = strrchr(path, '\\'); // Windows
