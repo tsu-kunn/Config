@@ -355,6 +355,57 @@ $ GST_DEBUG_DUMP_DOT_DIR=<保存先> gst-launch-1.0 playbin uri=file://<ファ�
 $ dot 0.00.02.531619900-gst-launch.READY_PAUSED.dot -Tpng -o foo.png
 ```
 
+## docker
+### Image作成
+- dockerfile
+
+```
+FROM ubuntu:20.04
+
+RUN apt-get update
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    libgstreamer1.0-0 \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-libav \
+    gstreamer1.0-tools
+```
+
+- Create image
+
+```bash
+$ docker build . --tag gstreamer
+```
+
+### 実行例
+- casting.sh
+
+```bash
+CAST_ADDR="230.0.0.1"
+CAST_PORT=5004
+
+exec gst-launch-1.0 videotestsrc ! video/x-raw, width=640, height=360 ! x264enc ! mpegtsmux ! \
+        udpsink host=${CAST_ADDR} port=${CAST_PORT}
+```
+
+- dockerrun
+
+```bash
+docker run \
+    --restart=always \
+    -it \
+    -d \
+    --name gst_server \
+    --net=host \
+    -v $(pwd):/work \
+    gstreamer \
+    /work/casting.sh
+```
+
+
 ## 参考HP
 - [gst-launch-1.0](https://gstreamer.freedesktop.org/documentation/tools/gst-launch.html?gi-language=c#)
 - [Plugins](https://gstreamer.freedesktop.org/documentation/plugins_doc.html?gi-language=c)
