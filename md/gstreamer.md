@@ -360,11 +360,9 @@ $ dot 0.00.02.531619900-gst-launch.READY_PAUSED.dot -Tpng -o foo.png
 - dockerfile
 
 ```
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-RUN apt-get update
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+RUN DEBIAN_FRONTEND=apt-get update && apt-get install -y \
     libgstreamer1.0-0 \
     gstreamer1.0-plugins-base \
     gstreamer1.0-plugins-good \
