@@ -882,6 +882,20 @@ $ vmstat <更新間隔>
 ### 参考HP
 - [vmstat - サーバー管理でよく使うコマンド](https://www.fulldigit.co.jp/command/s1_vmstat.html)
 
+## OSバージョン
+### カーネル
+```bash
+$ uname -a
+```
+
+### ディストリビューション
+```bash
+$ lsb_release -a
+```
+
+```bash
+$ cat /etc/os-release
+```
 
 ## SSH
 ### 秘密鍵の作成
