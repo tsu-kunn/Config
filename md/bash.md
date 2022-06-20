@@ -1219,7 +1219,8 @@ fi
   - `-p` 属性情報（タイムスタンプや権限など）をそのままにしてコピー
 - ファイルのタイムスタンプを変更
   - `touch -t [[CC]YY]MMDDhhmm <file name...>` or `touch --date="20211028 12:00" <file name...>`
-
+- グローバルIPの確認
+  - `curl ifconfig.io`
 
 
 # 参考
