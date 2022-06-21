@@ -29,6 +29,7 @@ Ubuntuの場合はLTSを推奨。（LTSなしは最新バージョンとなる�
 
 - [Ubuntu](https://www.microsoft.com/ja-jp/p/ubuntu/9nblggh4msv6?activetab=pivot:overviewtab)
 - [Ubuntu 20.04 LTS](https://www.microsoft.com/ja-jp/p/ubuntu-2004-lts/9n6svws3rx71?rtc=1&activetab=pivot:overviewtab)
+- [Ubuntu 22.04_LTS](https://apps.microsoft.com/store/detail/ubuntu-2204-lts/9PN20MSR04DW?hl=ja-jp&gl=JP)
 - [Debian](https://www.microsoft.com/ja-jp/p/debian/9msvkqc78pk6?rtc=1&activetab=pivot:overviewtab)
 
 ### 6 - Windows Terminal をインストールする
@@ -176,6 +177,16 @@ $ sudo apt install -y docker-ce docker-ce-cli containerd.io && sync
 $ sudo service docker start
 ```
 
+#### .bash_profile
+初回だけ sudo のパスワード入力をするようにする。
+
+```bash
+# 初回シェル時のみ Docker を実行
+if test $(service docker status | awk '{print $4}') = 'not'; then #停止状態
+    sudo service docker start
+fi
+```
+
 ### コンテナの実行
 ```bash
 $  docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 -u node --name nodejs_14173 node:14.17.3 /bin/bash
@@ -249,12 +260,13 @@ Docker for Windowsを使ってWSL2にDockerをインストールする。\
 ## Docker Compose
 ※Proxy環境下の場合は `sudo -E` にする。
 
+### version 1.xx
 1. 以下のコマンドを実行して最新版をダウンロードする
     ```bash
     $ sudo curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
     ```
 
-    - [最新版の確認](https://github.com/docker/compose/releases)
+    - 1.29.2が最終バージョン
 1. 実行権限の付与
     ```bash
     $ sudo chmod +x /usr/local/bin/docker-compose
@@ -266,6 +278,26 @@ Docker for Windowsを使ってWSL2にDockerをインストールする。\
 1. インストールの確認
     ```bash
     $ docker-compose --version
+    ```
+### version 2.xx
+1. 以下のコマンドを実行して最新版をダウンロードする
+    ```bash
+    $ mkdir -p ~/.docker/cli-plugins/
+    $ curl -SL https://github.com/docker/compose/releases/download/v2.6.0/docker-compose-`uname -s`-`uname -m` -o ~/.docker/cli-plugins/docker-compose
+    ```
+
+    - [最新版の確認](https://github.com/docker/compose/releases)
+1. 実行権限の付与
+    ```bash
+    $ chmod +x ~/.docker/cli-plugins/docker-compose
+    ```
+1. コマンドライン補完をインストール
+    ```bash
+    $ sudo curl -L https://raw.githubusercontent.com/docker/compose/$(docker compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+    ```
+1. インストールの確認
+    ```bash
+    $ docker compose version
     ```
 
 ### Node.jsでの使用例
