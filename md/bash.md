@@ -961,6 +961,39 @@ or
 $ sudo systemctl restart sshd
 ```
 
+## scp
+```bash
+$ scp -i <秘密鍵名> -p <ポート番号> <ユーザー名>@<ドメイン名>
+```
+
+- `-i` を省略した場合は `id_rsa` が使われる。
+- `-p` を省略した場合は `22番ポート` が使われる。
+
+SSHの `configファイル` を利用する場合。
+
+```bash
+$ scp <HOST名>
+```
+
+### 受信例
+```bash
+$ scp user@example.com:~/Documents/sample.txt ./test
+$ scp hostname:~/Documents/ssample.txt ./test
+```
+
+### 送信例
+```bash
+$ scp ./test/test.txt user@example.com:~/Downloads
+$ scp ./test/test.txt hostname:~/Downloads
+```
+
+### ディレクトリのコピー
+`-r` を付ける。
+
+```bash
+$ scp -r user@example.com:~/Documents/test ./
+```
+
 ## 圧縮・解凍
 ### 圧縮
 ```bash
