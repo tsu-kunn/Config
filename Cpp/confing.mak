@@ -26,7 +26,8 @@ RANLIB      = ranlib
 OBJDUMP     = objdump
 
 ##--- compile option
-USER_CFLAG  = -pthread -m64 -fopenmp
+# -m64 is Intel CPU Only
+USER_CFLAG  = -pthread -fopenmp
 USER_DFLAG  = -DLINUX
 CFLAGS      = -std=c++17 -Wall -fexceptions -Wuninitialized
 #CFLAGS      = -std=c11 -Wall -Wuninitialized
