@@ -1255,6 +1255,11 @@ fi
   - `touch -t [[CC]YY]MMDDhhmm <file name...>` or `touch --date="20211028 12:00" <file name...>`
 - グローバルIPの確認
   - `curl ifconfig.io`
+- ソースコードの行数計算
+  - `find . -name "*.c" | xargs wc -l`
+- apt個別アップグレード
+  - アップグレード可能なパッケージ: `sudo apt update && apt list --upgradable`
+  - 個別にアップグレード: `sudo apt install <パッケージ名> --only-upgrade`
 
 
 # 参考
