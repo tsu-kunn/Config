@@ -24,6 +24,15 @@ $ tar -zcf ~/storage/downloads/termux-backup.tar.gz home usr
 
 ※公式サイトでは F-Droid のアプリからインストールすることを推奨している。
 
+## バックアップの展開
+1. ストレージを見れるようにする。
+    ```bash
+    $ termux-setup-storage
+    ```
+1. バックアップを展開する。
+    ```bash
+    tar -zxf /storage/downloads/termux-backup.tar.gz -C /data/data/com.termux/files --recursive-unlink --preserve-permissions
+    ```
 
 # Termuxの設定方法
 
