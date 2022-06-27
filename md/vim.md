@@ -365,3 +365,26 @@ endif
 1. 追加したい文字を入力
 1. ESCで抜ける
 
+## ctags
+Ctagsは今でも更新されている `universal-ctags` を使用する。
+
+### インデックスファイルの作成
+
+```bash
+$ ctags -R -f tags
+```
+
+### Vimの設定
+
+```vim
+:set tags=tags
+```
+
+### タグジャンプ
+
+|key|動作|
+|:--|:--|
+|Ctrl+]|タグジャンプ|
+|Ctrl+t|元に戻る|
+|Ctrl+x Ctrl+]|タグリスト補間|
+
