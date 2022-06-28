@@ -169,8 +169,24 @@ set noswapfile
 "---------------------------------------------------------------
 " 表示関係
 "---------------------------------------------------------------
-"タイトルをウインドウ枠に表示する
-set title
+"タイトルをウインドウ枠に表示しない
+set notitle
+
+" ステータスラインの設定
+" Set the statusline
+set statusline=%f               " filename relative to current $PWD
+set statusline+=%h              " help file flag
+set statusline+=%m              " modified flag
+set statusline+=%r              " readonly flag
+set statusline+=\ [%{&ff}]      " Fileformat [unix]/[dos] etc...
+set statusline+=[ENC=%{&fileencoding}]  " File encoding
+set statusline+=[%Y]            " Filetype
+set statusline+=%=              " Rest: right align
+set statusline+=%l,%c%V         " Position in buffer: linenumber, column, virtual column
+set statusline+=\ %P            " Position in buffer: Percentage
+
+"ステータスラインを表示（0:非表示 1:2つ以上 2:常時）
+set laststatus=2
 
 "行番号表示
 set number
