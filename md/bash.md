@@ -145,6 +145,7 @@ export http_proxy=http://proxy.example.com:8080
 export https_proxy=http://proxy.example.com:8080
 export HTTP_PROXY=http://proxy.example.com:8080
 export HTTPS_PROXY=http://proxy.example.com:8080
+export no_proxy="127.0.0.1, localhost, 192.168.1.1"
 ```
 
 ## .wgetrc
