@@ -661,7 +661,9 @@ wgetは再帰的取得、1URLに対してどれだけ処理ができるかが特
 |:--|:--|
 |-o|ファイル出力|
 |-O|リクエスト先の名前でファイル出力|
+|-F|ファイルのアップロード|
 |-s|プログレス出力抑制|
+|-f|エラーレスポンスの出力抑制|
 |-I|HTTP Header出力|
 |-i|Response Header, Body出力|
 |-v|リクエスト時のHeader出力|
@@ -669,11 +671,13 @@ wgetは再帰的取得、1URLに対してどれだけ処理ができるかが特
 |-L|リダイレクト先までアクセス|
 |-#|プログレスバーで進捗表示|
 |-C|ダウンロード再開|
+|-x|プロキシーの指定|
 |-X|HTTPメソッドの指定|
 |-H|リクエストヘッダーの指定|
 |-d|POSTリクエストの送信|
 |-c|cookieの保存|
 |-b|cookieを指定|
+|-A|UserAgentを指定|
 |-anyauth|認証方式自動判別|
 
 ## URLエンコード
@@ -687,6 +691,17 @@ $ echo ${u:2}
 $ echo ${u:2} | nkf --url-input
 ```
 
+### 保存
+#### ファイル名指定
+```bash
+$ curl -o dl_fille1.zip http://exapmle.com/sample.zip
+```
+
+#### リクエスト先の名前
+```bash
+$ curl -O http://exapmle.com/sample.zip
+```
+
 ### 連番保存
 ```bash
 $ curl -O "http://example.com/[001-100].jpg"
@@ -696,6 +711,16 @@ $ curl -O "http://example.com/[001-100].jpg"
 ```bash
 $ curl -o test#1 "http://example.com/[001-100].jpg"
 ```
+
+### ファイルのアップロード
+```bash
+$ curl http://exapmle.com -X POST -F "file=@sample.txt"
+
+# JSON
+$ curl http://exapmle.com -X POST -F 'json={"parameter": [{"name":"FileParameter", "file":"file"}]}'
+```
+
+※注意: `-F` と `-d` は併用できない。(エラーになる)
 
 ### プログレスバー
 ```bash
@@ -722,6 +747,27 @@ $ curl --anyauth --user user:pass http://example.com
 ```bash
 $ curl -X POST -H "Content-Type: application/json" -d '{"name":"美幸", "age":"23"}' http://example.com
 $ curl -X POST -H "Content-Type: application/json" -d '@sample.json' http://example.com
+```
+
+### cookie
+#### cookieの保存
+```bash
+$ curl -c cookie.txt http://example.com/cookies/test/value
+```
+
+#### cookieの利用
+```bash
+$ curl -b cookie.txt http://exapmle.com/cookies{"cookies":"{"test":"value"}}
+```
+
+### UserAgent
+```bash
+$ curl -A "UserAgent" http://exapmle.com
+```
+
+### proxy
+```bash
+$ curl -x http://proxy.example.com:8080 http://example.com
 ```
 
 ## 参考
