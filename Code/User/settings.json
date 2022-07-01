@@ -13,7 +13,6 @@
     "editor.renderWhitespace": "all",
     "editor.renderControlCharacters": true,
     "editor.renderLineHighlight": "all",
-    "editor.renderIndentGuides": true,
 
     // Controls visibility of the glyph margin
     "editor.glyphMargin": true,
@@ -107,7 +106,7 @@
     },
 
     // デフォルトターミナルの設定
-    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
@@ -160,7 +159,8 @@
         "*.ipynb": "jupyter.notebook.ipynb"
     },
     "gauge.recommendedSettings.options": "Apply & Reload",
-    "workbench.startupEditor": "none"
+    "workbench.startupEditor": "none",
+    "editor.guides.indentation": true
 }
 
 // MEMO:
