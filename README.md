@@ -26,6 +26,8 @@ VSCode(Windows/Linux) + Bash環境の設定ファイルが中心。
   - PowerShellの設定ファイル。
     - Windows PowerShellとPowerShellのprofileを分離。
   - 一部の関数はWindows依存になっている。
+- Python
+  - Pythonの自分用のベース関数群。
 - WindowsTerminal
   - Windows Terminalの設定ファイル。
 - WSL2
