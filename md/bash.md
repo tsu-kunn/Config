@@ -1307,6 +1307,8 @@ fi
 - apt個別アップグレード
   - アップグレード可能なパッケージ: `sudo apt update && apt list --upgradable`
   - 個別にアップグレード: `sudo apt install <パッケージ名> --only-upgrade`
+- パッケージの情報
+  - `apt show <パッケージ名>`
 
 
 # 参考
