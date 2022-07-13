@@ -16,19 +16,19 @@
             "command": 
             {
                 "action": "splitPane",
-                "profile": "Ubuntu-20.04",
+                "profile": "Git Bash",
                 "split": "down"
             },
-            "keys": "alt+shift+l"
+            "keys": "alt+shift+b"
         },
         {
             "command": 
             {
                 "action": "splitPane",
-                "profile": "Git Bash",
+                "profile": "Ubuntu-20.04",
                 "split": "down"
             },
-            "keys": "alt+shift+b"
+            "keys": "alt+shift+l"
         },
         {
             "command": 
@@ -40,20 +40,8 @@
             "keys": "alt+shift+d"
         },
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+shift+c"
-        },
-        {
             "command": "find",
             "keys": "ctrl+shift+f"
-        },
-        {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
         },
         {
             "command": "togglePaneZoom",
@@ -62,6 +50,18 @@
         {
             "command": "toggleSplitOrientation",
             "keys": "ctrl+alt+o"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
         }
     ],
     "alwaysShowTabs": true,
@@ -76,7 +76,7 @@
         "defaults": 
         {
             "antialiasingMode": "cleartype",
-            "backgroundImage": "%USERPROFILE%\\Pictures\\Indigo_e2s.png",
+            "backgroundImage": "%USERPROFILE%\\Pictures\\reds.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.3,
             "backgroundImageStretchMode": "none",
@@ -87,6 +87,7 @@
                 "size": 10,
                 "weight": "semi-light"
             },
+            "historySize": 20001,
             "opacity": 75,
             "useAcrylic": true
         },
