@@ -315,4 +315,8 @@ $ git fetch origin
 $ git marge ハッシュ値
 ```
 
+## rename(git mv)前のログの確認
+```bash
+$ git log --follow ファイル名
+```
 
