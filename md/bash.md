@@ -929,6 +929,11 @@ $ vmstat <更新間隔>
 ### 参考HP
 - [vmstat - サーバー管理でよく使うコマンド](https://www.fulldigit.co.jp/command/s1_vmstat.html)
 
+## コマンドの位置
+```bash
+$ which コマンド名
+```
+
 ## OSバージョン
 ### カーネル
 ```bash
