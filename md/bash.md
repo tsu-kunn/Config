@@ -898,6 +898,25 @@ $ du -h -d 1
   - `-s`: 指定したディレクトリの合計サイズのみ表示
   - `-d 深さ`: 集計するディレクトリの深さ
 
+## dd
+### ダミーファイルの作成
+100MBのダミーファイルを作成。
+
+```bash
+$ dd if=/dev/zero of=DUMMY_FILE bs=1M count=100
+```
+
+- オプション（一部）
+  - `if`: ファイルからの読み出し
+  - `of`: ファイルへの書き込み
+  - `bs`: １回に読み書きするブロックサイズ(K/M/G/T/Pの指定可能)
+  - `count`: bs/ibsで指定したサイズのブロックを個数分コピー
+
+### ISOファイルの作成
+```bash
+$ dd if=/dev/cdrom of=install.iso
+```
+
 ## vmstat
 ```bash
 $ vmstat <更新間隔>
@@ -1314,6 +1333,8 @@ fi
   - 個別にアップグレード: `sudo apt install <パッケージ名> --only-upgrade`
 - パッケージの情報
   - `apt show <パッケージ名>`
+- コマンド結果のdiff
+  - `diff <(command1) <(command2)`
 
 
 # 参考
