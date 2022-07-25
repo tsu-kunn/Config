@@ -561,6 +561,37 @@ $ cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1
   - `$?` には影響を与えるので注意
   - 文字列の先頭を半角にしないと日本語が化ける
 
+## パイプの先はサブシェル
+Bashではパイプで結合した先はサブシェルとして実行される仕様がある。
+
+```bash
+#!/bin/bash
+
+str="dummy"
+
+cat <<'__EOT__' >temp.$$
+hoge hoge
+fuga fuga
+foo foo
+bar bar
+__EOT__
+
+cat temp.$$ | while read line
+do
+  str="$line"
+done
+```
+
+この場合は str は `bar bar` ではなく `dummy` となる。（サブシェルで実行されているのでスコープが違う）\
+対応としてはリダイレクトを使う。
+
+```bash
+while read line
+do
+  str="$line"
+  exit
+done <temp.$$
+```
 
 # JSON
 BashでJSONを扱う場合は `jq` というツールを使うのがベターっぽい。\
