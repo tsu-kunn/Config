@@ -176,6 +176,45 @@ $ <command> > log.txt 2>&1         # 標準出力とエラー出力をまとめ�
 $ <command> > /dev/null            # 標準出力を破棄
 ```
 
+## 空ファイル作成
+```bash
+$ > file
+$ cat /dev/null > file
+```
+
+## コマンドへの入力
+```bash
+$ <command> < hoge.txt
+```
+
+## プロセス置換
+コマンドの出力結果をファイルとして扱う機能。(`<()` でコマンドをくくる)
+
+```bash
+$ <command> <(command)
+```
+
+## 標準入力
+### キーボードから
+```bash
+$ read HOGE
+```
+
+### ファイルから
+```bash
+$ read HOGE 0< test.txt
+$ read HOGE < test.txt  # 0は省略可能
+```
+
+## 複数行リダイレクト
+```bash
+{
+    echo "1.one"
+    echo "2.two"
+    echo "3.three"
+} >> file
+```
+
 # 計算
 `$((...))` で囲うと計算になる。
 
