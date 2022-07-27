@@ -435,6 +435,12 @@ do
 done
 ```
 
+C言語のような記述も可能。
+
+```bash
+for ((i=0;i<10;i++)); do echo $i; done
+```
+
 ### while
 ``` bash
 while コマンド
