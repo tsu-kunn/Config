@@ -435,6 +435,21 @@ do
 done
 ```
 
+例）
+```bash
+# リスト指定
+for i in 1 2 3 4 5
+do
+  echo $i
+done
+
+# seq コマンドを使用
+for i in `seq 1 5`
+do
+  echo $i
+done
+```
+
 C言語のような記述も可能。
 
 ```bash
@@ -1080,6 +1095,11 @@ $ dd if=/dev/zero of=DUMMY_FILE bs=1M count=100
   - `of`: ファイルへの書き込み
   - `bs`: １回に読み書きするブロックサイズ(K/M/G/T/Pの指定可能)
   - `count`: bs/ibsで指定したサイズのブロックを個数分コピー
+
+※中身がランダムな場合
+```bash
+$ head -c 200m /dev/urandom > test.txt
+```
 
 ### ISOファイルの作成
 ```bash
