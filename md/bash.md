@@ -881,6 +881,68 @@ $ curl -x http://proxy.example.com:8080 http://example.com
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
+# wget
+curlとよく比較されるツール。\
+再起処理やダウンロードのダウンロード再開機能を目的に使用される。
+
+wgetはBASIC認証のみ対応。
+
+## オプション
+|オプション|動作|
+|:--|:--|
+|-b|バックグラウンドで実行|
+|-o ファイル名|経過メッセージをファイルに保存|
+|-a ファイル名|経過メッセージをファイルに追加保存|
+|-q|経過メッセージを非表示|
+|-O|保存先の指定|
+|-i ファイル名|指定したファイルからダウンロードするURLを読み込む|
+|-t 回数|リトライ回数の指定(default:20)|
+|-w 秒数|リトライの待ち時間を指定|
+|-nc|上書き保存しない|
+|-c|続きからダウンロード開始|
+|-N|タイムスタンプをサーバー上のものを使用|
+|-r|再帰ダウンロードを実施する|
+|-l 数|再帰する改装を指定(default:5階層)|
+|-p|ローカルで表示するために必要なファイルを含めてダウンロード|
+|-k|ダウンロードファイル内のURLをローカル閲覧用に変換|
+|-R 拡張子|指定した拡張子はダウンロードしない|
+|-A 拡張子|指定した拡張子のみダウンロードする|
+|-nAp|親ディレクトリを対象としない|
+|-S|サーバーの応答情報を取得|
+|--spider|ファイルをダウンロードせずにURLの存在だけ確認|
+|--user=ユーザー名|ダウンロードする際のユーザー名|
+|--password=パスワード|ダウンロードする際のパスワード|
+
+## Webページを丸ごとダウンロード
+```bash
+$ wget -r -l 5 -np -p -k http://www.exapmle.com/
+```
+
+## ダウンロードを途中から再開
+```bash
+$ wget -c http://www.exapmel.com/
+```
+
+## 保存先指定
+```bash
+$ wget -c -O /tmp/hoge http://www.example.com/
+```
+
+## ダウンロード速度制限
+```bash
+$ wget --limit-rate=2m -c http://example.com/
+```
+
+## UserAgentの偽装
+```bash
+$ wget --user-agent="UserAgent" http://example.com/
+```
+
+## OAuth認証
+```bash
+$ wget --save-cookies cookies.txt --post-data 'user=hoge&password=hoge' http://example.com/auth.html
+$ wget --load-cookies cookies.txt -p http://exapmle.com/hoge/
+```
 
 # コマンド備忘録
 
