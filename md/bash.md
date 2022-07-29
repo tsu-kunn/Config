@@ -1264,6 +1264,7 @@ $ 7za a -tzip hoge.zip [file/directory]
 $ zip -r hoge.zip [file/directory]
 $ zip -r -p [password] hoge.zip [file/directory]
 $ lha a hoge.lzh [file/directory]
+$ gzip [file]
 ```
 
 ### 解凍
@@ -1274,7 +1275,11 @@ $ 7za x hoge.7z
 $ 7za x hoge.zip
 $ unzip hoge.zip
 $ lha x hoge.lzh
+$ gzip -d hoge.gz
+$ gnuzip hoge.gz
 ```
+
+※gzip で元のファイルを残す場合は `-k` を付ける。
 
 ### tarで一部のファイル・ディレクトリを除外
 `--exclude パターン` を追加することで除外ができる。\
