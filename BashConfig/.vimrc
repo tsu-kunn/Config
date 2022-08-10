@@ -20,7 +20,7 @@ autocmd Colorscheme * highlight FullWidthSpace ctermbg=0
 autocmd VimEnter * match FullWidthSpace /　/
 
 "カラースキームの設定(ron: Git BashのVim標準設定)
-colorscheme ron
+colorscheme koehler
 
 "スワップファイルを作成しない
 set noswapfile
