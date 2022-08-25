@@ -100,13 +100,13 @@
             "icon": "terminal-cmd"
         },
         "Git Bash": {
-            "source": "Git Bash"
-            // "icon": "c:/Program Files/Git/mingw64/share/git/git-for-windows.ico"
+            "source": "Git Bash",
+            "icon": "terminal-bash"
         }
     },
 
     // デフォルトターミナルの設定
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
@@ -121,6 +121,12 @@
 
     // ターミナルの表示位置を editor に設定（default:view）
     "terminal.integrated.defaultLocation": "view",
+
+    // ターミナルのバッファ最大値変更
+    "terminal.integrated.scrollback": 3200,
+
+    // ターミナルの履歴
+    "terminal.integrated.shellIntegration.history": 200,
 
     // テレメトリーを無効にする（MSに送らない）
     "telemetry.enableTelemetry": false,
@@ -152,6 +158,10 @@
     "editor.unicodeHighlight.allowedCharacters": {
         "　": true
     },
+
+    // Ruby settings
+    "ruby.useBundler": true, //run non-lint commands with bundle exec
+    "ruby.useLanguageServer": true, // use the internal language server (see below)
 
     // VSCode自動設定
     "C_Cpp.updateChannel": "Insiders",
