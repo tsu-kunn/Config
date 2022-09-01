@@ -242,9 +242,23 @@ $ docker run -it -v $PWD/src:/home/node/src -w /home/node/src -p 3000:3000 --nam
 
 ※root ユーザーで入り、作業をする際は `su node` でユーザーを切り替えて作業する。
 
+### sudo を不要にする
+```bash
+$ sudo gpasswd -a [user name] docker
+```
+
+追加されたことを確認。
+
+```bash
+$ getent group docker
+```
+
+PCを再起動 or ログアウトして再ログインすると有効になる。
+
 ### 参考HP
-- [Docker Documentation](https://docs.docker.com/)
+- [Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 - [Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/)
+- [ubuntu版Dockerを毎回sudoなしで実行したい](https://qiita.com/katoyu_try1/items/1bdaaad9f64af86bbfb7)
 
 ## インストール２
 Docker for Windowsを使ってWSL2にDockerをインストールする。\
