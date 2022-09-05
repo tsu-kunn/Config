@@ -96,7 +96,7 @@ $ sudo apt install git
 これを使用する場合は **Git for Windows をインストール**する必要があります。
 
 ```bash
-$ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe"
+$ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-wincred.exe"
 ```
 
 ※これを設定することで、Git for Windows で作成したリポジトリを、WSL2のBashから push できるようになる。
