@@ -1335,6 +1335,39 @@ test2
 $HOME
 EOF
 ```
+
+## patch
+`diff` コマンドと `patch` コマンドを使ったパッチの作成と適用方法。 \
+`git` コマンドも同様の手段がある。
+
+### patch ファイルの作成
+```bash
+$ diff -u <古いファイル> <新しいファイル> > hoge.patch
+```
+
+#### git
+```bash
+$ git diff > hoge.patch
+```
+
+### patch ファイルの適用
+```bash
+$ patch -u <ファイルパス> < hoge.patch
+```
+
+#### git
+```bash
+$ patch -p1 < hoge.patch
+```
+
+### 変更取り消し
+```bash
+$ patch -R <ファイルパス> < hoge.patch
+```
+
+### 参考HP
+- [Git で変更を patch ファイルにする / patch コマンドで適用する](https://qiita.com/sea_mountain/items/7d9c812e68a26bd1a292)
+
 # システムモニタリング
 ## sarコマンドのインストール
 ```bash
@@ -1535,3 +1568,4 @@ fi
 - [ターミナルプロンプトの表示・色の変更](https://qiita.com/hmmrjn/items/60d2a64c9e5bf7c0fe60)
 - [とほほのBash入門](https://www.tohoho-web.com/ex/shell.html)
 - [UNIX & Linux コマンド・シェルスクリプト リファレンス](https://shellscript.sunone.me/)
+- [もっと使いやすいコマンドラインツール10選](https://zenn.dev/the_exile/articles/5176b7a5c29bce)
