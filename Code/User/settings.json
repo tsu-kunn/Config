@@ -173,7 +173,8 @@
     "editor.guides.indentation": true,
     "remote.SSH.remotePlatform": {
         "linux": "linux"
-    }
+    },
+    "window.newWindowDimensions": "inherit"
 }
 
 // MEMO:
