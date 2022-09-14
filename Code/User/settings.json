@@ -106,7 +106,7 @@
     },
 
     // デフォルトターミナルの設定
-    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.defaultProfile.windows": "PowerShell",
 
     // ターミナルのカーソルを縦線にして点滅
     "terminal.integrated.cursorBlinking": true,
@@ -126,7 +126,7 @@
     "terminal.integrated.scrollback": 3200,
 
     // ターミナルの履歴
-    "terminal.integrated.shellIntegration.history": 200,
+    "terminal.integrated.shellIntegration.history": 256,
 
     // テレメトリーを無効にする（MSに送らない）
     "telemetry.enableTelemetry": false,
@@ -157,7 +157,7 @@
     // 特定の文字のみハイライトをOFFにする
     "editor.unicodeHighlight.allowedCharacters": {
         "　": true
-    },
+    }, //run non-lint commands with bundle exec
 
     // Ruby settings
     "ruby.useBundler": true, //run non-lint commands with bundle exec
@@ -170,7 +170,10 @@
     },
     "gauge.recommendedSettings.options": "Apply & Reload",
     "workbench.startupEditor": "none",
-    "editor.guides.indentation": true
+    "editor.guides.indentation": true,
+    "remote.SSH.remotePlatform": {
+        "linux": "linux"
+    }
 }
 
 // MEMO:

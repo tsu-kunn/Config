@@ -25,6 +25,14 @@
         "key": "ctrl+k 0",
         "command": "editor.action.fontZoomReset"
     },
+    {
+        "key": "ctrl+alt+u",
+        "command": "editor.action.transformToUppercase"
+    },
+    {
+        "key": "ctrl+alt+l",
+        "command": "editor.action.transformToLowercase"
+    },
 
     // Editor(カーソル移動をEmacs風にする)
     {

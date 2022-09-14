@@ -408,6 +408,8 @@ BROWSER=none
 |Alt + →|前に進む|
 |Alt + ←|前に戻る|
 |Ctrl + Shift + \\|対応する括弧に移動|
+|Ctrl + Alt + U|大文字に変換(割り当て)|
+|Ctrl + Alt + L|小文字に変換(割り当て)|
 
 
 ## 参考
