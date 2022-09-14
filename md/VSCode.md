@@ -392,6 +392,24 @@ BROWSER=none
 - ターミナルウィンドウで "Ctr + c" を押下
 - ターミナルウィンドウのごみ箱アイコンを押下
 
+## Remote - SSH
+VSCodeからSSH接続をして、リモートで編集できる拡張。 \
+WSL2だけでなく、Linux PC やラズパイに接続して編集ができる。
+
+### 拡張のインストール
+[Remote - SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh) をインストールする。
+
+左側のアイコン欄に `Remote Explorer` が追加されれる。
+
+### SSH接続
+`Remote Explorer` を選択すると `~/.ssh/config` に書かれているリモート接続先が表示される。 \
+`~/.ssh/config` がない場合は、歯車アイコンを選択して作成する。
+
+一覧から接続先を選択して、右側に出ている +アイコン を選択する。 \
+リモートホストのOSを聞かれるので、接続先のOSを選択する。 \
+　⇒ここでうまくいかない場合は、`known_hosts` から接続先を削除すると改善するかも
+
+
 ## メモ
 ### ショートカットキー備忘録
 |key|動作|
