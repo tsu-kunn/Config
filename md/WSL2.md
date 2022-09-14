@@ -417,6 +417,10 @@ $ sudo do-release-upgrade -y
 ## WSL2の再起動
 PowerShellで以下のコマンドを実行する。
 
+```PowerShell
+> wsl --shutdown
+```
+
 ### ディストリビューションの確認
 ```PowerShell
 > wsl -l -v
