@@ -401,6 +401,8 @@ WSL2だけでなく、Linux PC やラズパイに接続して編集ができる�
 
 左側のアイコン欄に `Remote Explorer` が追加されれる。
 
+※WSL2 や Docker とも接続するのであれば、 [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack) をインストールする。
+
 ### SSH接続
 `Remote Explorer` を選択すると `~/.ssh/config` に書かれているリモート接続先が表示される。 \
 `~/.ssh/config` がない場合は、歯車アイコンを選択して作成する。
