@@ -158,9 +158,7 @@
     "editor.unicodeHighlight.allowedCharacters": {
         "　": true
     }, //run non-lint commands with bundle exec
-
-    // Ruby settings
-    "ruby.useBundler": true, //run non-lint commands with bundle exec
+    "ruby.useBundler": true,
     "ruby.useLanguageServer": true, // use the internal language server (see below)
 
     // VSCode自動設定
@@ -174,7 +172,8 @@
     "remote.SSH.remotePlatform": {
         "linux": "linux"
     },
-    "window.newWindowDimensions": "inherit"
+    "window.newWindowDimensions": "inherit",
+    "C_Cpp.clang_format_style": "BreakBeforeBraces: Attach, IndentWidth: 4"
 }
 
 // MEMO:
