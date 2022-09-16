@@ -172,8 +172,7 @@
     "remote.SSH.remotePlatform": {
         "linux": "linux"
     },
-    "window.newWindowDimensions": "inherit",
-    "C_Cpp.clang_format_style": "BreakBeforeBraces: Attach, IndentWidth: 4"
+    "window.newWindowDimensions": "inherit"
 }
 
 // MEMO:
