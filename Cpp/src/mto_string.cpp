@@ -15,7 +15,7 @@
 std::vector<std::string> MtoLib::Str::Split(std::string str, const std::string &delim)
 {
 	std::vector<std::string> strList;
-	sint32 idx = 0;
+	std::size_t idx = 0;
 
 	while ((idx = str.find_first_of(delim)) != std::string::npos) {
 		if (idx > 0) {
@@ -47,7 +47,7 @@ void MtoLib::Str::SplitPath(std::string path, std::string *pPwd, std::string *pN
 	static const char *pDiv = "/";
 #endif
 
-	sint32 idx;
+	std::size_t idx;
 	std::string pwd, name, ext;
 
 	// pwd
@@ -80,7 +80,7 @@ void MtoLib::Str::SplitPath(std::string path, std::string *pPwd, std::string *pN
 std::string MtoLib::Str::Sequence(const std::string &str, const sint32 paddNum, const char *pDiv, sint32 *pIdx)
 {
 	int i, n;
-	sint32 idx = 0;
+	std::size_t idx = 0;
 	std::string seqStr;
 
 	do {
