@@ -6,7 +6,7 @@
  * C++17に対応(2022/06/13)
  * 
  * Fast 2010/08/24
- * Last 2022/06/13 Ver1.3.1                                      (c)Tsuyoshi.A
+ * Last 2022/09/20 Ver1.3.2                                      (c)Tsuyoshi.A
 =============================================================================*/
 #ifndef _MTO_COMMON_H_
 #define _MTO_COMMON_H_
@@ -55,6 +55,10 @@
 #if __STDC_VERSION__ >= 199901L	// C99以上
 #include <stdint.h>
 #include <stdbool.h>
+#endif
+
+#if __cplusplus >= 201103L     // C++11以上
+#include <stdint.h>
 #endif
 
 #ifdef _USE_CPP
