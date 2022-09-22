@@ -328,6 +328,25 @@ let w = &s[6..11];
 - `[6..]` で終了位置(s.len())省略
 - `[..]` で文字列全体
 
+### フォーマット
+`{}` が基本の型で `{n}` で引数に置き換えられる。
+
+#### 揃え
+|型|揃え|
+|:--|:--|
+|{x: <n}|n桁左寄せ|
+|{x: >n}|n桁右寄せ|
+|{x: ^n}|n桁中央寄せ|
+|{x: >0n}|0埋め|
+
+### 基数
+|型|基数|
+|:--|:--|
+|{:b}|バイナリ|
+|{:o}|8進数|
+|{:x}|16進数|
+|{:e}|指数表示|
+
 ### 参考
 - [Rustの文字列操作](https://qiita.com/aflc/items/f2be832f9612064b12c6)
 - [Rustで文字列の先頭文字や部分文字列を取得する](https://qiita.com/HelloRusk/items/7fb68395984958987a54)
@@ -1683,6 +1702,102 @@ fn main() {
     println!("The answer is: {}", answer);
 }
 ```
+
+## マクロ
+マクロには以下のデメリットがあるのであまり利用しない方がよいとされている。
+
+- コードが理解しづらい
+- 良いマクロを書くのは難しい
+- コンパイルエラーは展開後のコードで起こるので、原因が分かり難い
+
+詳しくは参考HPを参照。ここでは自分が使ったことのあるものをピックアップ。
+
+### 基本形
+```Rust
+macro_rules! foo {
+    () => ()
+}
+
+foo!();  // 何もしない
+```
+
+### 指定子
+name:disanatorの形式で、何にマッチさせるか（disanator）と、マッチさせたものを格納するメタ変数(name:disanator)の形式で、
+何にマッチさせるか（disanator）と、マッチさせたものを格納するメタ変数(name）を指定できる。
+
+|指定子|マッチするもの|
+|:--|:--|
+|item|アイテム（関数、構造体など）|
+|block|ブロック|
+|stmt|ステートメント（文）|
+|pat|パターン|
+|expr|式|
+|ty|型|
+|ident|識別子|
+|path|修飾された名前|
+|tt|単一のトークン木|
+|meta|アトリビュートの中身|
+
+#### item
+- extern crate 宣言
+- use 宣言
+- モジュール
+- 関数
+- 型定義
+- 構造体 (struct)
+- 列挙子 (enum)
+- 定数 (const)
+- 静的アイテム (static)
+- トレイト (trait)
+- トレイトの実装 (impl ... for ... { ... })
+
+#### expr
+式にマッチする。Rustは式ベースなので、計算や関数の結果、if文やブロックなどが該当する。
+
+```Rust
+macro_rules! match_expr {
+    ( $e:expr ) => (println!("expr: {}", stringify!($e)))
+};
+
+match_expr!(10);
+match_expr!(line.unwrap());
+match_expr!(if initialized { start() } else { report_error() });
+```
+
+#### ty
+型にマッチする。マクロの展開はコンパイル前に行われるので、既知の型でなくてもいい。
+
+```Rust
+macro_rules! match_ty {
+    ( $t:ty ) => (println!("ty: {}", stringify!($t)))
+};
+
+match_ty!(i32);
+match_ty!(String);
+match_ty!(&[i32]);
+match_ty!(UnknownType);  // 未知の型
+match_ty!(html);  // 頭小文字の未知の型
+match_ty!(std::str);  // パス付き
+```
+
+#### ident
+識別子にマッチする。こちらは ty と違って予約語でもマッチする。
+
+```Rust
+macro_rules! match_ident {
+    ( $i:ident ) => (println!("ident: {}", stringify!($i)))
+};
+
+match_ident!(i32);
+match_ident!(String);
+match_ident!(UnknownType);
+match_ident!(match);
+match_ident!(if);
+match_ident!(fn);
+```
+
+### 参考HP
+[Rustのマクロを覚える](https://qiita.com/k5n/items/758111b12740600cc58f)
 
 ## コマンドラインオプション
 公式トレントにある `getopts` を使用すると楽ができる。\
