@@ -1784,6 +1784,7 @@ match_ty!(std::str);  // パス付き
 識別子にマッチする。こちらは ty と違って予約語でもマッチする。
 
 ```Rust
+#[macro_export]
 macro_rules! match_ident {
     ( $i:ident ) => (println!("ident: {}", stringify!($i)))
 };
@@ -1795,6 +1796,9 @@ match_ident!(match);
 match_ident!(if);
 match_ident!(fn);
 ```
+
+`#[macro_export]` があると、マクロを定義しているクレートがスコープに持ち込まれたなら、無条件でこのマクロが利用可能になる。
+これがないとマクロがスコープに持ち込まれない（非公開）になる。
 
 ### 参考HP
 [Rustのマクロを覚える](https://qiita.com/k5n/items/758111b12740600cc58f)
