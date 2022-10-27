@@ -3,6 +3,9 @@
 default: `Ctrl + t`\
 setting: `Ctrl + j`
 
+※2重起動した場合の操作
+`prefix prefix c` というように prefix を2回入力することで、後から起動した tmux を操作できる。
+
 ## 起動（セッション作成）
 |key|動作|
 |:--|:--|
