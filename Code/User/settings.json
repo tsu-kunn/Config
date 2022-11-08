@@ -4,7 +4,7 @@
     "editor.fontSize": 15,
 
     // Controls the font family.MS Gothic
-    "editor.fontFamily": "Myrica M,Cascadia Mono,Consolas",
+    "editor.fontFamily": "Myrica M,MyricaM M,Cascadia Mono,Consolas",
 
     // インデントの設定(true: スペース, false: タブ)
     "editor.insertSpaces": true,
@@ -157,8 +157,7 @@
     // 特定の文字のみハイライトをOFFにする
     "editor.unicodeHighlight.allowedCharacters": {
         "　": true
-    }, //run non-lint commands with bundle exec
-    "ruby.useBundler": true,
+    },
     "ruby.useLanguageServer": true, // use the internal language server (see below)
 
     // VSCode自動設定
@@ -170,9 +169,12 @@
     "workbench.startupEditor": "none",
     "editor.guides.indentation": true,
     "remote.SSH.remotePlatform": {
-        "linux": "linux"
+        "linux": "linux",
+        "rpi": "linux"
     },
-    "window.newWindowDimensions": "inherit"
+    "window.newWindowDimensions": "inherit",
+    "vsicons.dontShowNewVersionMessage": true
+    // "C_Cpp.clang_format_style": "{BreakBeforeBraces: Attach}"
 }
 
 // MEMO:
