@@ -20,7 +20,7 @@ autocmd Colorscheme * highlight FullWidthSpace ctermbg=0
 autocmd VimEnter * match FullWidthSpace /　/
 
 "カラースキームの設定(ron: Git BashのVim標準設定)
-colorscheme koehler
+colorscheme ron
 
 "スワップファイルを作成しない
 set noswapfile
@@ -168,6 +168,9 @@ noremap! <C-L> <Esc>zza
 " vimgrep 前:<F4>, 次:<F3>
 nnoremap <F4> :cNext<CR>
 nnoremap <F3> :cnext<CR>
+
+" 補完表示時のEnterで改行をしない
+inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 
 "---------------------------------------------------------------
 " オムニ補完設定
