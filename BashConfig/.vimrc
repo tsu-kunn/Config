@@ -147,8 +147,9 @@ autocmd QuickFixCmdPost *grep* cwindow
 "---------------------------------------------------------------
 " キーマップの変更
 "---------------------------------------------------------------
-" <C-N>の補完を<C-I>に割り当て
-inoremap <C-I> <C-N>
+" 補完を<C-Space>に割り当て
+"autocmd VimEnter * imap <Nul> <C-Space>
+"inoremap <C-Space> <C-X><C-I>
 
 " 挿入とコマンドラインでカーソル周りをemacs風味にする
 noremap! <C-D> <Del>
