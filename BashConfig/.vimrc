@@ -148,8 +148,8 @@ autocmd QuickFixCmdPost *grep* cwindow
 " キーマップの変更
 "---------------------------------------------------------------
 " 補完を<C-Space>に割り当て
-"autocmd VimEnter * imap <Nul> <C-Space>
-"inoremap <C-Space> <C-X><C-I>
+autocmd VimEnter * imap <Nul> <C-Space>
+inoremap <C-Space> <C-X><C-N>
 
 " 挿入とコマンドラインでカーソル周りをemacs風味にする
 noremap! <C-D> <Del>
@@ -189,4 +189,16 @@ set omnifunc=pythoncomplete#Complete
 set omnifunc=rubycomplete#Complete
 set omnifunc=xmlcomplete#CompleteTags
 set omnifunc=syntaxcomplete#Complete
+
+"---------------------------------------------------------------
+" プラグイン
+"---------------------------------------------------------------
+call plug#begin()
+
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'mattn/vim-lsp-settings'
+
+call plug#end()
 

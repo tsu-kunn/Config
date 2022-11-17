@@ -128,7 +128,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 
 alias grep='grep --color=auto'
-alias diff='diff -u'
+alias diff='diff -u --color'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
