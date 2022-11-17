@@ -1,10 +1,13 @@
 // Place your settings in this file to overwrite the default settings
 {
     // Controls the font size.(default:0)
-    "editor.fontSize": 15,
+    "editor.fontSize": 14,
 
     // Controls the font family.MS Gothic
-    "editor.fontFamily": "Myrica M,MyricaM M,Cascadia Mono,Consolas",
+    "editor.fontFamily": "Cascadia Mono,Myrica M,MyricaM M,Consolas",
+
+    // フォントの太さを設定(normal/bold/1~1000)
+    "editor.fontWeight": 350,
 
     // インデントの設定(true: スペース, false: タブ)
     "editor.insertSpaces": true,
@@ -83,7 +86,10 @@
     "workbench.editor.highlightModifiedTabs": true,
 
     // ターミナルのフォント設定
-    "terminal.integrated.fontFamily": "Cascadia Mono",
+    "terminal.integrated.fontFamily": "Cascadia Mono,Myrica M,MyricaM M",
+
+    // ターミナルのフォントサイズ
+    "terminal.integrated.fontSize": 14,
 
     // ターミナルのプロファイルを設定
     "terminal.integrated.profiles.windows": {
@@ -174,9 +180,4 @@
     },
     "window.newWindowDimensions": "inherit",
     "vsicons.dontShowNewVersionMessage": true
-    // "C_Cpp.clang_format_style": "{BreakBeforeBraces: Attach}"
 }
-
-// MEMO:
-// Install Extensions: vscode-icon, Path Autocomplete, zenkaku, Center Editor Window
-//                     glsl-cancas, Shader languages support, Bash Beautify
