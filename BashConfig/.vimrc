@@ -171,7 +171,7 @@ noremap! <C-L> <Esc>zza
 
 " vimgrep 前:<F4>, 次:<F3>
 nnoremap <silent> <F4> :cNext<CR>
-nnoremap <silent< <F3> :cnext<CR>
+nnoremap <silent> <F3> :cnext<CR>
 
 " 補完表示時のEnterで改行をしない
 inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
