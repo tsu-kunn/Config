@@ -170,11 +170,22 @@ noremap! <C-L> <Esc>zza
 "inoremap <C-S> <Esc>:w<CR>a
 
 " vimgrep 前:<F4>, 次:<F3>
-nnoremap <F4> :cNext<CR>
-nnoremap <F3> :cnext<CR>
+nnoremap <silent> <F4> :cNext<CR>
+nnoremap <silent< <F3> :cnext<CR>
 
 " 補完表示時のEnterで改行をしない
 inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
+
+" 定義[F12], 宣言[C-X,C]]へ移動(LSP)(C-Tで戻る)
+nnoremap <silent> <F12> :LspDefinition<CR>
+nnoremap <silent> <C-X><C-]> :LspDeclaration<CR>
+
+" シンボル情報(LSP)
+nnoremap <silent> <C-]> :LspHover<CR>
+
+" 警告やエラーのジャンプ
+nnoremap <silent> ]e  :LspNextError<CR>
+nnoremap <silent> [e  :LspPreviousError<CR>
 
 "---------------------------------------------------------------
 " オムニ補完設定
@@ -186,6 +197,7 @@ set omnifunc=htmlcomplete#CompleteTags
 set omnifunc=javascriptcomplete#CompleteJS
 set omnifunc=phpcomplete#CompletePHP
 set omnifunc=pythoncomplete#Complete
+
 set omnifunc=rubycomplete#Complete
 set omnifunc=xmlcomplete#CompleteTags
 set omnifunc=syntaxcomplete#Complete
