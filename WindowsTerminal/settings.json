@@ -13,17 +13,20 @@
             "keys": "alt+shift+p"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
-                "action": "splitPane",
-                "profile": "Git Bash",
-                "split": "down"
+                "action": "copy",
+                "singleLine": false
             },
-            "keys": "alt+shift+b"
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
@@ -38,48 +41,45 @@
             "command": 
             {
                 "action": "splitPane",
+                "profile": "Git Bash",
+                "split": "down"
+            },
+            "keys": "alt+shift+b"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+d"
         },
         {
-            "command": "togglePaneZoom",
-            "keys": "ctrl+shift+q"
-        },
-        {
             "command": "toggleSplitOrientation",
             "keys": "ctrl+alt+o"
         },
         {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+shift+c"
+            "command": "togglePaneZoom",
+            "keys": "ctrl+shift+q"
         }
     ],
     "alwaysShowTabs": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{d15b228a-05d7-50d1-8472-f60aaba86efc}",
-    "initialCols": 142,
+    "firstWindowPreference": "persistedWindowLayout",
+    "initialCols": 154,
     "initialPosition": "740,8",
     "initialRows": 64,
-    "firstWindowPreference": "persistedWindowLayout",
     "profiles": 
     {
         "defaults": 
         {
             "antialiasingMode": "cleartype",
-            "backgroundImage": "%USERPROFILE%\\Pictures\\Lavas.png",
+            "backgroundImage": "%USERPROFILE%\\Pictures\\irene2s.png",
             "backgroundImageAlignment": "bottomRight",
-            "backgroundImageOpacity": 0.3,
+            "backgroundImageOpacity": 0.29999999999999999,
             "backgroundImageStretchMode": "none",
             "colorScheme": "One Half Dark",
             "font": 
