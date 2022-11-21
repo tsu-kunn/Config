@@ -12,6 +12,7 @@ Import-Module posh-git
 # ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
 if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# path
+	$ENV:PATH = "C:\Program Files\OpenSSH;" + $ENV:PATH;
 	$ENV:PATH += ";C:\Program Files\Git\usr\bin;${HOME}\bin;"
 
 	# alias
