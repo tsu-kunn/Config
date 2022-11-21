@@ -17,7 +17,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 
 	# alias
 	Set-Alias -name vi -Value "vim.exe"
-	Set-Alias -name editer -Value "code"
+	Set-Alias -name editer -Value "vim.exe"
 
 	# variable
 	$Projects = "c:\files\work\projects\"
@@ -34,7 +34,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 
 	function diff
 	{
-		diff.exe -u $args
+		diff.exe -u --color $args
 		# wsl diff -u $args
 	}
 
@@ -63,7 +63,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# Windowsの場合と表示を合わせる
 	function diff
     {
-		/usr/bin/diff -u $args
+		/usr/bin/diff -u --color $args
 	}
 
 	function grep
