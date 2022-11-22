@@ -17,6 +17,7 @@ sudo apt-get install '^libssl1.0.[0-9]$' libunwind8 -y
 wget https://github.com/PowerShell/PowerShell/releases/download/v7.3.0/powershell-7.3.0-linux-arm64.tar.gz
 
 # Make folder to put powershell
+rm -rf ~/powershell
 mkdir ~/powershell
 
 # Unpack the tar.gz file
