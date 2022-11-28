@@ -20,9 +20,9 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	Set-Alias -name editer -Value "vim.exe"
 
 	# variable
-	$Projects = "c:\files\work\projects\"
-	$Memo = "C:\Files\work\Memo"
-	$Bext = ".txt"
+	$Projects = "${HOME}/GitHub/" 
+	$Memo = "${HOME}/GitHub/Config/md"
+	$Bext = ".md"
 	$Div = "\\"
 
 	# use linux command(Git Bash or WSL2)
