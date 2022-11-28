@@ -87,8 +87,8 @@ Set-PSReadLineOption -Colors @{
     #"Operator" = [ConsoleColor]::Gray
 }
 
-# 入力予測を有効にする
-Set-PSReadLineOption -PredictionSource History
+# 入力予測を有効にする(ver.7.2以前の場合設定）
+#Set-PSReadLineOption -PredictionSource History
 
 # function
 
@@ -458,4 +458,3 @@ function urldecode
 		[System.Web.HttpUtility]::UrlDecode($str)
 	}
 }
-
