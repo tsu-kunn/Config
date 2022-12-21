@@ -256,6 +256,13 @@ $ HOGE=`ls -l`
 
 ※注意: 標準エラーに出力されたものは保存されない
 
+または `$()` で囲む。
+
+```bash
+$ HOGE=$(lsb_release -i | awk '{print $3}')
+echo $HOGE
+```
+
 ### エラーメッセージのみ変数に保存
 ```bash
 $ HOGE=`ls -l hoge 2>&1 >/dev/null`
