@@ -1562,6 +1562,8 @@ fi
   - `apt show <パッケージ名>`
 - コマンド結果のdiff
   - `diff <(command1) <(command2)`
+- `set -e`
+  - コマンド実行がエラーの場合にシェルスクリプトを自動的に中断させる ※[参考HP](https://qiita.com/ko1nksm/items/e73e343f609c071e6a8c)
 
 
 # 参考
