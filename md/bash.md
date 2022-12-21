@@ -1050,6 +1050,33 @@ $ find <検索パス> -regextype posix-basic --regex <正規表現>
   - p: 名前付きパイプ
   - s: ソケット
 
+## locate
+DBを使った検索。インストールが必要。
+
+### インストール
+```bash
+$ sudo apt install mlocate
+```
+
+### DBの更新
+```bash
+$ sudo updatedb
+```
+
+### 検索
+```bash
+$ locate <option> <検索文字列>
+```
+
+検索文字列はワイルドカードも可能。
+
+- option（一部）
+  - `-b`: 上位ディレクトリは検索しない
+  - `-c`: 検索された数を表示
+  - `-e`: 現存するファイルやディレクトリのみを検索する
+  - `-i`: 大文字小文字を区別しない
+  - `-r`: 正規表現で検索する
+
 ## xargs
 ```bash 
 $ xargs <コマンド>
