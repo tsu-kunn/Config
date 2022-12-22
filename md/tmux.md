@@ -38,6 +38,7 @@ setting: `Ctrl + j`
 |prefix 矢印| ペインを移動|
 |prefix o|次のペインに移動|
 |prefix ;|以前のペインに移動|
+|prefix カーソル|指定方向のペインに移動|
 |prefix q|ペイン番号を表示|
 |prefix {|ペイン順序を前方向に入れ替え|
 |prefix }|ペイン順序を後方向に入れ替え|
