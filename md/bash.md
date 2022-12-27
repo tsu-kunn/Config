@@ -358,6 +358,12 @@ readonly tmp="HOGE"
 |${param:?[word]}|${param}が NULL の場合 word を出力してシェルをエラー終了する|
 |${param:+word}|${param}が NULL 以外の場合 word に置き換える|
 |${#param}|${param}の文字列数に置き換える|
+|${param#pattern}|param の値の文字列を左側から pattern に一致する最短の部分を取り除く（##で最長）|
+|${param%pattern}|param の値の文字列を右側から pattern に一致する最短の部分を取り除く（%%で最長）|
+|${param:offset:len}|param の値の文字列を左側から offset 個の文字を取り除き、最大 len 分展開する（lenは省略可）|
+|${param/pattern/replace/}|param の値の文字列を左側から最初に pattern に一致した文字列を place に置き換える（//ですべて）|
+
+
 
 ## 参考HP
 - [シェルの変数展開](https://qiita.com/bsdhack/items/597eb7daee4a8b3276ba)
@@ -370,6 +376,8 @@ readonly tmp="HOGE"
 - $?: 直前に実行したコマンドの終了ステータス(0:true 0以外:false)
 - $!: バックグラウンドで実行されたコマンドのPID
 - $$: コマンド自身のPID
+- $-: 現在のシュルに設定されているオプションフラグを参照
+- $_: 直前に実行したコマンドの最後の引数を参照
 
 ## 補足
 引数を受け取る際は "$0", "$1" "$@" というように、"..." で囲むのが安全。\
@@ -427,6 +435,13 @@ done
 ## 参考HP
 - [BashのGlobは積極的に利用しましょう](https://kiririmode.hatenablog.jp/entry/20160731/1469930855)
 
+# リスト
+## &&
+左側が真である場合のみ右側が実行される。
+
+## ||
+左側が偽である場合のみ右側が実行される。
+
 # シェルスクリプト
 
 ## エラーチェック
@@ -473,6 +488,8 @@ case string in
   expr2)
     expr2が成の場合の処理
     ;;
+  expr3|expr4)
+    expr3かexpr4が成の場合の処理
   *)
     否の場合の処理
     ;;
@@ -1652,6 +1669,15 @@ fi
   - `apt show <パッケージ名>`
 - コマンド結果のdiff
   - `diff <(command1) <(command2)`
+- パイプラインの終了ステータス
+  - `${PIPESTATUS[@]}`
+- 呼び出しシェルに影響を与えずに実行
+  ```bash
+  (
+    cd /tmp
+    cp -p "$hoge" "$hoge".bak
+  )
+  ```
 
 
 # 参考
