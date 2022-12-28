@@ -200,6 +200,14 @@ $ <command> <(command)
 $ read HOGE
 ```
 
+|オプション|動作|
+|:--|:--|
+|-p|プロンプトを表示|
+|-r|行の継続表示|
+|-t [時間]|タイムアウトの設定|
+|-n [最大入力文字数]|最大入力文字数の設定|
+|-s|入力のエコーバックを抑制|
+
 ### ファイルから
 ```bash
 $ read HOGE 0< test.txt
@@ -588,6 +596,39 @@ done
 |-z|変数が空のとき真|
 |-n|変数が空でないとき真|
 |-v|変数が定義されているとき真|
+
+### : (コロン)
+何もしないで `0` を返す。
+
+#### パラメーターの設定チェック
+```bash
+$ : ${1?'引数を指定してください'}
+```
+
+`$1` が未設定の場合エラーメッセージを表示する。
+
+#### シェル変数のデフォルト設定
+```bash
+$ ${CFLAGS='-O2 -fomit-frame-pointer`}
+```
+
+`CFLAGS` が未設定の場合デフォルト値を代入
+
+### eval
+```bash
+$ eval echo \"\$$var\"
+```
+
+引数を再度解釈してコマンドを実行する。
+
+#### 例
+
+```bash
+$ day=Sunday
+$ today=day
+$ eval echo \"\$$today\"
+Sunday
+```
 
 
 ## 関数
@@ -1685,3 +1726,8 @@ fi
 - [とほほのBash入門](https://www.tohoho-web.com/ex/shell.html)
 - [UNIX & Linux コマンド・シェルスクリプト リファレンス](https://shellscript.sunone.me/)
 - [もっと使いやすいコマンドラインツール10選](https://zenn.dev/the_exile/articles/5176b7a5c29bce)
+
+## 書籍
+- Linuxハンドブック（オライリー絶版？）
+- [シェルスクリプト基本リファレンス 第三版](https://amzn.to/3GlR1o7)
+
