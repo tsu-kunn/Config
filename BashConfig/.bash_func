@@ -110,6 +110,40 @@ function urldecode()
     echo "$str" | nkf --url-input
 }
 
+function argcheck()
+{
+    for arg in "$@"; do
+        echo \'"$arg"\'
+    done
+}
+
+function progressbar()
+{
+    ECHO='echo -e'
+    percent=$1
+
+    column=`expr 71 \* "$percent" / 100`
+    nspace=`expr 71 - "$column"`
+
+    bar='\r['
+    set dummy
+    while [ $# -le "$column" ]; do
+        bar=$bar'='
+        set - "$@" dummy
+    done
+
+    set dummy
+    while [ $# -le "$nspace" ]; do
+        bar=$bar' '
+        set - "$@" dummy
+    done
+    bar=$bar'] '$percent'%\c'
+
+    $ECHO "$bar"
+
+    # 100 をセットしたら "echo" を呼ぶこと
+}
+
 # PowerShell関数の実装
 function Edit-Profile()
 {
