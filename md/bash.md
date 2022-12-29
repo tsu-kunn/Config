@@ -223,6 +223,11 @@ $ read HOGE < test.txt  # 0は省略可能
 } >> file
 ```
 
+## 標準出力と標準エラーをまとめて出力
+```bash
+$ make 2>&1 | tee make_log
+```
+
 # 計算
 `$((...))` で囲うと計算になる。
 
@@ -268,7 +273,15 @@ $ HOGE=`ls -l`
 
 ```bash
 $ HOGE=$(lsb_release -i | awk '{print $3}')
-echo $HOGE
+$ echo $HOGE
+```
+
+### コマンドの実行結果をコマンドに渡す
+上記と同じでバッククォートまはた `$()` で囲む。
+
+```bash
+$ basename "`pwd`"
+$ echo "$(cal 1 2023)"
 ```
 
 ### エラーメッセージのみ変数に保存
@@ -284,67 +297,72 @@ $ HOGE=`ls -l hoge 2>&1`
 
 ## 値を表示
 ```bash
-echo $HOGE
-echo "$HOGE"
-echo ${HOGE}
-echo "${HOGE}"
+$ echo $HOGE
+$ echo "$HOGE"
+$ echo ${HOGE}
+$ echo "${HOGE}"
 ```
 
 ※注意\
 　シングルコーテーションで囲んだ場合は変数が展開されず、変数名が表示される。
 ```bash
-echo '$HOGE'
+$ echo '$HOGE'
 $HOGE
+```
+
+シングルコーテーションを表示したい場合は一度閉じてからバックスラッシュ記述する。
+```bash
+$ echo 'Let'\'s' Go!!'
 ```
 
 ## 値に追加
 ```bash
-echo ${HOGE}3
-echo ${HOGE}" World"
+$ echo ${HOGE}3
+$ echo ${HOGE}" World"
 ```
 
 ## 結合表示
 ```bash
-echo ${HOGE0}${HOGE1}
+$ echo ${HOGE0}${HOGE1}
 ```
 
 ## 部分文字列
 ### オフセット
 ```bash
-echo ${HOGE:0:2}
-echo ${HOGE:2:4}
+$ echo ${HOGE:0:2}
+$ echo ${HOGE:2:4}
 ```
 
 ### 最後からオフセット
 ```bash
-echo ${HOGE:0:-2}
+$ echo ${HOGE:0:-2}
 ```
 
 ### 右端から最短パターン一致までを除外
 ```bash
-HOGE=abc.def.ghi
-echo ${HOGE%.*}
+$ HOGE=abc.def.ghi
+$ echo ${HOGE%.*}
 # => abc.def
 ```
 
 ### 右端から最長パターン一致までを除外
 ```bash
-HOGE=abc.def.ghi
-echo ${HOGE%%.*}
+$ HOGE=abc.def.ghi
+$ echo ${HOGE%%.*}
 # => abc
 ```
 
 ### 左端から最短パターン一致まで除外
 ```bash
-HOGE=abc.def.ghi
-echo ${HOGE#*.}
+$ HOGE=abc.def.ghi
+$ echo ${HOGE#*.}
 # => def.ghi
 ```
 
 ### 左端から最長パターン一致まで除外
 ```bash
-HOGE=abc.def.ghi
-echo ${HOGE##*.}
+$ HOGE=abc.def.ghi
+$ echo ${HOGE##*.}
 # => ghi
 ```
 
@@ -401,6 +419,7 @@ tar cvzf "$FNAME" "$@"
 # 配列
 ```bash
 arry=(1 2 3 4)
+arry[5]=5
 
 # 参照
 echo ${arry[0]}
@@ -428,6 +447,8 @@ bash には glob という機能がある。 \
 - `*`: 何にでもマッチする
 - `?`: 任意の1文字にマッチする
 - `[...]`: `[` と `]` の間に記述された任意の文字にマッチする
+  - `[abc]`, `[a-z]` にマッチする
+  - `[!123]`, `[!0-9]` 以外にマッチする
 
 ## 使用例
 ファイル一覧を出力させる場合の例。 \
@@ -485,6 +506,16 @@ elif [ 比較2 ]
 else
   否の場合の処理
 fi
+```
+
+#### &&と||
+```bash
+[ "$i" -lt 10 ] && {  # if < 10
+    echo "10未満"
+    :
+} || { # else
+    echo "10以上"
+}
 ```
 
 ### case
@@ -1082,6 +1113,28 @@ $ wget --load-cookies cookies.txt -p http://exapmle.com/hoge/
 |uniq|重複した行を取り除く|
 |tac|逆順に出力|
 |wc|行数やバイト数を表示|
+|tee|標準出力とファイルに書き出す|
+
+## basename
+```bash
+$ basename '/home/user/bin/tmux_win.sh'
+tmux_win
+```
+
+### ファイルのリネーム
+```bash
+for file in *.txt
+do
+    name=`basename "$file" .txt`
+    mv "$name".txt "$name".log
+done
+```
+
+## dirname
+```bash
+$ dirname '/home/user/bin/tmux_win.sh'
+/home/user/bin
+```
 
 ## wc
 ```bash
