@@ -508,6 +508,12 @@ else
 fi
 ```
 
+1行手各場合は `;` が必要
+
+```bash
+if [ $hoge = "a"]; then echo "hogeは a "; fi
+```
+
 #### &&と||
 ```bash
 [ "$i" -lt 10 ] && {  # if < 10
