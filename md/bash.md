@@ -1461,6 +1461,30 @@ $ scp ./test/test.txt hostname:~/Downloads
 $ scp -r user@example.com:~/Documents/test ./
 ```
 
+## 秘密鍵の保存
+```bash
+$ eval "$(ssh-agent)"
+
+$ ssh-add ~/.ssh/id_rsa
+$ ssh-add ~/.ssh/hogekey
+```
+
+### 保存している鍵の確認
+```bash
+$ ssh-add -l
+```
+
+### 保存している鍵の削除
+```bash
+$ ssh-add -d ~/.ssh.id_rsa # 個別削除
+$ ssh-add -D # すべて削除
+```
+
+### ssh-agentの修了
+```bash
+$ ssh-agent -k
+```
+
 ## 圧縮・解凍
 ### 圧縮
 ```bash
