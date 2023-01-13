@@ -31,7 +31,7 @@
     "files.autoGuessEncoding": true,
 
     // ファイルの最終行を空行
-    "files.insertFinalNewline": true,
+    "files.insertFinalNewline": false,
 
     // カラーテーマの設定
     "workbench.colorTheme": "Tomorrow Night Blue",
