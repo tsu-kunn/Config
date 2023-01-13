@@ -1726,6 +1726,16 @@ fi
 ### 参考HP
 - [Git Bash for Windows で bash-completion を使う](https://zenn.dev/sprout2000/articles/e80168e97fc306)
 
+## shellcheck
+シェルスクリプトの書き方に問題がないかをチェックしてくれるツール。
+
+### インストール
+```bash
+$ sudo apt install shellcheck
+```
+
+### Web
+- [shellcheck](https://www.shellcheck.net/)
 
 # メモ
 - シェルスクリプト内では `~/` は使えないので `${HOME}` を使用する
@@ -1778,6 +1788,8 @@ fi
     cp -p "$hoge" "$hoge".bak
   )
   ```
+- CPUのプロセス数取得
+  - `nproc`
 
 
 # 参考
