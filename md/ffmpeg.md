@@ -102,6 +102,12 @@ $ ffmpeg -i input.mp4 -aspect 16:9 output.mp4
 $ ffmpeg -i input.mp4 -c copy -aspect 16:9 output.mp4
 ```
 
+レターボックス(1920x1080,16:9 -> 640x480,16:9)
+
+```bash
+$ ffmpeg -y -i import.mp4 -aspect 16:9 scale=640x360,pad=640:480:0:60:black output.mp4
+```
+
 ### 回転
 ※ ":s:v:0": 最初のビデオストリーム
 
