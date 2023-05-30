@@ -1814,6 +1814,8 @@ $ sudo apt install shellcheck
   ```
 - CPUのプロセス数取得
   - `nproc`
+- systemdのファイル名エスケープ
+  - `systemd-escape /dev/hogehoge-foo`
 
 
 # 参考
