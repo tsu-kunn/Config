@@ -206,3 +206,12 @@ $ ctags -R -f tags
 |Ctrl+t|元に戻る|
 |Ctrl+x Ctrl+]|タグリスト補間|
 
+## vim-lsp
+|key|動作|
+|:--|:--|
+|F12|定義ジャンプ|
+|Ctrl+x Ctrl+]|宣言ジャンプ|
+|Ctrl+t|元に戻る|
+|Ctrl+]|シンボル情報|
+|]e|次のエラー|
+
