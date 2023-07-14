@@ -1040,6 +1040,12 @@ $ curl -A "UserAgent" http://exapmle.com
 $ curl -x http://proxy.example.com:8080 http://example.com
 ```
 
+#### プロキシーを使用しない場合
+
+```bash
+$ curl --noproxy http://example.com http://example.com
+```
+
 ## 参考
 - [curl コマンド 使い方メモ](https://qiita.com/yasuhiroki/items/a569d3371a66e365316f)
 
@@ -1816,6 +1822,9 @@ $ sudo apt install shellcheck
   - `nproc`
 - systemdのファイル名エスケープ
   - `systemd-escape /dev/hogehoge-foo`
+- nkfでbase64
+  - エンコード: `echo -n テスト | nkf -MB`
+  - デコード: `echo 44OG44K544OI | nkf -mB`
 
 
 # 参考
