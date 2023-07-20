@@ -22,7 +22,7 @@
 
     // Control the cursor animation style
     "editor.cursorStyle": "line",
-    "editor.cursorSmoothCaretAnimation": true,
+    "editor.cursorSmoothCaretAnimation": "on",
     
     // ミニマップの表示設定
     "editor.minimap.enabled": false,
@@ -31,7 +31,7 @@
     "files.autoGuessEncoding": true,
 
     // ファイルの最終行を空行
-    "files.insertFinalNewline": false,
+    "files.insertFinalNewline": true,
 
     // カラーテーマの設定
     "workbench.colorTheme": "Tomorrow Night Blue",
@@ -164,7 +164,6 @@
     "editor.unicodeHighlight.allowedCharacters": {
         "　": true
     },
-    "ruby.useLanguageServer": true, // use the internal language server (see below)
 
     // VSCode自動設定
     "C_Cpp.updateChannel": "Insiders",
@@ -179,5 +178,7 @@
         "rpi": "linux"
     },
     "window.newWindowDimensions": "inherit",
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "javascript.suggest.autoImports": false,
+    "glassit.alpha": 245
 }
