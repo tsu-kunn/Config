@@ -24,15 +24,16 @@
 |:--|:--|
 |Ctrl + @|ターミナルのウィンドウ表示※1|
 |Ctrl + k, j|ターミナルのウィンドウ非表示※2|
-|Ctrl + Shift + @|ターミナル追加※|
+|Ctrl + Shift + @|ターミナル追加※3|
 |Shift + PgUp|上にスクロール（ページ）|
 |Shift + PgDn|下にスクロール（ページ）|
 |Ctrl + Alt + PgUp|上にスクロール（行）|
 |Ctrl + Alt + PgDn|下にスクロール（行）|
 |Alt + マウス左ドラッグ|矩形選択|
 
-※1 Windowsの場合（設定はOSによって異なる）
-※2 defaultは `Ctrl + j` (tmuxの prefix と被るので変更)
+※1 Windowsの場合（設定はOSによって異なる） \
+※2 defaultは `Ctrl + j` (tmuxの prefix と被るので変更) \
+※3 Windowsの場合（Linuxでは `ターミナルウィンドウ表示` ）
 
 ### ファイル比較
 |key|動作|
