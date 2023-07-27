@@ -215,3 +215,46 @@ $ ctags -R -f tags
 |Ctrl+]|シンボル情報|
 |]e|次のエラー|
 
+## LSPプラグインのインストール
+### vim-plug
+https://github.com/prabirshrestha/vim-lsp
+
+```bash
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+上記のコマンドを実行する。
+
+### vim-lsp-settings
+https://github.com/mattn/vim-lsp-settings
+
+#### プラグインのインストール
+`.vimrc` に以下を記載する。
+（上からLSP使用、自動補完、LSP設定のプラグイン）
+
+```
+call plug#begin()
+
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'mattn/vim-lsp-settings'
+
+call plug#end()
+```
+
+vimを起動して以下を実行する。
+
+1. `:` キーを押下
+1. 続けて `PlugInstall` を実行
+
+#### LSPのインストール
+対応しているファイルを開くと `LspInstallServer` を実行するように表示されるので、
+インストールする場合は以下を実行する。
+
+1. `:` キーを押下
+1. 続けて `LspInstallServer` を実行
+
+表示されたウィンドウで行番号が表示されたらインストール完了です。
+（インストール完了してもウィンドウは閉じないので、行番号表示を推奨）
