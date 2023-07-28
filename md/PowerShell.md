@@ -729,6 +729,12 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-ChildItem -LiteralPath 'C:\' -Recurse | Where-Object{$_.LastAccessTime-lt (Get-Date).AddYears(0)} | Sort-Object length|Export-Csv -Path "list.csv" -Encoding Default -NoTypeInformation
 ```
 
+## ファイル名をまとめて変更
+```PowerShell
+> Get-ChildItem ＜対象ファイル＞ | Rename-Item -NewName { $_.Name -replace '旧文字列','新文字列' }
+> Get-ChildItem *.srm | Rename-Item -NewName { $_.name -replace '\.srm', '.sav' }
+```
+
 ## GUID
 ```PowerShell
 > New-Guid
