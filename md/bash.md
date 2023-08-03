@@ -1825,6 +1825,8 @@ $ sudo apt install shellcheck
 - nkfでbase64
   - エンコード: `echo -n テスト | nkf -MB`
   - デコード: `echo 44OG44K544OI | nkf -mB`
+- alias を無視してコマンド実行
+  - 頭に \ を付ける。 (`\cp`)
 
 
 # 参考
