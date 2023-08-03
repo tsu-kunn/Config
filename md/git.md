@@ -320,3 +320,7 @@ $ git marge ハッシュ値
 $ git log --follow ファイル名
 ```
 
+## ブランチを一括削除
+```bash
+$ git branch | grep "文字列" | xargs git branch -d
+```
