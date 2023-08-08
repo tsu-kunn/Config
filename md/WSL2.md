@@ -255,6 +255,13 @@ $ getent group docker
 
 PCを再起動 or ログアウトして再ログインすると有効になる。
 
+### QMENU の使用
+QEMU multi-architecture 機能を有効にする。
+
+```bash
+$ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes
+```
+
 ### 参考HP
 - [Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 - [Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/)
