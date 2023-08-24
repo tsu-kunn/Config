@@ -262,6 +262,11 @@ QEMU multi-architecture 機能を有効にする。
 $ docker run --rm --privileged multiarch/qemu-user-static --reset -p yes -c yes
 ```
 
+### キャッシュを使わないでビルド
+```bash
+$ docker build -t hoge . --no-cache
+```
+
 ### 参考HP
 - [Docker Documentation](https://docs.docker.com/engine/install/ubuntu/)
 - [Docker ドキュメント](https://matsuand.github.io/docs.docker.jp.onthefly/)
