@@ -1828,6 +1828,9 @@ $ sudo apt install shellcheck
   - デコード: `echo 44OG44K544OI | nkf -mB`
 - alias を無視してコマンド実行
   - 頭に \ を付ける。 (`\cp`)
+- ディレクトリ内比較
+  - `diff -qr [dirA] [dirB]`
+  - `-q` で中身を表示せずに比較、`-r` で再帰処理
 
 
 # 参考
