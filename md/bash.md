@@ -1831,6 +1831,8 @@ $ sudo apt install shellcheck
 - ディレクトリ内比較
   - `diff -qr [dirA] [dirB]`
   - `-q` で中身を表示せずに比較、`-r` で再帰処理
+- 拡張子一括変換
+  - `for filename in *.rb; do mv $filename ${filename%.rb}.txt; done` 
 
 
 # 参考
