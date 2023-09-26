@@ -187,6 +187,9 @@ nnoremap <silent> <C-]> :LspHover<CR>
 nnoremap <silent> ]e  :LspNextError<CR>
 nnoremap <silent> [e  :LspPreviousError<CR>
 
+" ファイルツリーの表示・非表示
+nnoremap <C-e> :Fern . -reveal=% -drawer -toggle -width=40<CR>
+
 "---------------------------------------------------------------
 " オムニ補完設定
 " ※Ctrl+x,Ctrl+oで候補を出す、Ctrl+n Ctrl+pで選択、Ctrl+yで確定 
@@ -211,6 +214,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'mattn/vim-lsp-settings'
+Plug 'lambdalisue/fern.vim'
 
 call plug#end()
 
