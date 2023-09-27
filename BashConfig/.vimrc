@@ -206,6 +206,16 @@ set omnifunc=xmlcomplete#CompleteTags
 set omnifunc=syntaxcomplete#Complete
 
 "---------------------------------------------------------------
+" 拡張子ごとにインデント変更
+"---------------------------------------------------------------
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.py setlocal tabstop=4 softtabstop=4 shiftwidth=4
+    autocmd BufNewFile,BufRead *.rb setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.js,*.ts,*.html,*.css setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+"---------------------------------------------------------------
 " プラグイン
 "---------------------------------------------------------------
 call plug#begin()
