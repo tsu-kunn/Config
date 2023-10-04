@@ -217,8 +217,13 @@ augroup fileTypeIndent
 augroup END
 
 "---------------------------------------------------------------
-" TypeScript language server のtsx対応
+" LSPの設定
 "---------------------------------------------------------------
+" エラー内容の表示
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+
+" TypeScript language server のtsx対応
 if executable('typescript-language-server')
     au User lsp_setup call lsp#register_server({
         \ 'name': 'typescript-language-server',
