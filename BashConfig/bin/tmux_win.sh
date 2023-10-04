@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ファイラーWindow
-tmux new-window -n "filer"
+tmux rename-window "filer"
 tmux send-keys "vifm" C-m
 
 # 新規Window
