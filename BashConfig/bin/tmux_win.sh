@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ファイラーWindow
-tmux new-window -n "filer"
-tmux send-keys "vifm" C-m
+# tmux new-window -n "filer"
+# tmux send-keys "vifm" C-m
 
 # 新規Window
 tmux new-window -n "work"
