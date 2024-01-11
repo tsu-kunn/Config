@@ -207,7 +207,7 @@
         "command": "workbench.action.toggleMaximizedPanel"
     },
     {
-        "key": "ctrl+k j",
+        "key": "ctrl+alt+j",
         "command": "workbench.action.togglePanel"
     },
     {

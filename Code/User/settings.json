@@ -180,5 +180,6 @@
     "window.newWindowDimensions": "inherit",
     "vsicons.dontShowNewVersionMessage": true,
     "javascript.suggest.autoImports": false,
-    "glassit.alpha": 245
+    "glassit.alpha": 245,
+    "window.density.editorTabHeight": "compact"
 }
