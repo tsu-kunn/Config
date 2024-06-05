@@ -3,8 +3,33 @@
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
-        "command": 
         {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "profile": "Ubuntu-20.04",
+                "split": "down"
+            },
+            "keys": "alt+shift+l"
+        },
+        {
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
+            "command": 
             {
                 "action": "splitPane",
                 "profile": "PowerShell",
@@ -22,31 +47,6 @@
             "keys": "alt+shift+d"
         },
         {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
-        },
-        {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+shift+c"
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "profile": "Ubuntu-20.04",
-                "split": "down"
-            },
-            "keys": "alt+shift+l"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -56,30 +56,37 @@
             "keys": "alt+shift+b"
         },
         {
-            "command": "toggleSplitOrientation",
-            "keys": "ctrl+alt+o"
-        },
-        {
             "command": "togglePaneZoom",
             "keys": "ctrl+shift+q"
+        },
+        {
+            "command": "toggleSplitOrientation",
+            "keys": "ctrl+alt+o"
         }
     ],
     "alwaysShowNotificationIcon": true,
     "alwaysShowTabs": true,
+    "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "firstWindowPreference": "persistedWindowLayout",
-    "initialCols": 162,
-    "initialPosition": "740,8",
-    "initialRows": 64,
+    "initialCols": 164,
+    "initialPosition": "8,0",
+    "initialRows": 57,
     "minimizeToNotificationArea": false,
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
         {
             "antialiasingMode": "cleartype",
-            "backgroundImage": "%USERPROFILE%\\Pictures\\amiya3s.png",
+            "backgroundImage": "%USERPROFILE%\\Pictures\\blue_magicianS.png",
             "backgroundImageAlignment": "bottomRight",
             "backgroundImageOpacity": 0.3,
             "backgroundImageStretchMode": "none",
@@ -129,29 +136,46 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+                "guid": "{5ecff98c-4702-581c-9071-f052068886aa}",
                 "hidden": false,
-                "name": "Ubuntu-20.04",
-                "source": "Windows.Terminal.Wsl",
-                "startingDirectory": "\\\\wsl$\\Ubuntu-20.04\\home\\%USERNAME%"
+                "name": "Developer Command Prompt for VS 2019 (2)",
+                "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{e50353ca-9c4e-5768-b0c8-6c1d55b352ee}",
+                "guid": "{a4e7db02-54ed-58d6-a9c0-0528b92767ef}",
                 "hidden": false,
+                "name": "Developer PowerShell for VS 2019 (2)",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{d055d047-25ef-5493-843f-d90c4104f878}",
+                "hidden": true,
                 "name": "Developer Command Prompt for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{db8c7422-a296-54ed-b312-b385930382f0}",
-                "hidden": false,
+                "guid": "{b0338d9a-3ec9-50f4-9dc8-d37d0b7288f1}",
+                "hidden": true,
                 "name": "Developer PowerShell for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{5fb123f1-af88-5b5c-8953-d14a8def1978}",
+                "guid": "{614b3201-a782-5631-8d0b-33b476b60a35}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2017",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{ef346435-80af-57f4-8fe6-08ef1edd13bc}",
                 "hidden": false,
-                "name": "PowerShell 7",
-                "source": "Windows.Terminal.PowershellCore"
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{c1a4548c-3756-53cb-8244-09d4426d872b}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
@@ -368,5 +392,49 @@
     "showTerminalTitleInTitlebar": false,
     "startOnUserLogin": true,
     "theme": "system",
-    "themes": []
+    "themes": 
+    [
+        {
+            "name": "legacyDark",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacyLight",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "light",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacySystem",
+            "tab": 
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window": 
+            {
+                "applicationTheme": "system",
+                "useMica": false
+            }
+        }
+    ]
 }
