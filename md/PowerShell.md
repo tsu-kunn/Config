@@ -845,6 +845,14 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > $player.Play()
 ```
 
+## 既知のフォルダ
+```PowerShell
+> [Environment]::GetFolderPath('Desktop')
+```
+
+`Desktop` は `Programs` や `MyDocuments` など多くのパラメーターが指定できる。 \
+エラー表示に指定できるパラメーターが表示される。
+
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
