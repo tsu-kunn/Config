@@ -470,12 +470,12 @@ function urldecode
 function LIST
 {
 	param($fname)
-	if ($fname -eq $null) {
+	if ($null -eq $fname) {
 		Get-ChildItem -path function: | Where-Object { $_.Source -eq '' -and $_.Name -notlike '[A-Z]:'}
 	} else {
 		$x=Get-Item ("function:"+$fname)
 		"Parameters"
-		$x.Parametersets.Parameters | select Position,Name,ParameterType,IsMandatory
+		$x.Parametersets.Parameters | Select-Object Position,Name,ParameterType,IsMandatory
 		"`nOptions"
 		$x.Options
 		"`n"+$x.CommandType+" "+$fname+"() { $($x.Definition) }"
