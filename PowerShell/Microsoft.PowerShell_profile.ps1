@@ -20,7 +20,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	Set-Alias -name editer -Value "vim.exe"
 
 	# variable
-	$Projects = "${HOME}/GitHub/" 
+	$Projects = "${HOME}/GitHub/"
 	$Memo = "${HOME}/GitHub/Config/md"
 	$Bext = ".md"
 	$Div = "\\"
@@ -456,5 +456,28 @@ function urldecode
 
 	process {
 		[System.Web.HttpUtility]::UrlDecode($str)
+	}
+}
+
+<#
+	.SYNOPSIS
+	ユーザー登録関数の一覧の表示
+
+	.DESCRIPTION
+	引数なしの場合はユーザー登録関数の一覧を表示します。
+	関数名を付けるとその定義を表示します。
+#>
+function LIST
+{
+	param($fname)
+	if ($fname -eq $null) {
+		Get-ChildItem -path function: | Where-Object { $_.Source -eq '' -and $_.Name -notlike '[A-Z]:'}
+	} else {
+		$x=Get-Item ("function:"+$fname)
+		"Parameters"
+		$x.Parametersets.Parameters | select Position,Name,ParameterType,IsMandatory
+		"`nOptions"
+		$x.Options
+		"`n"+$x.CommandType+" "+$fname+"() { $($x.Definition) }"
 	}
 }
