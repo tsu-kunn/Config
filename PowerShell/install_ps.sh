@@ -12,16 +12,18 @@ sudo apt-get install '^libssl1.0.[0-9]$' libunwind8 -y
 
 ###################################
 # Download and extract PowerShell
+VER="7.4.3"
+PWSH="powershell-${VER}-linux-arm64.tar.gz"
 
 # Grab the latest tar.gz
-wget https://github.com/PowerShell/PowerShell/releases/download/v7.3.0/powershell-7.3.0-linux-arm64.tar.gz
+wget https://github.com/PowerShell/PowerShell/releases/download/v${VER}/${PWSH}
 
 # Make folder to put powershell
 rm -rf ~/powershell
 mkdir ~/powershell
 
 # Unpack the tar.gz file
-tar -xvf ./powershell-7.3.0-linux-arm64.tar.gz -C ~/powershell
+tar -xvf ./${PWSH} -C ~/powershell
 
 # Execution authority added
 chmod +x ~/powershell/pwsh
