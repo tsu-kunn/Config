@@ -853,6 +853,10 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 `Desktop` は `Programs` や `MyDocuments` など多くのパラメーターが指定できる。 \
 エラー表示に指定できるパラメーターが表示される。
 
+## ダウンロード
+```PowerShell
+> Invoke-WebRequest "ダウンロードするファイルのURL" -OutFile "保存先ファイルパス"
+```
 
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
