@@ -306,7 +306,7 @@ $ ffmpeg -i input.mp4 -vf scale=1920:1080:flags=lanczos+accurate_rnd -codec:v li
 
 ### xBRでスケーリング
 ```bash
-ffmpeg -i input.mp4 -an -vf xbr=n=4 -pixfmt yuv420p -c:v libx265 -tune animation -qmin 18 -q 20 -preset slower -movflags +faststart -codec:a copy output.mp4
+$ ffmpeg -i input.mp4 -an -vf xbr=n=4 -pixfmt yuv420p -c:v libx265 -tune animation -qmin 18 -q 20 -preset slower -movflags +faststart -codec:a copy output.mp4
 ```
 
 この例では `-vf xbr=n=4` で4倍にスケーリングしている。
