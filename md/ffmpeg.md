@@ -304,6 +304,13 @@ $ ffmpeg -decoders | grep 264
 $ ffmpeg -i input.mp4 -vf scale=1920:1080:flags=lanczos+accurate_rnd -codec:v libx265 -crf 20 -tune animation -codec:a copy output.mp4
 ```
 
+### xBRでスケーリング
+```bash
+ffmpeg -i input.mp4 -an -vf xbr=n=4 -pixfmt yuv420p -c:v libx265 -tune animation -qmin 18 -q 20 -preset slower -movflags +faststart -codec:a copy output.mp4
+```
+
+この例では `-vf xbr=n=4` で4倍にスケーリングしている。
+
 ### 当倍率フィルター
 [映像を拡大するフィルター](https://nico-lab.net/magnification_with_ffmpeg/) で2, 3, 4倍する。\
 Ubuntu 20.04 のffmpegでは、EPXはフィルターなしで動作せず、HQXは動作することを確認。
