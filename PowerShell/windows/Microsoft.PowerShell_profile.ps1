@@ -12,6 +12,7 @@
 # ($PSVersionTable.Platform -eq "Unix") は PowerShell 6.0 から対応
 if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# path
+	$ENV:PATH = "C:\Program Files\OpenSSH;" + $ENV:PATH;
 	$ENV:PATH += ";C:\Program Files\Git\usr\bin;${HOME}\bin;"
 
 	# alias
@@ -33,9 +34,10 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 
 	function diff
 	{
-		diff.exe -u $args
+		diff.exe -u --color $args
 		# wsl diff -u $args
 	}
+
 	function grep {
 		# 簡易的な変換のみ実施
 		$args[-1] = $args[-1].Replace('\', '/')
@@ -58,7 +60,7 @@ if ([Environment]::OSVersion.Platform -eq "Win32NT") {
 	# Windowsの場合と表示を合わせる
 	function diff
     {
-		/usr/bin/diff -u $args
+		/usr/bin/diff -u --color $args
 	}
 
 	function grep
@@ -451,3 +453,25 @@ function urldecode
 	}
 }
 
+<#
+	.SYNOPSIS
+	ユーザー登録関数の一覧の表示
+
+	.DESCRIPTION
+	引数なしの場合はユーザー登録関数の一覧を表示します。
+	関数名を付けるとその定義を表示します。
+#>
+function LIST
+{
+	param($fname)
+	if ($null -eq $fname) {
+		Get-ChildItem -path function: | Where-Object { $_.Source -eq '' -and $_.Name -notlike '[A-Z]:'}
+	} else {
+		$x=Get-Item ("function:"+$fname)
+		"Parameters"
+		$x.Parametersets.Parameters | Select-Object Position,Name,ParameterType,IsMandatory
+		"`nOptions"
+		$x.Options
+		"`n"+$x.CommandType+" "+$fname+"() { $($x.Definition) }"
+	}
+}
