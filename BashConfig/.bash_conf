@@ -3,7 +3,8 @@
 # PATH
 export LANG='ja_JP.UTF-8'
 export PROMPT_DIRTRIM=3
-export PATH=$PATH:"${HOME}/bin":
+export DOTNET_ROOT=$HOME/.dotnet
+export PATH=$PATH:"${HOME}/bin":"${HOME}/powershell:$DOTNET_ROOT":
 
 # history
 export HISTSIZE=1000
