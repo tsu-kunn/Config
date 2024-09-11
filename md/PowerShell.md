@@ -738,7 +738,7 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 ## ファイルごとに圧縮
 ```PowerShell
 > Get-ChildItem *.iso | ForEach-Object { $newName = $_.Name -replace "\.iso", ".7z"
->> 7za a $newName $_.Name }
+7za a $newName $_.Name }
 ```
 
 ※ `".7z"` の後にEnterで改行
