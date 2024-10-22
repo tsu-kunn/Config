@@ -867,11 +867,17 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 ```
 
 ## コマンドパスの取得
+### コマンド
+```
+> where.exe pwsh.exe
+```
+
+### PowerShell
 ```PowerShell
 > Get-Command pwsh.exe
 ```
 
-### ファイルパスだけ表示
+#### ファイルパスだけ表示
 ```
 > (Get-Command pwsh.exe).Source
 ```
