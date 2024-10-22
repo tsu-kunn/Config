@@ -866,6 +866,16 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Invoke-WebRequest "ダウンロードするファイルのURL" -OutFile "保存先ファイルパス"
 ```
 
+## コマンドパスの取得
+```PowerShell
+> Get-Command pwsh.exe
+```
+
+### ファイルパスだけ表示
+```
+> (Get-Command pwsh.exe).Source
+```
+
 # Web
 - [PowerShell](https://github.com/PowerShell/PowerShell)
 - [PowerShell ドキュメント](https://docs.microsoft.com/ja-jp/powershell/)
