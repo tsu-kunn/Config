@@ -23,9 +23,6 @@
     // Control the cursor animation style
     "editor.cursorStyle": "line",
     "editor.cursorSmoothCaretAnimation": "on",
-    
-    // ミニマップの表示設定
-    "editor.minimap.enabled": false,
 
     // 文字コード自動判別
     "files.autoGuessEncoding": true,
@@ -165,6 +162,17 @@
         "　": true
     },
 
+    // 背景画像の設定
+   "background.fullscreen": {
+       "images": [
+            "file:///C:/Files/amiya4.png"
+       ],
+       "opacity": 0.25,
+       "size": "384px 384px",
+       "position": "right bottom",
+       "interval": 0
+   },
+
     // VSCode自動設定
     "C_Cpp.updateChannel": "Insiders",
     "workbench.editorAssociations": {
@@ -181,5 +189,9 @@
     "vsicons.dontShowNewVersionMessage": true,
     "javascript.suggest.autoImports": false,
     "glassit.alpha": 245,
-    "window.density.editorTabHeight": "compact"
+    "window.density.editorTabHeight": "compact",
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "github.copilot.advanced": {
+        "authProvider": "github"
+    }
 }
