@@ -735,6 +735,14 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 > Get-ChildItem *.srm | Rename-Item -NewName { $_.name -replace '\.srm', '.sav' }
 ```
 
+## ファイルごとに圧縮
+```PowerShell
+> Get-ChildItem *.iso | ForEach-Object { $newName = $_.Name -replace "\.iso", ".7z"
+7za a $newName $_.Name }
+```
+
+※ `".7z"` の後にEnterで改行
+
 ## GUID
 ```PowerShell
 > New-Guid
@@ -856,6 +864,22 @@ Start-Process -FilePath <外部プログラム名> -ArgumentList "<引数>" -NoN
 ## ダウンロード
 ```PowerShell
 > Invoke-WebRequest "ダウンロードするファイルのURL" -OutFile "保存先ファイルパス"
+```
+
+## コマンドパスの取得
+### コマンド
+```
+> where.exe pwsh.exe
+```
+
+### PowerShell
+```PowerShell
+> Get-Command pwsh.exe
+```
+
+#### ファイルパスだけ表示
+```
+> (Get-Command pwsh.exe).Source
 ```
 
 # Web

@@ -43,6 +43,16 @@
 |Alt + F5|次へ|
 |Alt + Shift + F5|前へ|
 
+### Github Copilot
+|key|動作|
+|:--|:--|
+|TAB|提案を受け入れる|
+|ESC|提案を拒否する|
+|Ctrl + Enter|まとめて提案を表示させる|
+|Ctrl + →|提案を単語単位で受け入れる|
+|Alt + j|次の提案を見る|
+|Alt + [|前の提案に戻る|
+
 
 ## 設定ファイルの配置場所
 - setting.json

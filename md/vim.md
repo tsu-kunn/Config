@@ -216,6 +216,28 @@
 1. 検索(`/`)キーを押下
 1. `C-r` の後に `"` を押下
 
+## エンコーディング
+### SJISで開きなおす
+```vim
+:edit ++encoding=sjis
+```
+
+### UTF-8で開きなおす
+```vim
+:edit ++encoding=utf-8
+```
+
+### UTF-8で保存する
+```vim
+:set fileencoding=utf-8
+```
+
+### エンコーディングの確認
+```vim
+:set encoding?
+:set fileencoding?
+```
+
 ## ctags
 Ctagsは今でも更新されている `universal-ctags` を使用する。
 
