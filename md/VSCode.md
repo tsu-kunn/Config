@@ -52,6 +52,9 @@
 |Ctrl + →|提案を単語単位で受け入れる|
 |Alt + j|次の提案を見る|
 |Alt + [|前の提案に戻る|
+|Ctrl + i|インライン問い合わせ|
+|Ctri + Shift + i|Edits with Copilot|
+|Ctrl + Alt + i|Ask Copilot|
 
 
 ## 設定ファイルの配置場所
