@@ -56,6 +56,22 @@
 |Ctri + Shift + i|Edits with Copilot|
 |Ctrl + Alt + i|Ask Copilot|
 
+#### コンテキストの指定
+|指定方法|動作範囲|
+|:--|:--|
+|指定なし|現在開いてるファイル|
+|行選択|選択した行|
+|@workspace|ワークスペース全体|
+|@vscode|Visual Studio Codeについて|
+|@gitthub|Web検索|
+|@termial|入力中のターミナル|
+|#editor|エディタで編集中のファイル|
+|#file|ファイル指定|
+|#selection|選択個所|
+|#termianlLastCommand|ターミナルの最後のコマンド|
+|#terminalSelection|ターミナルの選択個所|
+|#vscodeAPI|Visual Studio CodeのAPIに関して|
+
 
 ## 設定ファイルの配置場所
 - setting.json
