@@ -4,29 +4,21 @@
     "actions": 
     [
         {
-            "command": "paste",
-            "keys": "ctrl+shift+v"
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
             {
                 "action": "splitPane",
-                "profile": "Ubuntu-20.04",
-                "split": "down"
+                "split": "auto",
+                "splitMode": "duplicate"
             },
-            "keys": "alt+shift+l"
+            "keys": "alt+shift+d"
         },
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+shift+c"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "command": "togglePaneZoom",
+            "keys": "ctrl+shift+q"
         },
         {
             "command": 
@@ -41,10 +33,14 @@
             "command": 
             {
                 "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
+                "profile": "Ubuntu-20.04",
+                "split": "down"
             },
-            "keys": "alt+shift+d"
+            "keys": "alt+shift+l"
+        },
+        {
+            "command": "paste",
+            "keys": "ctrl+shift+v"
         },
         {
             "command": 
@@ -56,8 +52,12 @@
             "keys": "alt+shift+b"
         },
         {
-            "command": "togglePaneZoom",
-            "keys": "ctrl+shift+q"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+shift+c"
         },
         {
             "command": "toggleSplitOrientation",
@@ -71,9 +71,9 @@
     "copyOnSelect": false,
     "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "firstWindowPreference": "persistedWindowLayout",
-    "initialCols": 164,
-    "initialPosition": "8,0",
-    "initialRows": 57,
+    "initialCols": 162,
+    "initialPosition": "740,8",
+    "initialRows": 64,
     "minimizeToNotificationArea": false,
     "newTabMenu": 
     [
@@ -86,9 +86,9 @@
         "defaults": 
         {
             "antialiasingMode": "cleartype",
-            "backgroundImage": "%USERPROFILE%\\Pictures\\blue_magicianS.png",
+            "backgroundImage": "%USERPROFILE%\\Pictures\\Vi_s.png",
             "backgroundImageAlignment": "bottomRight",
-            "backgroundImageOpacity": 0.3,
+            "backgroundImageOpacity": 0.25,
             "backgroundImageStretchMode": "none",
             "colorScheme": "One Half Dark",
             "font": 
@@ -136,45 +136,33 @@
                 "source": "Windows.Terminal.PowershellCore"
             },
             {
-                "guid": "{5ecff98c-4702-581c-9071-f052068886aa}",
+                "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
                 "hidden": false,
-                "name": "Developer Command Prompt for VS 2019 (2)",
-                "source": "Windows.Terminal.VisualStudio"
+                "name": "Ubuntu-20.04",
+                "source": "Windows.Terminal.Wsl"
             },
             {
-                "guid": "{a4e7db02-54ed-58d6-a9c0-0528b92767ef}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2019 (2)",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{d055d047-25ef-5493-843f-d90c4104f878}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{b0338d9a-3ec9-50f4-9dc8-d37d0b7288f1}",
-                "hidden": true,
-                "name": "Developer PowerShell for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{614b3201-a782-5631-8d0b-33b476b60a35}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2017",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{ef346435-80af-57f4-8fe6-08ef1edd13bc}",
+                "guid": "{02a2a110-dd2a-5fca-aefb-7f3e0b0839cf}",
                 "hidden": false,
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "guid": "{c1a4548c-3756-53cb-8244-09d4426d872b}",
+                "guid": "{a68c41da-c89b-5686-b28b-0e6f5cfe8585}",
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{c2a1859d-3f25-533f-8093-3b5cd27390cc}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2019",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{b94e284a-37fc-5e6d-a8e7-cf98691a5779}",
+                "hidden": true,
+                "name": "Developer PowerShell for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
             }
         ]
@@ -392,49 +380,5 @@
     "showTerminalTitleInTitlebar": false,
     "startOnUserLogin": true,
     "theme": "system",
-    "themes": 
-    [
-        {
-            "name": "legacyDark",
-            "tab": 
-            {
-                "background": null,
-                "showCloseButton": "always",
-                "unfocusedBackground": null
-            },
-            "window": 
-            {
-                "applicationTheme": "dark",
-                "useMica": false
-            }
-        },
-        {
-            "name": "legacyLight",
-            "tab": 
-            {
-                "background": null,
-                "showCloseButton": "always",
-                "unfocusedBackground": null
-            },
-            "window": 
-            {
-                "applicationTheme": "light",
-                "useMica": false
-            }
-        },
-        {
-            "name": "legacySystem",
-            "tab": 
-            {
-                "background": null,
-                "showCloseButton": "always",
-                "unfocusedBackground": null
-            },
-            "window": 
-            {
-                "applicationTheme": "system",
-                "useMica": false
-            }
-        }
-    ]
+    "themes": []
 }

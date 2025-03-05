@@ -165,12 +165,20 @@
     // 背景画像の設定
    "background.fullscreen": {
        "images": [
-            "file:///C:/Files/amiya4.png"
+            // "file:///C:/Files/amiya4.png"
+            "https://raw.githubusercontent.com/tsu-kunn/Config/refs/heads/master/img/Vi.png"
        ],
        "opacity": 0.25,
-       "size": "384px 384px",
+       "size": "339px 400px",
        "position": "right bottom",
        "interval": 0
+   },
+
+   // RemoteSSHでCopilotを有効にする
+   "remote.extensionKind": {
+    "GitHub.copilot": [
+        "ui"
+    ]
    },
 
     // VSCode自動設定
@@ -183,7 +191,8 @@
     "editor.guides.indentation": true,
     "remote.SSH.remotePlatform": {
         "linux": "linux",
-        "rpi": "linux"
+        "rpi": "linux",
+        "MacOS": "macOS"
     },
     "window.newWindowDimensions": "inherit",
     "vsicons.dontShowNewVersionMessage": true,
@@ -193,5 +202,7 @@
     "editor.unicodeHighlight.nonBasicASCII": false,
     "github.copilot.advanced": {
         "authProvider": "github"
-    }
+    },
+    "cmake.showOptionsMovedNotification": false,
+    "github.copilot.selectedCompletionModel": "gpt-4o-copilot"
 }
