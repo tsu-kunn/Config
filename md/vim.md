@@ -238,6 +238,30 @@
 :set fileencoding?
 ```
 
+## 改行コード
+### 指定して開く
+#### LF(Unix)
+```vim
+:edit ++fileformat=unix
+```
+
+#### CRLF(DOS)
+```vim
+:e ++ff=dos
+```
+
+#### CR(Mac)
+```vim
+:e ++ff=mac
+```
+
+### 指定する
+```vim
+:se ff=unix
+:se ff=dos
+:se ff=mac
+```
+
 ## ctags
 Ctagsは今でも更新されている `universal-ctags` を使用する。
 
