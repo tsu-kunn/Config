@@ -26,6 +26,63 @@ curl -O https://downloads.raspberrypi.com/micropython/mp_firmware_unofficial_lat
 コピーすると自動的にファームウェアが更新されて、`Raspberry Pi Pico 2W` が自動的に再起動されます。 \
 (これでMicroPythonが使えるようになる)
 
+#### 3. 動作確認
+`Thonny` を起動して右下に表示されている `Local Python3` をクリックして `MicroPython(Raspberry Pi Pico` を選択する。
+
+以下のプログラムをコード部分にコピペして、Wi-Fi設定のSSIDとパスワードを編集する。 \
+▶を押下してプログラム実行してシェルにIPアドレスが出力されて、PicoのLEDが点滅したら動作確認成功。
+
+```Python
+import network
+import time
+from machine import Pin
+
+# Wi-Fi設定(2.4GHzのみ対応)
+ssid='your_SSID'  # 自宅のWiFiの名前
+password='your_PASSWORD'  # 自宅のWiFiのパスワード
+
+# 内蔵LEDの設定(Pico2W）
+led= machine.Pin('LED', machine.Pin.OUT)
+
+# Wi-Fiに接続
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect(ssid, password)
+
+# 接続が確立されるまで待機
+while not wlan.isconnected():
+    print('Connecting...')
+    time.sleep(1)
+
+print('Connected, IP address:', wlan.ifconfig()[0])
+
+# Wi-Fi接続が成功したらLEDを点滅させる
+while True:
+    led.value(1)  # LEDをオンにする
+    time.sleep(1)  # 1秒待機
+    led.value(0)  # LEDをオフにする
+    time.sleep(1)  # 1秒待機
+
+```
+
+#### 4. ディスプレイの動作確認
+サンプルをダウンロードして回答する。
+
+```bash
+wget https://files.waveshare.com/upload/5/5a/Pico_code.7z
+7z x Pico_code.7z
+```
+
+`Pico_code/Python/Pico-OLED-1.3/Pico-OLED-1.3(spi).py` を `Thonny` でロードする。 \
+▶を押下してプログラムを実行し、液晶に図形や文字列が表示されたら動作確認完了。
+
+
+## 自動でpythonのプログラムを実行
+`Thonny` で保存を実行し、保存先を `Raspberry Pi Pico` を選択。 \
+ファイル名を `main.py` で保存する。
+
+再起動すると自動で `main.py` のプログラムが実行されれば成功。
+
 
 
 ## 参考
