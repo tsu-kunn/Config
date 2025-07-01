@@ -13,11 +13,15 @@
 ## 初期設定と動作確認
 ### ファームウェアアップデート
 #### 1. ファームウェアのダウンロード
-[MicroPython公式サイト](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html) の `Download the correct MicroPython UF2 file for your board:` から `Pico 2 W` を選択してファームウェアをダウンロードする。
+[Raspberry Pi公式ドキュメントのMicroPythonサイト](https://www.raspberrypi.com/documentation/microcontrollers/micropython.html) の `Download the correct MicroPython UF2 file for your board:` から `Pico 2 W` を選択してファームウェアをダウンロードする。
 
 ```bash
 curl -O https://downloads.raspberrypi.com/micropython/mp_firmware_unofficial_latest.uf2
 ```
+
+##### MicroPython公式のファームウェア
+[MicroPython公式のダウンロードページ](https://micropython.org/download/RPI_PICO2_W/) からもダウンロード可能。 \
+ラズパイ公式のファームウェアで問題がある場合に試すとよいかも。
 
 #### 2. ファームウェアの更新
 `BOOTSEL` ボタンを押下したままでUSBケーブルを接続するとUSBストレージとして認識されるので、
@@ -86,5 +90,8 @@ wget https://files.waveshare.com/upload/5/5a/Pico_code.7z
 
 
 ## 参考
-- https://yossy-life.com/pico-start/
-- https://www.iwillgoifican.com/raspberry-pi-pico/
+- [MicroPython公式](https://micropython.org/)
+- [MicroPythonライブラリ](https://micropython-docs-ja.readthedocs.io/ja/latest/library/index.html)
+- [【超入門】Raspberry Pi Picoを使った電子工作の始め方を徹底解説！](https://yossy-life.com/pico-start/)
+- [Raspberry Pi Pico/PicoW、2Wの完全ガイド](https://www.iwillgoifican.com/raspberry-pi-pico/)
+- [リラックス解除](https://micropython.org/download/RPI_PICO2/RPI_PICO2-latest.uf2)
