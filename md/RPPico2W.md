@@ -100,6 +100,7 @@ if __name__=='__main__':
         with open(filename, 'rb') as f:
             if f.read(2) != b'BM':
                 raise ValueError("Not a BMP file")
+
             f.seek(10)
             offset = ustruct.unpack('<I', f.read(4))[0]
             print(f'offset={offset}')
@@ -107,8 +108,22 @@ if __name__=='__main__':
             width = ustruct.unpack('<I', f.read(4))[0]
             height = ustruct.unpack('<I', f.read(4))[0]
             print(f'width={width}, height={height}')
+
+            f.seek(28)
+            bpp = ustruct.unpack('<H', f.read(2))[0]
+            if bpp != 1:
+                raise ValueError("Only 1-bit BMP supported")
+
             f.seek(offset)
-            buf = bytearray(f.read(width * height // 8))
+            row_size = ((width + 31) // 32) * 4  # 1bit BMPの1行のバイト数（4バイト境界）
+            print(f'row_size={row_size}')
+            buf = bytearray(width * height // 8)
+
+            for y in range(height):
+                row = f.read(row_size)
+                for x in range(width // 8):
+                    buf[(height - 1 - y) * (width // 8) + x] = row[x]
+
             return framebuf.FrameBuffer(buf, width, height, framebuf.MONO_HLSB)
 
     # QRコード読み込み
