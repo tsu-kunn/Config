@@ -177,3 +177,4 @@ if __name__=='__main__':
 - [【超入門】Raspberry Pi Picoを使った電子工作の始め方を徹底解説！](https://yossy-life.com/pico-start/)
 - [Raspberry Pi Pico/PicoW、2Wの完全ガイド](https://www.iwillgoifican.com/raspberry-pi-pico/)
 - [リラックス解除](https://micropython.org/download/RPI_PICO2/RPI_PICO2-latest.uf2)
+- [Raspberry Pi Pico Wを使ってみよう](https://iwoneko.blogspot.com/2025/06/raspberry-pi-pico-w.html?m=1)
