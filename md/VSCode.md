@@ -20,6 +20,7 @@
 |Ctrl + Alt + L|小文字に変換(割り当て)|
 |Ctrl + k, Ctrl + c|コメントアウト|
 |Ctrl + k, Ctrl + u|コメント解除|
+|Ctrl + Shift + k|1行削除|
 
 ### ターミナル
 |key|動作|
@@ -488,3 +489,4 @@ WSL2だけでなく、Linux PC やラズパイに接続して編集ができる�
 ## 参考
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [ChromebookにLinuxを入れてまともなターミナルを得る](https://okayu-moka.hatenablog.com/entry/2020/03/14/180000)
+
