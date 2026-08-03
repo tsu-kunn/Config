@@ -1220,6 +1220,25 @@ $ awk -F "," `{print $2}` csv             # "," 区切りの2番目を表示
 ※`$NF`: 最後のフィールド番号
 ※`$NR`: 行番号(1～)
 
+## tee
+sudoとヒアドキュメント作成。
+
+```bash
+$ sudo tee /etc/hoge.conf <<EOF
+hoge
+foo
+EOF
+```
+
+標準出力を出したくない場合。
+
+```bash
+$ sudo tee /etc/hoge.conf <<EOF >/dev/null
+hoge
+foo
+EOF
+```
+
 ## find
 ```bash
 $ find <検索パス> -name <検索文字>
