@@ -1255,6 +1255,15 @@ $ find <検索パス> -regextype posix-basic --regex <正規表現>
   - p: 名前付きパイプ
   - s: ソケット
 
+### 日付で検索
+```bash
+$ find <検索パス> -type f -mtime -7
+$ find <検索パス> -type f -mtime +7
+```
+
+`-7` で指定日数より新しいファイル。  
+`+7` で指定日数より古いファイル。
+
 ## locate
 DBを使った検索。インストールが必要。
 
